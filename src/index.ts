@@ -1,1 +1,4 @@
-console.log('the best webpack setup ever')
+import App from './pages/app/index';
+
+const app = new App();
+app.run();
