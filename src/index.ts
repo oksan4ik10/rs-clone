@@ -1,0 +1,1 @@
+console.log('the best webpack setup ever')
