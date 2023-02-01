@@ -10,6 +10,7 @@ const baseConfig = {
     devtool: 'eval-source-map',
     entry: path.resolve(__dirname, './src/index.ts'),
     mode: 'development',
+    cache: false,
     module: {
         rules: [
             {
@@ -43,14 +44,10 @@ const baseConfig = {
             },
             {
                 test: /\.(png|svg|jpe?g|jpeg|gif|ico)$/i,
-                use: [
-                    {
-                        loader: 'url-loader',
-                        options: {
-                            limit: 50000,
-                        },
-                    },
-                ],
+                type: 'asset/resource',
+                generator: {
+                  filename: './images/[name][ext]'
+                }
             },
         ],
     },
@@ -79,6 +76,6 @@ const baseConfig = {
 module.exports = ({ mode }) => {
     const isProductionMode = mode === 'prod';
     const envConfig = isProductionMode ? require('./webpack.prod.config') : require('./webpack.dev.config');
-
+    
     return merge(baseConfig, envConfig);
 };
