@@ -7,6 +7,9 @@ class MainPage extends Page {
 
     createMainPage() {
         const main = document.createElement('main');
+        main.classList.add('main');
+
+        
         
 
 
