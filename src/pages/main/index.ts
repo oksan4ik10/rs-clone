@@ -1,4 +1,6 @@
 import Page from "../../core/templates/page";
+import Reviews from "../../core/components/reviews";
+
 class MainPage extends Page {
 
     constructor(id: string) {
@@ -94,6 +96,9 @@ class MainPage extends Page {
         about.appendChild(div3);
         about.appendChild(div4);
         wrapper.appendChild(buttonMore);
+
+        const reviews = new Reviews('section', 'review');
+        main.appendChild(reviews.render());
 
         return main;
     }
