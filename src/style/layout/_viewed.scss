@@ -1,0 +1,44 @@
+.viewed {
+    margin-bottom: 40px;
+    border-top: 1px dashed green;
+}
+
+.viewed__title {
+    margin-top: 80px;
+    width: 100%;
+    @include flex-center;
+}
+
+.viewed__container {
+    display: flex;
+    margin-top: 40px;
+}
+
+.viewed__colomn {
+    @include flex-colomn;
+    margin-right: 25px;
+    width: 150px;
+    height: 160px;
+    padding: 10px;
+    align-items: center;
+
+    border: 1px dashed green;
+}
+
+.viewed__book {
+    width: 70px;
+    height: 120px;
+    border: 1px solid black;
+}
+
+.viewed__author {
+    margin-bottom: 5px;
+    width: 100%;
+    text-align: center;
+}
+
+.viewed__name {
+    width: 100%;
+    text-align: center;
+}
+

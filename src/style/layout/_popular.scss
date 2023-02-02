@@ -1,0 +1,36 @@
+.popular {
+    border-bottom: 1px green dashed;
+}
+
+.popular__container {
+    width: 100%;
+    @include flex-space-between;
+}
+
+.popular__colomn {
+    @include flex-colomn;
+    width: 250px;
+    height: 260px;
+    align-items: center;
+    padding: 10px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+
+    border: 1px dashed green;
+}
+
+.popular__book {
+    width: 130px;
+    height: 180px;
+    
+    border: 1px solid green;
+}
+
+.popular__author {
+    margin-top: 20px;
+}
+
+.popular__name {
+    margin-top: 5px;
+}
+
