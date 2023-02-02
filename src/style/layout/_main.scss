@@ -1,0 +1,16 @@
+.wrapper {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 1400px){
+    .wrapper {
+        width: 1000px;
+    }
+}
+
+@media screen and (max-width: 1200px){
+    .wrapper {
+        width: 900px;
+    }
+}

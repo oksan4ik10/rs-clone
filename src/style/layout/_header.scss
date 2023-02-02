@@ -1,0 +1,49 @@
+.header {
+    width: 100%;
+    height: 75px;
+
+    border-bottom: 1px dashed blueviolet;
+}
+
+.header .wrapper {
+    @include flex-space-between;
+    height: 100%;
+}
+
+.header__cabinet {
+    @include flex-space-between;
+    height: 100%;
+    width: 230px;
+}
+
+.header__cabinet__enter {
+    cursor: pointer;
+}
+
+.header__form {
+    position: relative;
+}
+
+.header__search__active {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+
+    border: 1px solid black;
+}
+
+.header__random {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    margin-left: 20px;
+
+    border: 1px solid black;
+}
+
+.header__search {
+    @include flex-space-between;
+}
