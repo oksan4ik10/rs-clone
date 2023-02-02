@@ -1,0 +1,41 @@
+.recommend {
+    margin-top: 40px;
+
+    border-bottom: 1px dashed green;
+}
+
+.recommend .wrapper {
+    @include flex-space-between;
+    margin-bottom: 40px;
+
+    border: 1px solid black;
+}
+
+.recommend__info {
+    width: 70%;
+    height: 300px;
+    padding: 30px;
+
+    border: 1px dashed green;
+}
+
+.recommend__name {
+    margin-bottom: 5px;
+}
+
+.recommend__author {
+    margin-bottom: 20px;
+}
+
+.recomend__discr {
+    margin-bottom: 20px;
+}
+
+.recommend__book {
+    height: 250px;
+    width: 180px;
+    margin-right: 60px;
+
+    border: 1px solid black;
+}
+

@@ -1,5 +1,8 @@
 import Page from "../../core/templates/page";
 import Reviews from "../../core/components/reviews";
+import PopularBooks from "../../core/components/popular";
+import Recommendation from "../../core/components/recommend";
+import ViewBooks from "../../core/components/viewed";
 
 class MainPage extends Page {
 
@@ -97,8 +100,17 @@ class MainPage extends Page {
         about.appendChild(div4);
         wrapper.appendChild(buttonMore);
 
+        const popular = new PopularBooks('section', 'popular');
+        main.appendChild(popular.render());
+
+        const recommendation = new Recommendation('section', 'recommend');
+        main.appendChild(recommendation.render());
+
         const reviews = new Reviews('section', 'review');
         main.appendChild(reviews.render());
+
+        const viewed = new ViewBooks('section', 'viewed');
+        main.appendChild(viewed.render());
 
         return main;
     }
