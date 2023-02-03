@@ -2,7 +2,7 @@ import Component from '../../templates/components';
 import { PageIds } from '../../../types';
 import Registration from '../registration';
 
-let formOpen = false;
+const formOpen = false;
 
 
 class Header extends Component {
