@@ -1,8 +1,7 @@
 import Component from '../../templates/components';
 import { PageIds } from '../../../types';
 import Registration from '../registration';
-
-const formOpen = false;
+import MainPage from '../../../pages/main';
 
 
 class Header extends Component {
@@ -13,6 +12,8 @@ class Header extends Component {
     random: HTMLElement;
     registration: HTMLButtonElement;
     enter: HTMLElement;
+    formActive: boolean;
+    // darkBackground: HTMLElement;
     
     constructor(tagName: string, className: string) {
         super(tagName, className);
@@ -23,6 +24,8 @@ class Header extends Component {
         this.random = document.createElement('div');
         this.registration = document.createElement('button');
         this.enter = document.createElement('div');
+
+        this.formActive = false;
     }
 
     renderPageHeader() {
@@ -67,23 +70,48 @@ class Header extends Component {
         cabinet.appendChild(this.registration);
     }
 
+    openForm(form: string) {
+        const darkBackground = document.createElement('div');
+        const registration = new Registration('section', form);
+        const body = document.querySelector('.body') as HTMLBodyElement;
+        body.appendChild(registration.render());
+        body.appendChild(darkBackground);
+
+        setTimeout(function(){
+            darkBackground.classList.add('dark-background');
+            darkBackground.classList.add('dark-background_opacity');
+        }, 100);
+
+        this.formActive = true;
+        darkBackground.addEventListener('click', () => {
+            this.closeForm(form);
+            this.formActive = false;
+        })
+    }
+
+    closeForm(form: string) {
+        const registration = document.querySelector(`.${form}`) as HTMLElement;
+        registration.remove();
+        const darkBackground = document.querySelector('.dark-background') as HTMLElement;
+
+        darkBackground.classList.remove('dark-background_opacity');
+
+        setTimeout(function(){
+            darkBackground.classList.remove('dark-background');
+            darkBackground.remove();
+        }, 800);
+    }
+
     render() {
         this.renderPageHeader();
-        this.registration.addEventListener('click', () => {
-            // if (formOpen === false) {
-            //     console.log('false!!!');
-            //     const registration = new Registration('section', 'registration');
-            //     const body = document.querySelector('.body') as HTMLBodyElement;
-            //     body.appendChild(registration.render());
 
-            //     //дописать генерацию формы!
-                
-            //     formOpen = true;
-            // } else {
-            //     console.log('true!!!');
-            //     formOpen = false;
-            // }
+        this.registration.addEventListener('click', () => {
+            
+            if (this.formActive === false) {
+                this.openForm('registration');
+            }
         })
+
         return this.container;
     }
 }
