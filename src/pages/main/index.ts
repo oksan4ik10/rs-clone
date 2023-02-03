@@ -5,14 +5,16 @@ import Recommendation from "../../core/components/recommend";
 import ViewBooks from "../../core/components/viewed";
 
 class MainPage extends Page {
+    main: HTMLElement;
 
     constructor(id: string) {
         super(id);
+        this.main = document.createElement('main');
     }
 
     createMainPage() {
-        const main = document.createElement('main');
-        main.classList.add('main');
+        // const main = document.createElement('main');
+        this.main.classList.add('main');
 
         const preview = document.createElement('section');
         preview.classList.add('preview');
@@ -87,7 +89,7 @@ class MainPage extends Page {
         buttonMore.classList.add('preview__more');
         buttonMore.textContent = 'Хотите узнать больше?';
 
-        main.appendChild(preview);
+        this.main.appendChild(preview);
         preview.appendChild(wrapper);
         wrapper.appendChild(title);
         wrapper.appendChild(form);
@@ -101,18 +103,18 @@ class MainPage extends Page {
         wrapper.appendChild(buttonMore);
 
         const popular = new PopularBooks('section', 'popular');
-        main.appendChild(popular.render());
+        this.main.appendChild(popular.render());
 
         const recommendation = new Recommendation('section', 'recommend');
-        main.appendChild(recommendation.render());
+        this.main.appendChild(recommendation.render());
 
         const reviews = new Reviews('section', 'review');
-        main.appendChild(reviews.render());
+        this.main.appendChild(reviews.render());
 
         const viewed = new ViewBooks('section', 'viewed');
-        main.appendChild(viewed.render());
+        this.main.appendChild(viewed.render());
 
-        return main;
+        return this.main;
     }
 
     render() {
