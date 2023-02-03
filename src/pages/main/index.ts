@@ -6,10 +6,12 @@ import ViewBooks from "../../core/components/viewed";
 
 class MainPage extends Page {
     main: HTMLElement;
+    // darkBackground: HTMLElement;
 
     constructor(id: string) {
         super(id);
         this.main = document.createElement('main');
+        // this.darkBackground = document.createElement('div');
     }
 
     createMainPage() {
@@ -113,6 +115,9 @@ class MainPage extends Page {
 
         const viewed = new ViewBooks('section', 'viewed');
         this.main.appendChild(viewed.render());
+
+        // this.main.appendChild(this.darkBackground);
+        // this.darkBackground.classList.add('dark-background');
 
         return this.main;
     }

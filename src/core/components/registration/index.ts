@@ -1,8 +1,7 @@
 import Component from '../../templates/components';
-import { PageIds } from '../../../types';
+
 
 class Registration extends Component {
-    
     
     constructor(tagName: string, className: string) {
         super(tagName, className);
@@ -13,8 +12,12 @@ class Registration extends Component {
        const form = document.createElement('form');
        form.classList.add('registration__form');
 
+       const title = document.createElement('div');
+       title.textContent = 'Зарегистрируйтесь, и вы сможете:';
+       title.classList.add('registration__title');
+
        this.container.appendChild(form);
-    
+       form.appendChild(title);
     }
 
     render() {

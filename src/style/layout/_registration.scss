@@ -1,3 +1,16 @@
 .registration__form {
-    
+    width: 800px;
+    height: 500px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 25;
+    background: white;
+    border-radius: 5px;
+    padding: 20px;
+
+    border: 1px solid black;
 }
