@@ -2,11 +2,14 @@ import Component from '../../templates/components';
 import { PageIds } from '../../../types';
 import Registration from '../registration';
 import MainPage from '../../../pages/main';
+import { HeaderSearch } from './header-search';
+import { BooksAPI } from '../../../api/api';
 
 
 class Header extends Component {
 
     logo: HTMLAnchorElement;
+    searchContainer: HTMLElement;
     search: HTMLInputElement;
     searchActive: HTMLElement;
     random: HTMLElement;
@@ -19,6 +22,7 @@ class Header extends Component {
         super(tagName, className);
 
         this.logo = document.createElement('a');
+        this.searchContainer = document.createElement('div');
         this.search = document.createElement('input');
         this.searchActive = document.createElement('div');
         this.random = document.createElement('div');
@@ -34,8 +38,8 @@ class Header extends Component {
         this.logo.href = `#${PageIds.MainPage}`;
         this.logo.textContent = 'LOGO';
 
-        const searchContainer = document.createElement('div');
-        searchContainer.classList.add('header__search');
+        //const searchContainer = document.createElement('div');
+        this.searchContainer.classList.add('header__search');
 
         const form = document.createElement('form');
         form.classList.add('header__form');
@@ -58,11 +62,11 @@ class Header extends Component {
 
         this.container.appendChild(wrapper);
         wrapper.appendChild(this.logo);
-        wrapper.appendChild(searchContainer);
-        searchContainer.appendChild(form);
+        wrapper.appendChild(this.searchContainer);
+        this.searchContainer.appendChild(form);
         form.appendChild(this.search);
         form.appendChild(this.searchActive);
-        searchContainer.appendChild(this.random);
+        this.searchContainer.appendChild(this.random);
         wrapper.appendChild(cabinet);
         cabinet.appendChild(this.enter);
         cabinet.appendChild(this.registration);
@@ -110,6 +114,42 @@ class Header extends Component {
                 this.openForm('registration');
             }
         })
+
+        this.search.addEventListener('keyup', async () => {
+            const allBooks = await BooksAPI.getAllBooks();
+            if (this.search.value.length > 0) {
+                const headerSearch = new HeaderSearch(
+                    'div',
+                    'search__results__header__wrapper', 
+                    allBooks,
+                    this.search.value);
+                const oldHeaderSearch = document.querySelector('.search__results__header__wrapper');
+                if (oldHeaderSearch) {
+                    oldHeaderSearch.remove();
+                }
+                this.searchContainer.append(headerSearch.render());
+
+                window.addEventListener('click', (event) => {
+                    if (event.target instanceof HTMLElement 
+                        && !event.target.classList.contains('search__results__header__wrapper')){
+
+                        const oldSearch = document.querySelector('.search__results__header__wrapper');
+                        if (oldSearch) {
+                            oldSearch.remove();
+                        }
+
+                        this.search.value = '';
+                    }
+                })
+            } else if (this.search.value.length <= 0) {
+                const oldHeaderSearch = document.querySelector('.search__results__header__wrapper');
+                if (oldHeaderSearch) {
+                    oldHeaderSearch.remove();
+                }
+            }
+
+        });
+            
 
         return this.container;
     }
