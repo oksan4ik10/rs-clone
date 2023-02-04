@@ -6,16 +6,13 @@ import ViewBooks from "../../core/components/viewed";
 
 class MainPage extends Page {
     main: HTMLElement;
-    // darkBackground: HTMLElement;
 
     constructor(id: string) {
         super(id);
         this.main = document.createElement('main');
-        // this.darkBackground = document.createElement('div');
     }
 
     createMainPage() {
-        // const main = document.createElement('main');
         this.main.classList.add('main');
 
         const preview = document.createElement('section');
