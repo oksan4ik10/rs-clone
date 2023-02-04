@@ -1,5 +1,9 @@
+.registration {
+    // position: relative;
+}
+
 .registration__form {
-    width: 800px;
+    width: 500px;
     height: 500px;
     position: absolute;
     top: 0;
@@ -13,4 +17,36 @@
     padding: 20px;
 
     border: 1px solid black;
+}
+
+.registration__title {
+    margin-bottom: 20px;
+}
+
+.registration__cross {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    opacity: 0.3;
+	cursor: pointer;
+    background-image: url('./images/cross.svg');
+
+}
+
+.registration__cross:hover {
+    opacity: 1;
+}
+
+.registration__error {
+    width: 350px;
+    height: 20px;
+    color: $error-color;
+
+    border: 1px dashed green;
+}
+
+.registration__submit {
+    margin-top: 20px;
 }
