@@ -2,6 +2,8 @@ import Component from '../../templates/components';
 import { PageIds } from '../../../types';
 import Registration from '../registration';
 import MainPage from '../../../pages/main';
+import { HeaderSearch } from './header-search';
+import { BooksAPI } from '../../../api/api';
 
 
 class Header extends Component {
@@ -111,6 +113,19 @@ class Header extends Component {
                 this.openForm('registration');
             }
         })
+
+        this.search.addEventListener('click', async () => {
+            const allBooks = await BooksAPI.getAllBooks();
+
+            const headerSearch = new HeaderSearch(
+                'div',
+                'search__results__header__wrapper', 
+                allBooks,
+                'Астр');
+
+                headerSearch.renderSearchHeader();
+            });
+            
 
         return this.container;
     }

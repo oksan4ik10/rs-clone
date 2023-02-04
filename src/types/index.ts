@@ -5,20 +5,13 @@ export const enum PageIds {
     Sign = 'description-book',
 }
 
-export interface Product {
-    brand: string;
-    category: string;
-    description: string;
-    discountPercentage: number;
-    id: number;
-    images: string[];
-    price: number;
-    rating: number;
-    stock: number;
-    textContent?: string;
-    thumbnail: string;
+export interface IOneBook {
+    author: string;
+    desc: string;
+    genre: string;
+    img: string;
     title: string;
-    num?: number;
+    year: number;
+    _id: string;
+    rating?: number;
 }
-
-
