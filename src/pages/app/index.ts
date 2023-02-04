@@ -16,11 +16,15 @@ class App {
     private footer: Footer;
 
     static renderNewPage(idPage: string) {
+        const footer = new Footer('footer', 'footer');        
         if (idPage === '') return;
         const currentPageHTML = document.querySelector(`#${App.defaultPageId}`);
+        const footerOld = document.querySelector('footer');
+        if(footerOld) footerOld.remove();
 
         if (currentPageHTML) {
             currentPageHTML.remove();
+
         }
         let page: Page | null = null;
 
@@ -41,13 +45,20 @@ class App {
 
             pageHTML.id = App.defaultPageId;
             App.container.append(pageHTML);
+            console.log('page');
+            
         }
+        App.container.append(footer.render());
+
     }
 
     private enableRouteChange() {
         window.addEventListener('hashchange', () => {
             const hash = window.location.hash.slice(1);
             App.renderNewPage(hash);
+
+  
+
         });
     }
 
@@ -58,10 +69,12 @@ class App {
 
     run() {
         App.container.append(this.header.render());
-        if (window.location.hash === '') window.location.hash = 'main-page';
+        if (window.location.hash === '') App.renderNewPage('main-page');
         else App.renderNewPage(window.location.hash.slice(1));
-        App.container.append(this.footer.render());
         this.enableRouteChange();
+        
+
+
     }
 }
 
