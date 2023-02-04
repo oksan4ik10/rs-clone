@@ -6,7 +6,7 @@ class Footer extends Component {
         super(tagName, className);
     }
 
-    renderPageHeader() {
+    renderFooter() {
         this.container.innerHTML = 
             `<div class="wrapper">
                 <a href=#${PageIds.MainPage} class="logo footer__logo">LOGO</a>
@@ -23,7 +23,7 @@ class Footer extends Component {
     }
 
     render() {
-        this.renderPageHeader();
+        this.renderFooter();
 
         return this.container;
     }
