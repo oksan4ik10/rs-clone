@@ -12,8 +12,8 @@ class Header extends Component {
     random: HTMLElement;
     registration: HTMLButtonElement;
     enter: HTMLElement;
-    formActive: boolean;
-    // darkBackground: HTMLElement;
+
+    static formActive = false;
     
     constructor(tagName: string, className: string) {
         super(tagName, className);
@@ -24,8 +24,6 @@ class Header extends Component {
         this.random = document.createElement('div');
         this.registration = document.createElement('button');
         this.enter = document.createElement('div');
-
-        this.formActive = false;
     }
 
     renderPageHeader() {
@@ -74,6 +72,7 @@ class Header extends Component {
         const darkBackground = document.createElement('div');
         const registration = new Registration('section', form);
         const body = document.querySelector('.body') as HTMLBodyElement;
+
         body.appendChild(registration.render());
         body.appendChild(darkBackground);
 
@@ -82,10 +81,11 @@ class Header extends Component {
             darkBackground.classList.add('dark-background_opacity');
         }, 100);
 
-        this.formActive = true;
+        Header.formActive = true;
+
         darkBackground.addEventListener('click', () => {
             this.closeForm(form);
-            this.formActive = false;
+            Header.formActive = false;
         })
     }
 
@@ -106,8 +106,7 @@ class Header extends Component {
         this.renderPageHeader();
 
         this.registration.addEventListener('click', () => {
-            
-            if (this.formActive === false) {
+            if (Header.formActive === false) {
                 this.openForm('registration');
             }
         })
