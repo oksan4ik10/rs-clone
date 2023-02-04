@@ -13,5 +13,5 @@ export interface IOneBook {
     title: string;
     year: number;
     _id: string;
-    rating?: number;
+    raiting?: number;
 }

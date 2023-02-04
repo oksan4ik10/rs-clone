@@ -16,7 +16,7 @@ class App {
     private footer: Footer;
 
     static renderNewPage(idPage: string) {
-        const footer = new Footer('footer', 'footer');        
+        const footer = new Footer('footer', 'footer'); 
         if (idPage === '') return;
         const currentPageHTML = document.querySelector(`#${App.defaultPageId}`);
         const footerOld = document.querySelector('footer');
@@ -45,8 +45,7 @@ class App {
 
             pageHTML.id = App.defaultPageId;
             App.container.append(pageHTML);
-            console.log('page');
-            
+            window.location.hash = idPage;
         }
         App.container.append(footer.render());
 
@@ -69,7 +68,9 @@ class App {
 
     run() {
         App.container.append(this.header.render());
-        if (window.location.hash === '') App.renderNewPage('main-page');
+        if (window.location.hash === '') {
+            App.renderNewPage('main-page');
+        }
         else App.renderNewPage(window.location.hash.slice(1));
         this.enableRouteChange();
         
