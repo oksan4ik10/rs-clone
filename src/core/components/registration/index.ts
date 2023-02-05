@@ -42,7 +42,7 @@ class Registration extends Component {
         title.textContent = 'Регистрация';
         title.classList.add('registration__title');
 
-        this.cross.classList.add('registration__cross');
+        this.cross.classList.add('registration__cross', 'cross');
 
         this.name.classList.add('registration__name', 'input', 'input-registration');
         this.name.placeholder = 'Логин';
