@@ -29,9 +29,9 @@ class Registration extends Component {
         this.passwordRepeat = document.createElement('input');
         this.errorPassword = document.createElement('div');
         this.submit = document.createElement('button');
-        this.nameCheck = true;
-        this.emailCheck = true;
-        this.passwordCheck = true;
+        this.nameCheck = false;
+        this.emailCheck = false;
+        this.passwordCheck = false;
     }
 
     
@@ -85,45 +85,36 @@ class Registration extends Component {
         this.form.appendChild(this.errorPassword);
         this.form.appendChild(this.submit);
     }
-
-    render() {
-        this.renderRegistration();
-
-        this.cross.addEventListener('click', () => {
-            Header.prototype.closeForm('registration');
-            Header.formActive = false;
-        })
-
-        this.name.addEventListener('blur', () => {
-            this.name.classList.remove('input-valid');
-            if (this.name.value.length > 0) {
-                if (!this.name.checkValidity()) {
+    nameValidation(){
+        
+        this.name.classList.remove('input-valid');
+        if (!this.name.checkValidity()) {
                     this.nameCheck = false;
                     this.name.classList.add('input-invalid');
                     this.name.classList.remove('input-valid');
                     this.errorName.textContent = `Убедитесь, что значение состоит из латинских букв, цифр, символod тире (-), подчеркивания (_) и точки (.))`;
-                } else if (this.name.value.length < 3) {    
+        } else if (this.name.value.length < 3) {    
                     this.nameCheck = false;
                     this.name.classList.add('input-invalid');
                     this.name.classList.remove('input-valid');
                     this.errorName.textContent = `Убедитесь, что это значение содержит не менее 3 символов (сейчас ${this.name.value.length}).`
-                } else if (this.name.value.length > 30) {
+        } else if (this.name.value.length > 30) {
                     this.nameCheck = false;
                     this.name.classList.add('input-invalid');
                     this.name.classList.remove('input-valid');
                     this.errorName.textContent = `Убедитесь, что это значение содержит не более 20 символов (сейчас ${this.name.value.length}).`
-                } else {
+        } else {
                     this.nameCheck = true;
                     this.name.classList.remove('input-invalid');
                     this.name.classList.add('input-valid');
                     this.errorName.textContent = '';
-                }
-            }
-        })
+        }
+            
 
-        this.email.addEventListener('blur', () => {
-            this.email.classList.remove('input-valid');
-            if (this.email.value.length > 0) {
+    }
+    emailValidation(){
+        this.email.classList.remove('input-valid');
+            
                 if (!this.email.checkValidity()) {
                     this.emailCheck = false;
                     this.email.classList.add('input-invalid');
@@ -135,45 +126,64 @@ class Registration extends Component {
                     this.email.classList.add('input-valid');
                     this.errorEmail.textContent = '';
                 }
+            
+    }
+    passwordValidation(){
+        this.password.classList.remove('input-valid');
+        
+            if (this.password.value.length < 8) {
+                this.passwordCheck = false;
+                this.password.classList.add('input-invalid');
+                this.password.classList.remove('input-valid');
+                this.errorPassword.textContent = 'Недостаточно сложный пароль. Пожалуйста, введите пароль минимум 8 символов';
+            } else {
+                this.passwordCheck = true;
+                this.password.classList.remove('input-invalid');
+                this.password.classList.add('input-valid');
+                this.errorPassword.textContent = '';
             }
+        
+    }
+
+    submitForm(e: Event){
+        e.preventDefault();      
+
+        if (this.password.value !== this.passwordRepeat.value) {
+            this.passwordCheck = false;
+            this.passwordRepeat.classList.add('input-invalid');
+            this.passwordRepeat.classList.remove('input-valid');
+            this.errorPassword.textContent = 'Пожалуйста, повторите пароль';
+            return
+        }
+            this.passwordCheck = true;
+            this.passwordRepeat.classList.remove('input-invalid');
+            this.passwordRepeat.classList.add('input-valid');
+            this.errorPassword.textContent = '';
+            if(this.nameCheck && this.emailCheck && this.passwordCheck){
+                console.log(234);
+                
+            } else{
+                this.nameValidation();
+                this.emailValidation();
+                this.passwordValidation();
+            }
+    }
+
+    render() {
+        this.renderRegistration();
+        this.submit.addEventListener('click', this.submitForm.bind(this))
+
+        this.cross.addEventListener('click', () => {
+            Header.prototype.closeForm('registration');
+            Header.formActive = false;
         })
 
-        this.password.addEventListener('blur', () => {
-            this.password.classList.remove('input-valid');
-            if (this.password.value.length > 0) {
-                if (this.password.value.length < 8) {
-                    this.passwordCheck = false;
-                    this.password.classList.add('input-invalid');
-                    this.password.classList.remove('input-valid');
-                    this.errorPassword.textContent = 'Недостаточно сложный пароль. Пожалуйста, введите пароль минимум 8 символов';
-                } else {
-                    this.passwordCheck = true;
-                    this.password.classList.remove('input-invalid');
-                    this.password.classList.add('input-valid');
-                    this.errorPassword.textContent = '';
+        this.name.addEventListener('blur', this.nameValidation.bind(this))
 
-                    this.form.addEventListener('submit', (event) => {
-                        event.preventDefault();
-                        if (this.password.value !== this.passwordRepeat.value) {
-                            this.passwordCheck = false;
-                            this.passwordRepeat.classList.add('input-invalid');
-                            this.passwordRepeat.classList.remove('input-valid');
-                            this.errorPassword.textContent = 'Пожалуйста, повторите пароль';
-                        } else {
-                            this.passwordCheck = true;
-                            this.passwordRepeat.classList.remove('input-invalid');
-                            this.passwordRepeat.classList.add('input-valid');
-                            this.errorPassword.textContent = '';
+        this.email.addEventListener('blur', this.emailValidation.bind(this))
+        
 
-                            this.form.submit();
-                            
-                            Header.prototype.closeForm('registration');
-                            Header.formActive = false;
-                        }
-                    })
-                }
-            }
-        })
+        this.password.addEventListener('blur', this.passwordValidation.bind(this))
 
         return this.container;
     }
