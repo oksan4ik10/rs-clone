@@ -1,23 +1,42 @@
 .preview {
     display: flex;
     flex-direction: column;
-
-    border-bottom: 1px dashed green;
+    background: url('./images/book-background.jpg') no-repeat center 0;
+    height: 550px;
 }
 
 .preview__title {
     width: 100%;
     @include flex-center;
-    margin-top: 80px;
+    margin-top: 130px;
+    margin-bottom: 0;
+    font-size: 5rem;
+    color: $back-color;
+    font-weight: 900;
+}
+
+.search__results__main__wrapper {
+    position: absolute;
+    top: 310px;
+    @include border-and-backgroud;
+    width: 60%;
+    padding: 5px 30px;
+}
+
+.preview__search__input {
+    background-color: $color-opaque-light;
+    border: solid 2px $border-color;
+    width: 75%;
+}
+
+.preview__search__input:focus {
+    background-color: $color-opaque-dark;
+    outline: solid 1px $border-focus-color;
 }
 
 .preview__form {
     @include flex-space-between;
     margin-top: 40px;
-}
-
-.preview__search__input {
-    width: 75%;
 }
 
 .preview__about {
@@ -27,20 +46,33 @@
 }
 
 .preview__about__column {
-    width: 210px;
+    width: 20%;
     @include flex-space-between;
+    user-select: none;
 }
 
 .preview__about__img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    background: url('./images/main-icons.png') 0 0 no-repeat;
+}
 
-    border: 1px solid black;
+.preview_img2 {
+    background-position: 0 -60px;
+}
+
+.preview_img3 {
+    background-position: 0 -120px;
+}
+
+.preview_img4 {
+    background-position: 0 -180px;
 }
 
 .preview__about__text {
-    width: 150px;
+    width: 70%;
+    color: $back-color;
+    font-size: 1.3rem;
 }
 
 .preview__more {

@@ -38,7 +38,6 @@ class Header extends Component {
         this.logo.href = `#${PageIds.MainPage}`;
         this.logo.textContent = 'LOGO';
 
-        //const searchContainer = document.createElement('div');
         this.searchContainer.classList.add('header__search');
 
         const form = document.createElement('form');

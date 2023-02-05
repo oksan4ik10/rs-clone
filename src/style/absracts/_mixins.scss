@@ -16,6 +16,11 @@
 }
 
 @mixin border-and-backgroud {
-    border: solid 2px $border-color;
+    border: solid 1px $border-color;
     background-color: $back-color;
+}
+
+@mixin border-backgroud-opaque {
+    border: solid 1px $border-color;
+    background-color: $color-opaque-light;
 }

@@ -3,13 +3,19 @@ import Reviews from "../../core/components/reviews";
 import PopularBooks from "../../core/components/popular";
 import Recommendation from "../../core/components/recommend";
 import ViewBooks from "../../core/components/viewed";
+import { BooksAPI } from "../../api/api";
+import { HeaderSearch } from "../../core/components/header/header-search";
 
 class MainPage extends Page {
     main: HTMLElement;
+    input: HTMLInputElement;
+    form: HTMLFormElement;
 
     constructor(id: string) {
         super(id);
         this.main = document.createElement('main');
+        this.input = document.createElement('input');
+        this.form = document.createElement('form');
     }
 
     createMainPage() {
@@ -25,14 +31,12 @@ class MainPage extends Page {
         title.classList.add('preview__title');
         title.textContent = 'Найди свою книгу';
 
-        const form = document.createElement('form');
-        form.classList.add('preview__form');
+        this.form.classList.add('preview__form');
 
-        const input = document.createElement('input');
-        input.type = 'search';
-        input.classList.add('input');
-        input.classList.add('preview__search__input');
-        input.placeholder = 'Введите название книги...';
+        this.input.type = 'search'; 
+        this.input.classList.add('input');
+        this.input.classList.add('preview__search__input');
+        this.input.placeholder = 'Введите название книги...';
 
         const button = document.createElement('button');
         button.classList.add('button');
@@ -46,7 +50,7 @@ class MainPage extends Page {
         const div1 = document.createElement('div');
         div1.classList.add('preview__about__column');
         const img1 = document.createElement('div');
-        img1.classList.add('preview__about__img');
+        img1.classList.add('preview__about__img', 'preview_img1');
         const text1 = document.createElement('div');
         text1.classList.add('preview__about__text');
         text1.textContent = 'Находите интересные книги';
@@ -56,7 +60,7 @@ class MainPage extends Page {
         const div2 = document.createElement('div');
         div2.classList.add('preview__about__column');
         const img2 = document.createElement('div');
-        img2.classList.add('preview__about__img');
+        img2.classList.add('preview__about__img', 'preview_img2');
         const text2 = document.createElement('div');
         text2.classList.add('preview__about__text');
         text2.textContent = 'Собирайте свою библиотеку';
@@ -66,7 +70,7 @@ class MainPage extends Page {
         const div3 = document.createElement('div');
         div3.classList.add('preview__about__column');
         const img3 = document.createElement('div');
-        img3.classList.add('preview__about__img');
+        img3.classList.add('preview__about__img', 'preview_img2');
         const text3 = document.createElement('div');
         text3.classList.add('preview__about__text');
         text3.textContent = 'Оценивайте и обсуждайте';
@@ -76,7 +80,7 @@ class MainPage extends Page {
         const div4 = document.createElement('div');
         div4.classList.add('preview__about__column');
         const img4 = document.createElement('div');
-        img4.classList.add('preview__about__img');
+        img4.classList.add('preview__about__img', 'preview_img4');
         const text4 = document.createElement('div');
         text4.classList.add('preview__about__text');
         text4.textContent = 'Следите за тем, что читают друзья';
@@ -91,9 +95,9 @@ class MainPage extends Page {
         this.main.appendChild(preview);
         preview.appendChild(wrapper);
         wrapper.appendChild(title);
-        wrapper.appendChild(form);
-        form.appendChild(input);
-        form.appendChild(button);
+        wrapper.appendChild(this.form);
+        this.form.appendChild(this.input);
+        this.form.appendChild(button);
         wrapper.appendChild(about);
         about.appendChild(div1);
         about.appendChild(div2);
@@ -121,6 +125,40 @@ class MainPage extends Page {
 
     render() {
         this.container.append(this.createMainPage());
+
+        this.input.addEventListener('keyup', async () => {
+            const allBooks = await BooksAPI.getAllBooks();
+            if (this.input.value.length > 0) {
+                const headerSearch = new HeaderSearch(
+                    'div',
+                    'search__results__main__wrapper', 
+                    allBooks,
+                    this.input.value);
+                const oldHeaderSearch = document.querySelector('.search__results__main__wrapper');
+                if (oldHeaderSearch) {
+                    oldHeaderSearch.remove();
+                }
+                this.form.append(headerSearch.render());
+
+                window.addEventListener('click', (event) => {
+                    if (event.target instanceof HTMLElement 
+                        && !event.target.classList.contains('search__results__main__wrapper')){
+
+                        const oldSearch = document.querySelector('.search__results__main__wrapper');
+                        if (oldSearch) {
+                            oldSearch.remove();
+                        }
+
+                        this.input.value = '';
+                    }
+                })
+            } else if (this.input.value.length <= 0) {
+                const oldHeaderSearch = document.querySelector('.search__results__main__wrapper');
+                if (oldHeaderSearch) {
+                    oldHeaderSearch.remove();
+                }
+            }
+        })
         return this.container;
     }
 }
