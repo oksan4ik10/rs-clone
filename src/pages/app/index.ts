@@ -45,7 +45,7 @@ class App {
 
             pageHTML.id = App.defaultPageId;
             App.container.append(pageHTML);
-            window.location.hash = idPage;
+            //window.location.hash = idPage; // эта строка ломает отправку формы регистрации
         }
         App.container.append(footer.render());
 
@@ -70,8 +70,10 @@ class App {
         App.container.append(this.header.render());
         if (window.location.hash === '') {
             App.renderNewPage('main-page');
+            window.location.hash = 'main-page';
         }
         else App.renderNewPage(window.location.hash.slice(1));
+    
         this.enableRouteChange();
         
 
