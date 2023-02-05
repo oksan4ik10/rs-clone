@@ -174,12 +174,17 @@ class Registration extends Component {
                     this.email.classList.remove('input-valid');
                     this.errorEmail.textContent = res.message;
                     return
-                }            
+                }           
+
                 this.form.textContent = '';
                 const title = document.createElement('h2');
                 title.className = "title registrarion__title";
                 title.textContent = 'Регистрация прошла успешно';
                 this.form.append(title);
+                setTimeout(()=>{
+                    Header.prototype.closeForm('registration');
+                    Header.formActive = false; 
+                }, 2000)
 
             } else{
                 this.nameValidation();
