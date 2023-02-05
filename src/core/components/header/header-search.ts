@@ -17,7 +17,8 @@ export class HeaderSearch extends Component {
         if (key === "author" || 
             key === "title" || 
             key === "year" || 
-            key === "genre"){
+            key === "genre" ||
+            key === "desc"){
           if (typeof obj !== undefined) {
             return obj[key].toString().toLowerCase().includes(innerSearchValue.toLowerCase());
           }
