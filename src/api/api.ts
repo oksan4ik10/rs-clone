@@ -1,4 +1,5 @@
 import { IOneBook } from "../types";
+import { IUserNew } from "../types";
 
 const baseApiEndpoint = 'http://localhost:3000/api/';
 const basePaths = {
@@ -22,6 +23,18 @@ export class BooksAPI {
     return await fetch(`${this.apiEndpoint}${id}`)
       .then(response => response.json())
       .catch(error => console.log(error.message));
+  }
+
+  static async createUser(obj: IUserNew) {
+    const response = await fetch(`${baseApiEndpoint}\\login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: JSON.stringify(obj),
+    });
+    const result = await response.json();
+    return result;
   }
 }
 

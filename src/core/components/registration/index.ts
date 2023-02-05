@@ -1,5 +1,6 @@
 import Component from '../../templates/components';
 import Header from '../../components/header';
+import { BooksAPI } from '../../../api/api';
 
 
 class Registration extends Component {
@@ -145,7 +146,7 @@ class Registration extends Component {
         
     }
 
-    submitForm(e: Event){
+    async submitForm(e: Event){
         e.preventDefault();      
 
         if (this.password.value !== this.passwordRepeat.value) {
@@ -160,8 +161,26 @@ class Registration extends Component {
             this.passwordRepeat.classList.add('input-valid');
             this.errorPassword.textContent = '';
             if(this.nameCheck && this.emailCheck && this.passwordCheck){
-                console.log(234);
-                
+                const user = {
+                    name: this.name.value,
+                    email: this.email.value,
+                    password: this.password.value
+                }
+               
+                const res = await BooksAPI.createUser(user);
+                if(res.message) {
+                    this.emailCheck = false;
+                    this.email.classList.add('input-invalid');
+                    this.email.classList.remove('input-valid');
+                    this.errorEmail.textContent = res.message;
+                    return
+                }            
+                this.form.textContent = '';
+                const title = document.createElement('h2');
+                title.className = "title registrarion__title";
+                title.textContent = 'Регистрация прошла успешно';
+                this.form.append(title);
+
             } else{
                 this.nameValidation();
                 this.emailValidation();

@@ -15,3 +15,8 @@ export interface IOneBook {
     _id: string;
     raiting?: number;
 }
+export interface IUserNew{
+    email: string,
+    name: string,
+    password: string
+}
