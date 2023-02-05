@@ -70,7 +70,8 @@ class App {
         App.container.append(this.header.render());
         if (window.location.hash === '') {
             App.renderNewPage('main-page');
-            window.location.hash = 'main-page';
+            //window.location.hash = 'main-page';
+
         }
         else App.renderNewPage(window.location.hash.slice(1));
     
