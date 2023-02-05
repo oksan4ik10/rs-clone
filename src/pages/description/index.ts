@@ -14,19 +14,7 @@ class DescriptionPage extends Page {
         this.bookdId = window.location.hash.split('=')[1];
     }
 
-    /*
-    static async getCurrentBook() {        
-        return await BooksAPI.getBookById(window.location.hash.split('=')[1]);
-        
-    }
-    //currentBook = this.getCurrentBook();
-    async assignCurrentBook() {
-        this.currentBook = await DescriptionPage.getCurrentBook();
-    } */
-
     createPage() {
-        //this.assignCurrentBook()
-        
         this.main.classList.add('description__page__wrapper');
 
         const descrContentWrapper = document.createElement('div');
@@ -39,7 +27,7 @@ class DescriptionPage extends Page {
         const descrAuthor = document.createElement('div');
         descrAuthor.classList.add('description__author');
         const descrYear = document.createElement('div');
-        descrAuthor.classList.add('description__year');
+        descrYear.classList.add('description__year');
         const descrGenre = document.createElement('div');
         descrGenre.classList.add('description__genre');
 
@@ -56,20 +44,27 @@ class DescriptionPage extends Page {
         ratingWrapper.classList.add('decription__rating__wrapper');
         const myRatingText = document.createElement('span');
         myRatingText.classList.add('descriotion__myrating__text');
-        myRatingText.textContent = 'Моя оценка';
+        myRatingText.textContent = 'Моя оценка:';
         const myRating = document.createElement('div');
         myRating.classList.add('description__myrating');
-        myRating.textContent = "...Звёздочки...";
+        myRating.textContent = "З В Ё З Д О Ч К И";
         const allRatingText = document.createElement('span');
         allRatingText.classList.add('descriotion__allrating__text');
-        allRatingText.textContent = 'Средняя оценка';
+        allRatingText.textContent = 'Средняя оценка:';
         const allRating = document.createElement('div');
         allRating.classList.add('description__allrating');
+
+        const descrImgOuter = document.createElement('div');
+        descrImgOuter.classList.add('description__image__outer');
+        const descrImg = document.createElement('img');
+        descrImg.classList.add('description__image');
+        descrImg.alt = 'Book cover picture';
+        this.addToReadButton.classList.add('description__addtoread', 'button');
+        this.addToReadButton.textContent = 'Добавить в прочитанное';
 
         // присваиваем элементам информацию по книге
         BooksAPI.getBookById(this.bookdId).then(bookInfo => {
             const currentBook = bookInfo;
-            console.log(currentBook);
 
             descrName.textContent = currentBook.title;
             descrAuthor.textContent = `Автор книги: ${currentBook.author}`;
@@ -77,10 +72,13 @@ class DescriptionPage extends Page {
             descrGenre.textContent = `Жанр: ${currentBook.genre}`;
             descrDescr.textContent = currentBook.desc;
             allRating.textContent = currentBook.raiting.toString();
+            descrImg.src = currentBook.img;
         });
 
         ratingWrapper.append(myRatingText, myRating, allRatingText, allRating);
         descrDescrWrapper.append(descrDescrTitle, descrDescr);
+        descrImgOuter.append(descrImg);
+        descrImgWrapper.append(descrImgOuter, this.addToReadButton);
         descrContentWrapper.append(descrName, descrAuthor, descrYear, descrGenre, descrDescrWrapper, ratingWrapper);
         this.main.append(descrContentWrapper, descrImgWrapper);
 
