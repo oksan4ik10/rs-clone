@@ -70,7 +70,7 @@ class MainPage extends Page {
         const div3 = document.createElement('div');
         div3.classList.add('preview__about__column');
         const img3 = document.createElement('div');
-        img3.classList.add('preview__about__img', 'preview_img2');
+        img3.classList.add('preview__about__img', 'preview_img3');
         const text3 = document.createElement('div');
         text3.classList.add('preview__about__text');
         text3.textContent = 'Оценивайте и обсуждайте';
