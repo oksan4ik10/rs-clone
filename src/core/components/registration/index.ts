@@ -153,8 +153,8 @@ class Registration extends Component {
                     this.errorPassword.textContent = '';
 
                     this.form.addEventListener('submit', (event) => {
+                        event.preventDefault();
                         if (this.password.value !== this.passwordRepeat.value) {
-                            event.preventDefault();
                             this.passwordCheck = false;
                             this.passwordRepeat.classList.add('input-invalid');
                             this.passwordRepeat.classList.remove('input-valid');
@@ -164,6 +164,11 @@ class Registration extends Component {
                             this.passwordRepeat.classList.remove('input-invalid');
                             this.passwordRepeat.classList.add('input-valid');
                             this.errorPassword.textContent = '';
+
+                            this.form.submit();
+                            
+                            Header.prototype.closeForm('registration');
+                            Header.formActive = false;
                         }
                     })
                 }
