@@ -5,4 +5,17 @@
     padding: 5px;
     margin-bottom: 5px;
     margin-top: 5px;
+    outline: none;
+}
+
+.input-registration {
+    width: 400px;
+}
+
+.input-valid {
+    border: 1px solid $valid-color;
+}
+
+.input-invalid {
+    border: 1px solid $error-color;
 }
