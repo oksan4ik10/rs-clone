@@ -13,9 +13,10 @@ export interface IOneBook {
     title: string;
     year: number;
     _id: string;
-    raiting?: number;
+    raiting: number;
 }
-export interface IUserNew{
+
+export interface IUserNew {
     email: string,
     name: string,
     password: string

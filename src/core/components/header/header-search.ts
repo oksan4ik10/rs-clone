@@ -56,6 +56,7 @@ export class HeaderSearch extends Component {
       bookWrapper.classList.add('results__header__bookwrapper');
       bookWrapper.id = booksFound[i]._id;
       bookWrapper.addEventListener('click', () => {
+        window.location.hash = `id=${bookWrapper.id}`;
         console.log(`clicked on id ${bookWrapper.id}`);
       })
 
