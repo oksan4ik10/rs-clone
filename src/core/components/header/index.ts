@@ -171,6 +171,16 @@ class Header extends Component {
             darkBackground.remove();
         }, 800);
     }
+    outputPersonal(){
+        localStorage.removeItem('token');
+        const blockPersonal = document.querySelector('.header__personal') as HTMLElement;
+        const blockCabinet = document.querySelector('.header__cabinet') as HTMLElement;
+        if(blockPersonal && blockCabinet) {
+            blockPersonal.style.display = 'none';
+            blockCabinet.style.display = 'flex';
+        }
+
+    }
 
     render() {
         this.renderPageHeader();
@@ -221,6 +231,8 @@ class Header extends Component {
             }
 
         });
+
+        this.output.addEventListener('click', this.outputPersonal.bind(this))
             
 
         return this.container;
