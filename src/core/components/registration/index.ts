@@ -46,10 +46,10 @@ class Registration extends Component {
         this.cross.classList.add('registration__cross', 'cross');
 
         this.name.classList.add('registration__name', 'input', 'input-registration');
-        this.name.placeholder = 'Логин';
+        this.name.placeholder = 'Имя';
         this.name.type = 'text';
         this.name.setAttribute('required', 'true');
-        this.name.pattern = '^[a-zA-Z][a-zA-Z0-9-_\.]*';
+        this.name.pattern = '[А-Яа-яЁёa-zA-Z0-9-_\.]*';
         this.errorName.className = 'registration__error';
 
         this.email.classList.add('registration__email', 'input', 'input-registration');
@@ -102,7 +102,7 @@ class Registration extends Component {
                     this.nameCheck = false;
                     this.name.classList.add('input-invalid');
                     this.name.classList.remove('input-valid');
-                    this.errorName.textContent = `Убедитесь, что значение состоит из латинских букв, цифр, символod тире (-), подчеркивания (_) и точки (.))`;
+                    this.errorName.textContent = `Убедитесь, что значение состоит из латинских и русских букв, цифр, символoв тире, подчеркивания и точки`;
                 } else if (this.name.value.length < 3) {    
                     this.nameCheck = false;
                     this.name.classList.add('input-invalid');
@@ -112,7 +112,7 @@ class Registration extends Component {
                     this.nameCheck = false;
                     this.name.classList.add('input-invalid');
                     this.name.classList.remove('input-valid');
-                    this.errorName.textContent = `Убедитесь, что это значение содержит не более 20 символов (сейчас ${this.name.value.length}).`
+                    this.errorName.textContent = `Убедитесь, что это значение содержит не более 30 символов (сейчас ${this.name.value.length}).`
                 } else {
                     this.nameCheck = true;
                     this.name.classList.remove('input-invalid');
@@ -190,7 +190,6 @@ class Registration extends Component {
                                 Header.prototype.closeForm('registration');
                                 Header.formActive = false; 
                             }, 1000)
-
                         }
                     })
                 }
