@@ -34,7 +34,7 @@ class Authorization extends Component {
         this.email.type = 'email';
         this.email.setAttribute('required', 'true');
 
-        this.password.classList.add('authorisation__password', 'input', 'authorisation-registration');
+        this.password.classList.add('authorisation__password', 'input', 'authorisation-registration', 'input-authorisation');
         this.password.placeholder = 'Пароль';
         this.password.type = 'password';
         this.password.setAttribute('required', 'true');
