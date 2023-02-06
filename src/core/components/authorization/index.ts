@@ -1,6 +1,6 @@
 import Component from '../../templates/components';
 import Header from '../../components/header';
-import { BooksAPI } from '../../../api/api';
+import { UsersAPI } from '../../../api/api';
 
 
 class Authorization extends Component {
@@ -69,17 +69,20 @@ class Authorization extends Component {
                 email: this.email.value,
                 password: this.password.value
             }
-            const res = await BooksAPI.authUser(obj);
+            const res = await UsersAPI.authUser(obj);
             if(res.message){
                 this.error.textContent = res.message;
                 return
             }          
-            localStorage.setItem("token", res.token)
+            console.log(res.token);
+            
+
+            
+            localStorage.setItem("token", res.token.replace('\n',''))
                    
             Header.prototype.closeForm('authorisation');
-            Header.prototype.renderPageHeader(); 
             Header.formActive = false;
-          
+            Header.renderPersonalCabinet(res.token);
         
         })
         

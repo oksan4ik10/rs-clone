@@ -5,9 +5,21 @@ import Authorization from '../authorization';
 import MainPage from '../../../pages/main';
 import { HeaderSearch } from './header-search';
 import { BooksAPI } from '../../../api/api';
+import { UsersAPI } from '../../../api/api';
 
 
 class Header extends Component {
+    static renderPersonalCabinet = async (token:string)=>{
+        const blockPersonal = document.querySelector('.header__personal') as HTMLElement;
+        const blockCabinet = document.querySelector('.header__cabinet') as HTMLElement;
+        if(blockCabinet) blockCabinet.style.display = "none";
+        if(blockPersonal){
+            blockPersonal.style.display = "flex";
+            const res = await UsersAPI.infoUser(token);
+            console.log(res);          
+            
+        }
+    }
 
     logo: HTMLAnchorElement;
     searchContainer: HTMLElement;
