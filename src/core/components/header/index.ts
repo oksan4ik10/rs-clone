@@ -12,12 +12,14 @@ class Header extends Component {
     static renderPersonalCabinet = async (token:string)=>{
         const blockPersonal = document.querySelector('.header__personal') as HTMLElement;
         const blockCabinet = document.querySelector('.header__cabinet') as HTMLElement;
+        const iconImg = document.querySelector('.header__personal__icon img') as HTMLImageElement;
+        const nameUser = document.querySelector('.header__personal__name-user');
         if(blockCabinet) blockCabinet.style.display = "none";
-        if(blockPersonal){
+        if(blockPersonal && iconImg && nameUser){
             blockPersonal.style.display = "flex";
             const res = await UsersAPI.infoUser(token);
-            console.log(res);          
-            
+            iconImg.src = res.img;
+            nameUser.textContent = res.name;            
         }
     }
 

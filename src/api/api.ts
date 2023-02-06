@@ -59,8 +59,6 @@ export class UsersAPI{
 
   }
   static async infoUser(token:string) {
-    console.log(token);
-    
     const response = await fetch(`${this.apiEndpoint}/personal`, {
       method: "GET",
       headers: {

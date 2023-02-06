@@ -73,12 +73,9 @@ class Authorization extends Component {
             if(res.message){
                 this.error.textContent = res.message;
                 return
-            }          
-            console.log(res.token);
+            }                  
             
-
-            
-            localStorage.setItem("token", res.token.replace('\n',''))
+            localStorage.setItem("token", res.token);
                    
             Header.prototype.closeForm('authorisation');
             Header.formActive = false;
