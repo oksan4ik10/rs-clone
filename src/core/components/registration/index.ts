@@ -18,6 +18,7 @@ class Registration extends Component {
     submit: HTMLButtonElement;
     form: HTMLFormElement;
     
+    
     constructor(tagName: string, className: string) {
         super(tagName, className);
         this.form = document.createElement('form');
@@ -30,9 +31,9 @@ class Registration extends Component {
         this.passwordRepeat = document.createElement('input');
         this.errorPassword = document.createElement('div');
         this.submit = document.createElement('button');
-        this.nameCheck = false;
-        this.emailCheck = false;
-        this.passwordCheck = false;
+        this.nameCheck = true;
+        this.emailCheck = true;
+        this.passwordCheck = true;
     }
 
     
@@ -89,6 +90,7 @@ class Registration extends Component {
     nameValidation(){
         
         this.name.classList.remove('input-valid');
+        if (this.name.value.length > 0) {
         if (!this.name.checkValidity()) {
                     this.nameCheck = false;
                     this.name.classList.add('input-invalid');
@@ -110,11 +112,12 @@ class Registration extends Component {
                     this.name.classList.add('input-valid');
                     this.errorName.textContent = '';
         }
-            
+    }   
 
     }
     emailValidation(){
         this.email.classList.remove('input-valid');
+        if (this.email.value.length > 0) {
             
                 if (!this.email.checkValidity()) {
                     this.emailCheck = false;
@@ -127,10 +130,11 @@ class Registration extends Component {
                     this.email.classList.add('input-valid');
                     this.errorEmail.textContent = '';
                 }
-            
+        }
     }
     passwordValidation(){
         this.password.classList.remove('input-valid');
+        if (this.password.value.length > 0) {
         
             if (this.password.value.length < 8) {
                 this.passwordCheck = false;
@@ -143,12 +147,47 @@ class Registration extends Component {
                 this.password.classList.add('input-valid');
                 this.errorPassword.textContent = '';
             }
-        
+        }
+    }
+    checkEmptyForm(){
+        let res = true;
+        if(this.password.value.length === 0){
+            res = false;
+            this.passwordCheck = false;
+            this.password.classList.add('input-invalid');
+            this.password.classList.remove('input-valid');
+            this.errorPassword.textContent = 'Поле не заполнено';
+        }
+        if(this.passwordRepeat.value.length === 0){
+            res = false;
+            this.passwordCheck = false;
+            this.passwordRepeat.classList.add('input-invalid');
+            this.passwordRepeat.classList.remove('input-valid');
+            this.errorPassword.textContent = 'Поле не заполнено';
+        }
+        if(this.email.value.length === 0){
+            res = false;
+            this.emailCheck = false;
+            this.email.classList.add('input-invalid');
+            this.email.classList.remove('input-valid');
+            this.errorEmail.textContent = `Поле не заполнено`;
+        }
+        if(this.name.value.length === 0){
+            res = false;
+            this.nameCheck = false;
+            this.name.classList.add('input-invalid');
+            this.name.classList.remove('input-valid');
+            this.errorName.textContent = `Поле не заполнено`;
+        }
+
+        return res
     }
 
-    async submitForm(e: Event){
-        e.preventDefault();      
 
+    async submitForm(e: Event){
+        const target = e as PointerEvent;
+        e.preventDefault();
+        if (!target.pointerType) return;
         if (this.password.value !== this.passwordRepeat.value) {
             this.passwordCheck = false;
             this.passwordRepeat.classList.add('input-invalid');
@@ -156,11 +195,10 @@ class Registration extends Component {
             this.errorPassword.textContent = 'Пожалуйста, повторите пароль';
             return
         }
-            this.passwordCheck = true;
             this.passwordRepeat.classList.remove('input-invalid');
             this.passwordRepeat.classList.add('input-valid');
             this.errorPassword.textContent = '';
-            if(this.nameCheck && this.emailCheck && this.passwordCheck){
+            if(this.nameCheck && this.emailCheck && this.passwordCheck && this.checkEmptyForm()){
                 const user = {
                     name: this.name.value,
                     email: this.email.value,
@@ -184,7 +222,7 @@ class Registration extends Component {
                 setTimeout(()=>{
                     Header.prototype.closeForm('registration');
                     Header.formActive = false; 
-                }, 2000)
+                }, 1000)
 
             } else{
                 this.nameValidation();
@@ -201,14 +239,9 @@ class Registration extends Component {
             Header.prototype.closeForm('registration');
             Header.formActive = false;
         })
-
         this.name.addEventListener('blur', this.nameValidation.bind(this))
-
         this.email.addEventListener('blur', this.emailValidation.bind(this))
-        
-
         this.password.addEventListener('blur', this.passwordValidation.bind(this))
-
         return this.container;
     }
 }
