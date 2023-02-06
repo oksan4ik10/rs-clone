@@ -1,0 +1,84 @@
+.description__page__wrapper {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 5%;
+  padding: 70px 20% 40px 20%;
+  background-color: $color-opaque-light;
+}
+
+.desc__content__wrapper {
+  padding: 5px;
+}
+
+.decription__name{
+  margin-bottom: 20px;
+  font-size: 2rem;
+  font-weight: 900;
+  border-bottom: 5px solid $color-opaque-dark;
+}
+
+.description__author {
+  font-size: 1.2rem;
+}
+
+.description__allrating {
+  font-weight: 900;
+  font-size: 1.5rem;
+}
+
+.description__author,
+.description__year,
+.description__genre,
+.description__descr__title {
+  margin-bottom: 10px;
+}
+
+.description__descr__title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  border-bottom: 5px solid $color-opaque-dark;
+  padding-top: 40px;
+}
+
+.description__descr__content {
+  margin-top: 20px;
+}
+
+.decription__rating__wrapper {
+  margin-top: 30px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.descriotion__allrating__text {
+  margin-left: 20px;
+}
+
+.desc__img__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: $color-opaque-dark;
+  padding: 20px 5px 10px 5px;
+}
+
+.description__addtoread {
+  background-color: $header-color;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.description__image {
+  width: 100%;
+}
+
+@media screen and (max-width: 500px) {
+  .desc__img__wrapper {
+    width: 70px;
+  }
+
+  .description__page__wrapper {
+    padding: 20px 5% 10px 5%;
+  }
+}
