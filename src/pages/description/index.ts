@@ -49,6 +49,7 @@ class DescriptionPage extends Page {
         myRating.classList.add('description__myrating');
         const ratingContainer = document.createElement('div');
         
+        // рисуем звёздочки
         for (let i = 10; i > 0; i--) {
             const inputElement = document.createElement('input');
             inputElement.type = 'radio';
@@ -58,6 +59,8 @@ class DescriptionPage extends Page {
 
             const labelElement = document.createElement('label');
             labelElement.htmlFor = `myrating-${i}`;
+            labelElement.id = `myratinglbl-${i}`;
+            labelElement.classList.add('descr_star');
 
             myRating.append(inputElement, labelElement);
         }
@@ -65,6 +68,7 @@ class DescriptionPage extends Page {
         const myratingNumbers = document.createElement('div');
         myratingNumbers.classList.add('myrating__numbers');
 
+        // рисуем цифры к звёздочкам
         for (let i = 1; i <= 10; i++) {
             const iElement = document.createElement('i');
             iElement.textContent = i + '';
@@ -72,6 +76,14 @@ class DescriptionPage extends Page {
             myratingNumbers.append(iElement);
         }
 
+        ratingContainer.addEventListener('click', (event) => {
+            if (event.target instanceof HTMLElement && event.target.classList.contains('descr_star')) {
+                const currentRating = event.target.id.split('-')[1];
+                console.log(currentRating);
+            }
+        })
+
+        // продолжаем создавать страницу описания книги
         const allRatingText = document.createElement('span');
         allRatingText.classList.add('description__allrating__text');
         allRatingText.textContent = 'Средняя оценка:';

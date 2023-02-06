@@ -47,6 +47,7 @@
   text-align: center;
   display: inline-block;
   width: 20px;
+  user-select: none;
 }
 
 .description__myrating > input:checked ~ label {
