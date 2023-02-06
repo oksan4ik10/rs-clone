@@ -173,8 +173,6 @@ class Registration extends Component {
                             }
                            
                             const res = await BooksAPI.createUser(user);
-                            console.log(res);
-                            
                             if(res.message) {
                                 this.emailCheck = false;
                                 this.email.classList.add('input-invalid');
