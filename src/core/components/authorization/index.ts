@@ -73,9 +73,14 @@ class Authorization extends Component {
             if(res.message){
                 this.error.textContent = res.message;
                 return
-            }                  
+            }          
+            localStorage.setItem("token", res.token)
+                   
             Header.prototype.closeForm('authorisation');
+            Header.prototype.renderPageHeader(); 
             Header.formActive = false;
+          
+        
         })
         
         return this.container;
