@@ -21,3 +21,7 @@ export interface IUserNew {
     name: string,
     password: string
 }
+export interface IUser {
+    email: string,
+    password: string
+}

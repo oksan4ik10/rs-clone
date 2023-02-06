@@ -1,5 +1,6 @@
 import { IOneBook } from "../types";
 import { IUserNew } from "../types";
+import { IUser } from "../types";
 
 const baseApiEndpoint = 'http://localhost:3000/api/';
 const basePaths = {
@@ -35,6 +36,19 @@ export class BooksAPI {
     });
     const result = await response.json();
     return result;
+  }
+  static async authUser(obj: IUser) {
+    const response = await fetch(`${baseApiEndpoint}\\auth`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: JSON.stringify(obj),
+    });
+    
+      const result = await response.json();
+      return result;
+
   }
 }
 
