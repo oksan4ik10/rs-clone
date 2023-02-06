@@ -43,13 +43,37 @@ class DescriptionPage extends Page {
         const ratingWrapper = document.createElement('div');
         ratingWrapper.classList.add('decription__rating__wrapper');
         const myRatingText = document.createElement('span');
-        myRatingText.classList.add('descriotion__myrating__text');
+        myRatingText.classList.add('description__myrating__text');
         myRatingText.textContent = 'Моя оценка:';
         const myRating = document.createElement('div');
         myRating.classList.add('description__myrating');
-        myRating.textContent = "З В Ё З Д О Ч К И";
+        const ratingContainer = document.createElement('div');
+        
+        for (let i = 10; i > 0; i--) {
+            const inputElement = document.createElement('input');
+            inputElement.type = 'radio';
+            inputElement.id = `myrating-${i}`;
+            inputElement.name = 'myrating';
+            inputElement.value = i + '';
+
+            const labelElement = document.createElement('label');
+            labelElement.htmlFor = `myrating-${i}`;
+
+            myRating.append(inputElement, labelElement);
+        }
+        
+        const myratingNumbers = document.createElement('div');
+        myratingNumbers.classList.add('myrating__numbers');
+
+        for (let i = 1; i <= 10; i++) {
+            const iElement = document.createElement('i');
+            iElement.textContent = i + '';
+
+            myratingNumbers.append(iElement);
+        }
+
         const allRatingText = document.createElement('span');
-        allRatingText.classList.add('descriotion__allrating__text');
+        allRatingText.classList.add('description__allrating__text');
         allRatingText.textContent = 'Средняя оценка:';
         const allRating = document.createElement('div');
         allRating.classList.add('description__allrating');
@@ -75,7 +99,8 @@ class DescriptionPage extends Page {
             descrImg.src = currentBook.img;
         });
 
-        ratingWrapper.append(myRatingText, myRating, allRatingText, allRating);
+        ratingContainer.append(myRating, myratingNumbers);
+        ratingWrapper.append(myRatingText, ratingContainer, allRatingText, allRating);
         descrDescrWrapper.append(descrDescrTitle, descrDescr);
         descrImgOuter.append(descrImg);
         descrImgWrapper.append(descrImgOuter, this.addToReadButton);

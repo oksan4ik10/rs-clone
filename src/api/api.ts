@@ -37,9 +37,3 @@ export class BooksAPI {
     return result;
   }
 }
-
-/*
-window.addEventListener("DOMContentLoaded", () => {
-  BooksAPI.getBookById("63dbd4fe942b52bc2a107c5d").then(data => console.log(data))
-})
-*/

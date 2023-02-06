@@ -21,6 +21,54 @@
   font-size: 1.2rem;
 }
 
+.description__myrating {
+	overflow: hidden;
+  height: 26px;
+}
+.description__myrating:not(:checked) > input {
+	display: none;
+}
+.description__myrating:not(:checked) > label {
+	float: right;
+	padding: 0;
+	cursor: pointer;
+	font-size: 1.5rem;
+	color: lightgrey;
+	text-shadow: 1px 1px #bbb;
+}
+.description__myrating:not(:checked) > label:before {
+	content: '★';
+}
+
+.myrating__numbers > i {
+  font-size: 13px;
+  color: #a2a2a2;
+  font-style: normal;
+  text-align: center;
+  display: inline-block;
+  width: 20px;
+}
+
+.description__myrating > input:checked ~ label {
+	color: gold;
+	text-shadow: 1px 1px #c60;
+}
+.description__myrating:not(:checked) > label:hover,
+.description__myrating:not(:checked) > label:hover ~ label {
+	color: gold;
+}
+.description__myrating > input:checked + label:hover,
+.description__myrating > input:checked + label:hover ~ label,
+.description__myrating > input:checked ~ label:hover,
+.description__myrating > input:checked ~ label:hover ~ label,
+.description__myrating > label:hover ~ input:checked ~ label {
+	color: gold;
+	text-shadow: 1px 1px goldenrod;
+}
+.description__myrating > label:active {
+	position: relative;
+}
+
 .description__allrating {
   font-weight: 900;
   font-size: 1.5rem;
@@ -51,7 +99,7 @@
   gap: 10px;
 }
 
-.descriotion__allrating__text {
+.description__allrating__text {
   margin-left: 20px;
 }
 
@@ -71,6 +119,26 @@
 
 .description__image {
   width: 100%;
+}
+
+@media screen and (max-width: 1100px) {
+  .decription__rating__wrapper {
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: start;
+  }
+
+  .description__allrating__text {
+    margin-left: 0;
+    margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+
+  .description__page__wrapper {
+    padding: 20px 10% 10px 10%;
+  }
 }
 
 @media screen and (max-width: 500px) {
