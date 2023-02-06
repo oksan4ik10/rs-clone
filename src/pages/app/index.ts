@@ -68,6 +68,7 @@ class App {
 
     run() {
         App.container.append(this.header.render());
+        if(localStorage.getItem("token")) Header.renderPersonalCabinet(String(localStorage.getItem("token")));
         if (window.location.hash === '') {
             App.renderNewPage('main-page');
             // window.location.hash = 'main-page';

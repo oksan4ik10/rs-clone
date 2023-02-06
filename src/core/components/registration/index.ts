@@ -1,6 +1,6 @@
 import Component from '../../templates/components';
 import Header from '../../components/header';
-import { BooksAPI } from '../../../api/api';
+import { UsersAPI } from '../../../api/api';
 
 
 class Registration extends Component {
@@ -172,7 +172,7 @@ class Registration extends Component {
                                 password: this.password.value
                             }
                            
-                            const res = await BooksAPI.createUser(user);
+                            const res = await UsersAPI.createUser(user);
                             if(res.message) {
                                 this.emailCheck = false;
                                 this.email.classList.add('input-invalid');
