@@ -1,10 +1,6 @@
-.registration {
-    // position: relative;
-}
-
-.registration__form {
+.authorisation__form {
     width: 500px;
-    height: 500px;
+    height: 350px;
     @include flex-colomn;
     align-items: center;
     position: absolute;
@@ -21,17 +17,17 @@
     border: 1px solid black;
 }
 
-.registration__title {
+.authorisation__title {
     margin-bottom: 20px;
 }
 
-.registration__error {
+.authorisation__error {
     width: 400px;
     height: 40px;
     color: $error-color;
 }
 
-.registration__submit {
+.authorisation__submit {
     margin-top: 20px;
     color: black;
 }

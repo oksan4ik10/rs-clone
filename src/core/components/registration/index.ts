@@ -1,5 +1,6 @@
 import Component from '../../templates/components';
 import Header from '../../components/header';
+import { BooksAPI } from '../../../api/api';
 
 
 class Registration extends Component {
@@ -42,7 +43,7 @@ class Registration extends Component {
         title.textContent = 'Регистрация';
         title.classList.add('registration__title');
 
-        this.cross.classList.add('registration__cross');
+        this.cross.classList.add('registration__cross', 'cross');
 
         this.name.classList.add('registration__name', 'input', 'input-registration');
         this.name.placeholder = 'Логин';
@@ -152,9 +153,9 @@ class Registration extends Component {
                     this.password.classList.add('input-valid');
                     this.errorPassword.textContent = '';
 
-                    this.form.addEventListener('submit', (event) => {
+                    this.form.addEventListener('submit', async (event) => {
+                        event.preventDefault();
                         if (this.password.value !== this.passwordRepeat.value) {
-                            event.preventDefault();
                             this.passwordCheck = false;
                             this.passwordRepeat.classList.add('input-invalid');
                             this.passwordRepeat.classList.remove('input-valid');
@@ -164,6 +165,32 @@ class Registration extends Component {
                             this.passwordRepeat.classList.remove('input-invalid');
                             this.passwordRepeat.classList.add('input-valid');
                             this.errorPassword.textContent = '';
+
+                            const user = {
+                                name: this.name.value,
+                                email: this.email.value,
+                                password: this.password.value
+                            }
+                           
+                            const res = await BooksAPI.createUser(user);
+                            if(res.message) {
+                                this.emailCheck = false;
+                                this.email.classList.add('input-invalid');
+                                this.email.classList.remove('input-valid');
+                                this.errorEmail.textContent = res.message;
+                                return
+                            }           
+            
+                            this.form.textContent = '';
+                            const title = document.createElement('h2');
+                            title.className = "title registrarion__title";
+                            title.textContent = 'Регистрация прошла успешно';
+                            this.form.append(title);
+                            setTimeout(()=>{
+                                Header.prototype.closeForm('registration');
+                                Header.formActive = false; 
+                            }, 1000)
+
                         }
                     })
                 }

@@ -1,6 +1,7 @@
 import Component from '../../templates/components';
 import { PageIds } from '../../../types';
 import Registration from '../registration';
+import Authorization from '../authorization';
 import MainPage from '../../../pages/main';
 import { HeaderSearch } from './header-search';
 import { BooksAPI } from '../../../api/api';
@@ -71,12 +72,33 @@ class Header extends Component {
         cabinet.appendChild(this.registration);
     }
 
-    openForm(form: string) {
+    openRegistr(form: string) {
         const darkBackground = document.createElement('div');
         const registration = new Registration('section', form);
         const body = document.querySelector('.body') as HTMLBodyElement;
 
         body.appendChild(registration.render());
+        body.appendChild(darkBackground);
+
+        setTimeout(function(){
+            darkBackground.classList.add('dark-background');
+            darkBackground.classList.add('dark-background_opacity');
+        }, 100);
+
+        Header.formActive = true;
+
+        darkBackground.addEventListener('click', () => {
+            this.closeForm(form);
+            Header.formActive = false;
+        })
+    }
+
+    openAuth(form: string) {
+        const darkBackground = document.createElement('div');
+        const authorisation = new Authorization('section', form);
+        const body = document.querySelector('.body') as HTMLBodyElement;
+
+        body.appendChild(authorisation.render());
         body.appendChild(darkBackground);
 
         setTimeout(function(){
@@ -110,7 +132,13 @@ class Header extends Component {
 
         this.registration.addEventListener('click', () => {
             if (Header.formActive === false) {
-                this.openForm('registration');
+                this.openRegistr('registration');
+            }
+        })
+
+        this.enter.addEventListener('click', () => {
+            if (Header.formActive === false) {
+                this.openAuth('authorisation');
             }
         })
 
