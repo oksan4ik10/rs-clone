@@ -27,7 +27,6 @@ class App {
 
         }
         let page: Page | null = null;
-
         if (idPage === PageIds.MainPage) {
             page = new MainPage(idPage);
         } else if (idPage === PageIds.PersonalArea) {
