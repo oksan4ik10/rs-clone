@@ -21,6 +21,24 @@ export interface IUserNew {
     name: string,
     password: string
 }
+
+export interface IOneReview {
+    _id: string;
+    bookId: string;
+    userId: string;
+    text: string;
+    date: string;
+    __v: number;
+    userImg: string;
+    userName: string;
+}
+
+export interface IOptions {
+    year: 'numeric';
+    month: 'long';
+    day: 'numeric';
+}
+
 export interface IUser {
     email: string,
     password: string
