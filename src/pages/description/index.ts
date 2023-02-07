@@ -138,6 +138,7 @@ class DescriptionPage extends Page {
         const newReviewSubmit = document.createElement('button');
         newReviewSubmit.type = 'submit';
         newReviewSubmit.textContent = 'Отправить';
+        newReviewForm.append(newReviewText, newReviewSubmit);
 
         const reviewsWrapper = document.createElement('div');
         reviewsWrapper.classList.add('descr__reviews__wrapper');
@@ -236,7 +237,7 @@ class DescriptionPage extends Page {
                 reviewsWrapper.append(oneReviewWrapper);
             }
         })
-        reviewsAreaWrapper.append(descrReviewsTitle, reviewsWrapper);
+        reviewsAreaWrapper.append(descrReviewsTitle, newReviewForm, reviewsWrapper);
         return reviewsAreaWrapper;
     }
 
