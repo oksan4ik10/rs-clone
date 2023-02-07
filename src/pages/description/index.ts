@@ -136,9 +136,19 @@ class DescriptionPage extends Page {
         newReviewText.classList.add('decr__textarea');
         newReviewText.placeholder = "Оставить рецензию...";
         const newReviewSubmit = document.createElement('button');
+        newReviewSubmit.classList.add('button', 'desc_button__submit');
         newReviewSubmit.type = 'submit';
         newReviewSubmit.textContent = 'Отправить';
+        newReviewSubmit.style.display = 'none';
         newReviewForm.append(newReviewText, newReviewSubmit);
+
+        const toggleReviewSubmit = () => {
+
+        }
+
+        newReviewText.addEventListener('click', () => {
+            
+        })
 
         const reviewsWrapper = document.createElement('div');
         reviewsWrapper.classList.add('descr__reviews__wrapper');
@@ -161,8 +171,8 @@ class DescriptionPage extends Page {
                 reviewUserImage.classList.add('desc__review__img');
                 reviewUserImage.alt = "";
                 reviewUserImage.src = allReviews[i].userImg;
-                const reviewNameDateWrapper = document.createElement('div');
-                
+
+                const reviewNameDateWrapper = document.createElement('div');                
                 reviewNameDateWrapper.classList.add('desc__review__namedatewrap');
                 const reviewName = document.createElement('div');
                 reviewName.classList.add('desc__review__name');
@@ -223,7 +233,7 @@ class DescriptionPage extends Page {
                 BooksAPI.getBookById(this.bookdId).then(bookInfo => {
                     reviewBookTitle.textContent = bookInfo.title;
                     reviewBookAuthor.textContent = bookInfo.author;
-                    reviewUserImage.src = bookInfo.img;
+                    reviewBookImg.src = bookInfo.img;
                 });
                 
 
