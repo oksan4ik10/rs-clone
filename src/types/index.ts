@@ -43,3 +43,24 @@ export interface IUser {
     email: string,
     password: string
 }
+
+export interface IGetGradeByUserRespGood {
+    _id: string;
+    bookId: string;
+    userId: string;
+    value: number;
+    __v: number;
+} 
+
+export interface IGetGradeByUserResp {
+    json(): Promise<IGetGradeByUserRespGood>;
+    message?: string;
+    status: number;
+}
+
+export interface ICheckBookReadStatus {
+    json(): Promise<{
+        status: string | boolean;
+    }>;
+    status: number;
+}

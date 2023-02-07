@@ -1,11 +1,12 @@
-import { IOneBook, IOneReview, IUserNew, IUser } from "../types";
+import { IOneBook, IOneReview, IUserNew, IUser, IGetGradeByUserResp} from "../types";
 
 
 const baseApiEndpoint = 'http://localhost:3000/api/';
 const basePaths = {
   books: `${baseApiEndpoint}books/`,
   reviews: `${baseApiEndpoint}reviews/`,
-  users:`${baseApiEndpoint}users/`,
+  users: `${baseApiEndpoint}users/`,
+  grades: `${baseApiEndpoint}grades/`,
 }
 
 export class BooksAPI {
@@ -78,6 +79,30 @@ export class ReviewsAPI {
   static async getAllReviews(bookId: string): Promise<Array<IOneReview>> {
     return await fetch(`${this.apiEndpoint}book/${bookId}`)
     .then(response => response.json());
+  }
+}
+
+export class GradesAPI {
+  static apiEndpoint = basePaths.grades;
+
+  // получаем оценку пользователя по книге
+  static async getGradeByUser(userId: string, bookId: string) {
+    const userParam = {
+      userId: userId
+    }
+    const response: IGetGradeByUserResp = await fetch(`${this.apiEndpoint}${bookId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userParam),
+    })
+
+    if (response.status === 200){
+      return (await response.json()).value;
+    }
+
+    return null;
   }
 }
 

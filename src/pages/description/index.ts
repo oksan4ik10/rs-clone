@@ -1,4 +1,4 @@
-import { BooksAPI, ReviewsAPI } from '../../api/api';
+import { BooksAPI, GradesAPI, ReviewsAPI } from '../../api/api';
 import Page from '../../core/templates/page';
 import { IOptions } from '../../types';
 
@@ -143,18 +143,19 @@ class DescriptionPage extends Page {
         newReviewForm.append(newReviewText, newReviewSubmit);
 
         const toggleReviewSubmit = () => {
-
+            if (newReviewText === document.activeElement){
+                newReviewSubmit.style.display = 'block';
+            } else {
+                newReviewSubmit.style.display = 'none';
+            }
         }
 
-        newReviewText.addEventListener('click', () => {
-            
-        })
+        document.addEventListener('click', toggleReviewSubmit);
 
         const reviewsWrapper = document.createElement('div');
         reviewsWrapper.classList.add('descr__reviews__wrapper');
 
-        ReviewsAPI.getAllReviews(this.bookdId).then(allReviews => {
-            console.log(allReviews);
+        ReviewsAPI.getAllReviews(this.bookdId).then( async allReviews => {
 
             if (allReviews.length === 0){
                 reviewsWrapper.textContent = 'Будьте первым, кто оставит рецензию!'
@@ -172,7 +173,7 @@ class DescriptionPage extends Page {
                 reviewUserImage.alt = "";
                 reviewUserImage.src = allReviews[i].userImg;
 
-                const reviewNameDateWrapper = document.createElement('div');                
+                const reviewNameDateWrapper = document.createElement('div');
                 reviewNameDateWrapper.classList.add('desc__review__namedatewrap');
                 const reviewName = document.createElement('div');
                 reviewName.classList.add('desc__review__name');
@@ -181,39 +182,42 @@ class DescriptionPage extends Page {
                 reviewDate.classList.add('desc__review__date');
                 const date = new Date(allReviews[i].date);
                 const options: IOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-                reviewDate.textContent = date.toLocaleDateString("ru-RU", options);
+                reviewDate.textContent = `написал(а) ${date.toLocaleDateString("ru-RU", options)}`;
 
                 //СЮДА ДОБАВИТЬ УСЛОВИЕ ОТОБРАЖНИЯ ЭТОГО БЛОКА ПРИ УСПЕШНОМ ОТВЕТЕ НА ДОП ЗАПРОС
                 const reviewRatingWrapper = document.createElement('div');
                 reviewRatingWrapper.classList.add('desc__review__ratingwrap');
-                const reviewRatingText = document.createElement('div');
+                const reviewRatingText = document.createElement('span');
                 reviewRatingText.classList.add('desc__review__ratingtext');
-                reviewRatingText.textContent = 'Оценка книге:';
-
-                // рисуем звёздочки
-                const reviewRatingStars = document.createElement('div');
-                reviewRatingStars.classList.add('desc__review__ratingstars');
-                for (let j = 10; j > 0; j--) {
-                    const inputElement = document.createElement('input');
-                    inputElement.type = 'radio';
-                    inputElement.id = `myrating-${j}`;
-                    inputElement.name = 'myrating';
-                    inputElement.value = j + '';
-
-                    const labelElement = document.createElement('label');
-                    labelElement.htmlFor = `myrating-${j}`;
-                    labelElement.id = `myratinglbl-${j}`;
-                    labelElement.classList.add('descr_star');
-
-                    reviewRatingStars.append(inputElement, labelElement);
-                }
-
                 const reviewRatingNumber = document.createElement('span');
                 reviewRatingNumber.classList.add('desc__review__ratingnumber');
-                // В СТРОЧКУ НИЖЕ ВСТАВИТЬ ВЫЧИСЛЯЕМУЮ ПЕРЕМЕННУЮ
-                reviewRatingNumber.textContent = `0/10`;
-                // ЗАКАНЧИВАЕТСЯ УСЛОВИЕ РИСОВАНИЯ БЛОКА С ОЦЕНКОЙ
                 
+                // рисуем звёздочки и рейтинг, если он есть
+                const goldenStartNumber = await GradesAPI.getGradeByUser(allReviews[i].userId, allReviews[i].bookId).then(grade => {
+                    if (grade) {
+                        return grade;
+                    } 
+                    return 0;
+                })
+
+                const reviewRatingStars = document.createElement('div');
+                reviewRatingStars.classList.add('desc__review__ratingstars');
+                for (let j = 0; j < 10; j++) {
+                    const inputElement = document.createElement('span');
+                    inputElement.id = `therating-${j}`;
+                    if (goldenStartNumber > j){
+                        inputElement.classList.add('golden');
+                    }
+
+                    reviewRatingStars.append(inputElement);
+                }
+
+                if (goldenStartNumber > 0) {
+                    reviewRatingNumber.textContent = `${goldenStartNumber}/10`;
+                    reviewRatingText.textContent = 'Оценка:';
+                }
+
+                // продолжаем тело отзывов
                 const oneReviewBody = document.createElement('div');
                 oneReviewBody.classList.add('desc__review__body');
 
@@ -224,6 +228,7 @@ class DescriptionPage extends Page {
                 oneReviewBodyText.textContent = allReviews[i].text;
 
                 const reviewBookImg = document.createElement('img');
+                reviewBookImg.classList.add('desc__review__bookimg');
                 reviewBookImg.alt = "";
 
                 const reviewBookTitleAuthor = document.createElement('div');
