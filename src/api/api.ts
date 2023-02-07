@@ -1,9 +1,9 @@
-import { IOneBook } from "../types";
-import { IUserNew } from "../types";
+import { IOneBook, IOneReview, IUserNew  } from "../types";
 
 const baseApiEndpoint = 'http://localhost:3000/api/';
 const basePaths = {
   books: `${baseApiEndpoint}books/`,
+  reviews: `${baseApiEndpoint}reviews/`,
 }
 
 export class BooksAPI {
@@ -35,5 +35,16 @@ export class BooksAPI {
     });
     const result = await response.json();
     return result;
+  }
+}
+
+export class ReviewsAPI {
+  static apiEndpoint = basePaths.reviews;
+
+  // получаем массив из всех отзывов
+  // отзыв есть у книги "bookId": "63dbd4fe942b52bc2a107c35",
+  static async getAllReviews(bookId: string): Promise<Array<IOneReview>> {
+    return await fetch(`${this.apiEndpoint}book/${bookId}`)
+    .then(response => response.json());
   }
 }

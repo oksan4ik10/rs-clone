@@ -89,6 +89,7 @@
     top: 15px;
     right: 5px;
     background: url("./images/search.png") 0 0 no-repeat;
+    filter: brightness(0) saturate(100%) invert(81%) sepia(47%) saturate(314%) hue-rotate(2deg) brightness(90%) contrast(87%);
 }
 
 .header__random {
