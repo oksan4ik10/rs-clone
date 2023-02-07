@@ -38,3 +38,8 @@ export interface IOptions {
     month: 'long';
     day: 'numeric';
 }
+
+export interface IUser {
+    email: string,
+    password: string
+}

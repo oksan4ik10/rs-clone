@@ -1,10 +1,11 @@
 .registration {
-    // position: relative;
+    
 }
 
-.registration__form {
-    width: 500px;
-    height: 500px;
+.registration__form,
+.authorisation__form {
+    width: 520px;
+    height: 530px;
     @include flex-colomn;
     align-items: center;
     position: absolute;
@@ -14,24 +15,42 @@
     right: 0;
     margin: auto;
     z-index: 25;
-    background: white;
+    background: $form-color;
     border-radius: 5px;
-    padding: 20px;
-
-    border: 1px solid black;
+    padding: 25px;
 }
 
-.registration__title {
+.authorisation__form {
+    width: 520px;
+    height: 350px;
+}
+
+.registration__title,
+.authorisation__title {
     margin-bottom: 20px;
+    color: $text-dark-color;
+    font-size: 26px;
 }
 
-.registration__error {
+.registration__error,
+.authorisation__error {
     width: 400px;
     height: 40px;
     color: $error-color;
 }
 
-.registration__submit {
-    margin-top: 20px;
-    color: black;
+.registration__submit,
+.authorisation__submit {
+    margin-top: 25px;
+    margin-bottom: 5px;
+    color: white;
+    background: $button-form-color;
+    height: 50px;
+    font-size: 16px;
+    border: none;
+}
+
+.registration__submit:hover,
+.authorisation__submit:hover {
+    background: $button-form-hover;
 }

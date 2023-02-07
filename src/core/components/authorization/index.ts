@@ -1,5 +1,6 @@
 import Component from '../../templates/components';
 import Header from '../../components/header';
+import { UsersAPI } from '../../../api/api';
 
 
 class Authorization extends Component {
@@ -34,7 +35,7 @@ class Authorization extends Component {
         this.email.type = 'email';
         this.email.setAttribute('required', 'true');
 
-        this.password.classList.add('authorisation__password', 'input', 'authorisation-registration');
+        this.password.classList.add('authorisation__password', 'input', 'authorisation-registration', 'input-authorisation');
         this.password.placeholder = 'Пароль';
         this.password.type = 'password';
         this.password.setAttribute('required', 'true');
@@ -62,21 +63,24 @@ class Authorization extends Component {
             Header.formActive = false;
         })
 
-        this.form.addEventListener('submit', (event) => {
+        this.form.addEventListener('submit', async (event) => {
             event.preventDefault();
-            //здесь будет проверка 
-            //псевдокод:
-            //if (все хорошо) {
-                //что-то происходит
-            // } else {
-                // this.error.textContent = `Пожалуйста, введите корректные e-mail адрес и пароль. Оба поля могут быть чувствительны к регистру.`;
-            // }
-
-
-            //удалить отсюда и добавить в сценарий Все хорошо
-            this.form.submit();          
+            const obj = {
+                email: this.email.value,
+                password: this.password.value
+            }
+            const res = await UsersAPI.authUser(obj);
+            if(res.message){
+                this.error.textContent = res.message;
+                return
+            }                  
+            
+            localStorage.setItem("token", res.token);
+                   
             Header.prototype.closeForm('authorisation');
             Header.formActive = false;
+            Header.renderPersonalCabinet(res.token);
+        
         })
         
         return this.container;
