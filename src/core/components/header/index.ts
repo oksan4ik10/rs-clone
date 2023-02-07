@@ -89,7 +89,7 @@ class Header extends Component {
         personalLink.href = "#";
         this.icon.classList.add('header__personal__icon');
         const iconImg = document.createElement('img');
-        iconImg.src = 'https://i.pinimg.com/736x/9a/0d/eb/9a0debd592a5b15b9b979d53bfb0e019.jpg';
+        iconImg.src = './images/avatar.jpg';
         iconImg.setAttribute('alt','logo');
         this.icon.append(iconImg);
         this.nameUser.classList.add('header__personal__name-user');
