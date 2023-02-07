@@ -1,0 +1,30 @@
+.personal__user {
+    width: 100%;
+    height: 100px;
+    background-color: #454747;
+}
+
+.personal__user .wrapper {
+    height: 100%;
+}
+
+.personal__user__name {
+    color: white;
+    font-size: 24px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.personal__content {
+    height: 100%;
+}
+
+.personal__read__content {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.personal__read__wrapper {
+    @include flex-space-between;
+}

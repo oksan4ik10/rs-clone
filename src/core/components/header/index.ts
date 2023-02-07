@@ -6,6 +6,7 @@ import MainPage from '../../../pages/main';
 import { HeaderSearch } from './header-search';
 import { BooksAPI } from '../../../api/api';
 import { UsersAPI } from '../../../api/api';
+import App from '../../../pages/app';
 
 
 class Header extends Component {
@@ -33,6 +34,7 @@ class Header extends Component {
     icon: HTMLElement;
     nameUser: HTMLElement;
     output: HTMLButtonElement;
+    personalLink: HTMLElement;
 
     static formActive = false;
     
@@ -49,6 +51,7 @@ class Header extends Component {
         this.icon = document.createElement('div');
         this.nameUser = document.createElement('span');
         this.output = document.createElement('button');
+        this.personalLink = document.createElement('div');
     }
 
     renderPageHeader() {
@@ -84,9 +87,7 @@ class Header extends Component {
         const personalArea = document.createElement('div');
         personalArea.classList.add('header__personal');
 
-        const personalLink = document.createElement('a');
-        personalLink.classList.add('header__personal__link');
-        personalLink.href = "#";
+        this.personalLink.classList.add('header__personal__link');
         this.icon.classList.add('header__personal__icon');
         const iconImg = document.createElement('img');
         iconImg.src = 'https://i.pinimg.com/736x/9a/0d/eb/9a0debd592a5b15b9b979d53bfb0e019.jpg';
@@ -94,8 +95,8 @@ class Header extends Component {
         this.icon.append(iconImg);
         this.nameUser.classList.add('header__personal__name-user');
         this.nameUser.textContent = 'Test';
-        personalLink.append(this.icon);
-        personalLink.append(this.nameUser);
+        this.personalLink.append(this.icon);
+        this.personalLink.append(this.nameUser);
 
         this.output.classList.add('header__personal__btn-output', 'button');
         this.output.textContent = 'Выход';
@@ -111,10 +112,8 @@ class Header extends Component {
         cabinet.appendChild(this.enter);
         cabinet.appendChild(this.registration);
         wrapper.appendChild(personalArea);
-        personalArea.appendChild(personalLink);
+        personalArea.appendChild(this.personalLink);
         personalArea.appendChild(this.output);
-
-
     }
 
     openRegistr(form: string) {
@@ -171,6 +170,7 @@ class Header extends Component {
             darkBackground.remove();
         }, 800);
     }
+
     outputPersonal(){
         localStorage.removeItem('token');
         const blockPersonal = document.querySelector('.header__personal') as HTMLElement;
@@ -179,7 +179,16 @@ class Header extends Component {
             blockPersonal.style.display = 'none';
             blockCabinet.style.display = 'flex';
         }
+    }
 
+    inputPersonal() {
+        console.log('вход выполнен успешно');
+
+        window.location.hash = 'personal-area';
+
+        // App.renderNewPage(window.location.hash);
+        
+        // window.location.hash = `id=${bookWrapper.id}`;
     }
 
     render() {
@@ -233,6 +242,8 @@ class Header extends Component {
         });
 
         this.output.addEventListener('click', this.outputPersonal.bind(this))
+
+        this.personalLink.addEventListener('click', this.inputPersonal.bind(this))
             
 
         return this.container;
