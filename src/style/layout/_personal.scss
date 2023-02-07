@@ -1,7 +1,8 @@
 .personal__user {
     width: 100%;
     height: 100px;
-    background-color: #454747;
+    background-color: #2b222a;
+    color: $text-dark-color;
 }
 
 .personal__user .wrapper {
@@ -20,11 +21,44 @@
     height: 100%;
 }
 
-.personal__read__content {
-    display: flex;
-    flex-wrap: wrap;
+.personal__content .wrapper {
+    margin-bottom: 40px;
 }
 
-.personal__read__wrapper {
-    @include flex-space-between;
+.personal__tab {
+    overflow: hidden;
+    margin-top: 40px;
+    display: flex;
+}
+
+.personal__tab__button {
+    width: 210px;
+    height: 50px;
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 20px;
+    border: 3px solid rgba(0, 0, 0, 0);
+    @include flex-center;
+    background: rgba(112, 101, 108, 0.2);
+}
+
+.personal__tab__button:hover {
+    background: rgba(112, 101, 108, 0.4);
+}
+
+.personal__button-active {
+    background: rgba(112, 101, 108, 0.4);
+}
+
+.personal__tab__wrapper {
+    min-height: 50px;
+    margin-top: 30px;
+}
+
+.personal__tab__content {
+    display: none;
+    font-size: 20px;
 }

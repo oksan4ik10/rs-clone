@@ -179,16 +179,11 @@ class Header extends Component {
             blockPersonal.style.display = 'none';
             blockCabinet.style.display = 'flex';
         }
+        window.location.hash = 'main-page';
     }
 
     inputPersonal() {
-        console.log('вход выполнен успешно');
-
         window.location.hash = 'personal-area';
-
-        // App.renderNewPage(window.location.hash);
-        
-        // window.location.hash = `id=${bookWrapper.id}`;
     }
 
     render() {
@@ -238,13 +233,11 @@ class Header extends Component {
                     oldHeaderSearch.remove();
                 }
             }
-
         });
 
         this.output.addEventListener('click', this.outputPersonal.bind(this))
 
         this.personalLink.addEventListener('click', this.inputPersonal.bind(this))
-            
 
         return this.container;
     }

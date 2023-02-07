@@ -8,7 +8,6 @@ class PersonalArea extends Page {
         this.main = document.createElement('main');
         
         this.readContent = document.createElement('div');
-        
     }
 
     createMainPage() {
@@ -31,22 +30,45 @@ class PersonalArea extends Page {
         const wrapper2 = document.createElement('div');
         wrapper2.classList.add('wrapper');
 
-        const readBooks = document.createElement('div');
-        readBooks.classList.add('personal__read');
+        const tab = document.createElement('div');
+        tab.classList.add('personal__tab');
 
-        const titleWrapper = document.createElement('div');
-        titleWrapper.classList.add('personal__read__wrapper')
-        
-        const titleRead = document.createElement('div');
-        titleRead.classList.add('personal__read__title');
-        titleRead.textContent = 'Последние прочитанные';
+        const read = document.createElement('div');
+        read.classList.add('personal__tab__button');
+        read.textContent = 'Прочитанные книги'
 
-        const titleMore = document.createElement('div');
-        titleMore.classList.add('personal__read__more');
-        titleMore.textContent = 'Показать все';
+        const willRead = document.createElement('div');
+        willRead.classList.add('personal__tab__button');
+        willRead.textContent = 'Хочу прочитать';
 
-        this.readContent.classList.add('personal__read__content');
-        this.readContent.textContent = 'У Вас пока нет прочитанных книг';
+        const readWrapper = document.createElement('div');
+        readWrapper.classList.add('personal__tab__wrapper')
+
+        const readContent = document.createElement('div');
+        readContent.classList.add('personal__tab__content');
+        const readTitle = document.createElement('div');
+        readTitle.textContent = 'У вас пока нет прочитанных книг';
+        readContent.append(readTitle);
+
+        const willReadContent = document.createElement('div');
+        willReadContent.classList.add('personal__tab__content')
+        const willReadTitle = document.createElement('div');
+        willReadTitle.textContent = 'У вас пока нет книг, которые вы хотите прочесть';
+        willReadContent.append(willReadTitle);
+
+        read.addEventListener('click', () => {
+            readContent.style.display = 'block';
+            read.classList.add('personal__button-active');
+            willRead.classList.remove('personal__button-active');
+            willReadContent.style.display = 'none';
+        })
+
+        willRead.addEventListener('click', () => {
+            willReadContent.style.display = 'block';
+            willRead.classList.add('personal__button-active');
+            read.classList.remove('personal__button-active');
+            readContent.style.display = 'none';
+        })
 
         section.append(this.main);
         this.main.append(infoUserContainer);
@@ -54,12 +76,13 @@ class PersonalArea extends Page {
         wrapper.append(name);
         this.main.append(content);
         content.append(wrapper2);
-        wrapper2.append(readBooks);
-        readBooks.append(titleWrapper);
-        titleWrapper.append(titleRead);
-        titleWrapper.append(titleMore);
-        readBooks.append(this.readContent);
-
+        wrapper2.append(tab);
+        tab.append(read);
+        tab.append(willRead);
+        wrapper2.append(readWrapper);
+        readWrapper.append(readContent);
+        readWrapper.append(willReadContent);
+        
         return section;
     }
 
