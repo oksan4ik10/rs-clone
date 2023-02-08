@@ -1,6 +1,8 @@
 import Component from '../../templates/components';
 import Header from '../../components/header';
 import { UsersAPI } from '../../../api/api';
+import App from '../../../pages/app';
+import DescriptionPage from '../../../pages/description';
 
 
 class Authorization extends Component {
@@ -98,6 +100,13 @@ class Authorization extends Component {
             Header.prototype.closeForm('authorisation');
             Header.formActive = false;
             Header.renderPersonalCabinet(res.token);
+
+            // перезагрузка страницы при логине, когда юзер на странице описания книги
+            if (window.location.hash.slice(1).includes('id=')){
+                const currentBookId = window.location.hash.split('=')[1]
+                window.location.hash = '';
+                window.location.hash = `id=${currentBookId}`;
+            }
         
         })
         
