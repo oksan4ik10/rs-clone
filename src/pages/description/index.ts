@@ -1,9 +1,10 @@
-import { BooksAPI, GradesAPI, ReviewsAPI } from '../../api/api';
+import { BooksAPI, GradesAPI, ReviewsAPI, UsersAPI } from '../../api/api';
 import Page from '../../core/templates/page';
 import { IOptions } from '../../types';
 
 class DescriptionPage extends Page {
     addToReadButton: HTMLButtonElement;
+    wantToReadButton: HTMLButtonElement;
     main: HTMLElement;
     bookdId: string;
     descrContentWrapper: HTMLElement;
@@ -12,6 +13,7 @@ class DescriptionPage extends Page {
     constructor(id: string) {
         super(id);
         this.addToReadButton = document.createElement('button');
+        this.wantToReadButton = document.createElement('button');
         this.main = document.createElement('main');
         this.main.classList.add('description__page__wrapper');
         this.descrContentWrapper = document.createElement('div');
@@ -19,7 +21,17 @@ class DescriptionPage extends Page {
         this.bookdId = window.location.hash.split('=')[1];
     }
 
+    static isAuthorised() {
+        const storageStatus = localStorage.getItem('token');
+        if (storageStatus !== null){
+            console.log(localStorage.getItem('token'));
+            return storageStatus;
+        } 
+        return false;
+    }
+
     createPage() {
+        DescriptionPage.isAuthorised();
         const descrImgWrapper = document.createElement('div');
         descrImgWrapper.classList.add('desc__img__wrapper');
 
@@ -98,6 +110,8 @@ class DescriptionPage extends Page {
         descrImg.alt = 'Book cover picture';
         this.addToReadButton.classList.add('description__addtoread', 'button');
         this.addToReadButton.textContent = 'Добавить в прочитанное';
+        this.wantToReadButton.classList.add('description__wanttoread', 'button');
+        this.wantToReadButton.textContent = 'Хочу почитать';
 
         // присваиваем элементам информацию по книге
         BooksAPI.getBookById(this.bookdId).then(bookInfo => {
@@ -110,11 +124,36 @@ class DescriptionPage extends Page {
             descrImg.src = bookInfo.img;
         });
 
+        descrImgWrapper.append(descrImgOuter)
+
+        const authStatus = DescriptionPage.isAuthorised();
+        const checkButtonsAdd = () => {
+
+            if (typeof authStatus !== 'boolean'){
+                UsersAPI.checkBooksLikeRead(this.bookdId, authStatus).then(bookStatus => {
+                    console.log('Does user want to read this book or has already read this book?', bookStatus);
+                    if (bookStatus === "false") {
+                        descrImgWrapper.append(this.addToReadButton, this.wantToReadButton);
+                    } else if (bookStatus === 'booksLike') {
+                        this.wantToReadButton.textContent = 'Удалить из планов';
+                        descrImgWrapper.append(this.wantToReadButton);
+                    } else if (bookStatus === 'books') {
+                        this.addToReadButton.textContent = 'Удалить из прочитанного';
+                        descrImgWrapper.append(this.addToReadButton);
+                    }
+                })
+            } else {
+                descrImgWrapper.append(this.addToReadButton, this.wantToReadButton);
+            }
+
+        }
+
+        checkButtonsAdd();
+
         ratingContainer.append(myRating, myratingNumbers);
         ratingWrapper.append(myRatingText, ratingContainer, allRatingText, allRating);
         descrDescrWrapper.append(descrDescrTitle, descrDescr);
         descrImgOuter.append(descrImg);
-        descrImgWrapper.append(descrImgOuter, this.addToReadButton);
         this.descrContentWrapper.append(descrName, descrAuthor, descrYear, 
             descrGenre, descrDescrWrapper, ratingWrapper, this.createReviews());
         this.main.append(this.descrContentWrapper, descrImgWrapper);
@@ -146,7 +185,9 @@ class DescriptionPage extends Page {
             if (newReviewText === document.activeElement){
                 newReviewSubmit.style.display = 'block';
             } else {
-                newReviewSubmit.style.display = 'none';
+                setTimeout(() => {
+                    newReviewSubmit.style.display = 'none';
+                }, 100) 
             }
         }
 

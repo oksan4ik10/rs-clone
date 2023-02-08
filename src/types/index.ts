@@ -64,3 +64,9 @@ export interface ICheckBookReadStatus {
     }>;
     status: number;
 }
+
+export interface ICheckBooksLikeRead {
+    json(): Promise<{
+        status: string;
+    }>
+}

@@ -1,4 +1,4 @@
-import { IOneBook, IOneReview, IUserNew, IUser, IGetGradeByUserResp} from "../types";
+import { IOneBook, IOneReview, IUserNew, IUser, IGetGradeByUserResp, ICheckBooksLikeRead} from "../types";
 
 
 const baseApiEndpoint = 'http://localhost:3000/api/';
@@ -68,6 +68,16 @@ export class UsersAPI{
       const result = await response.json();
       return result;
 
+  }
+
+  //Проверка есть ли книга у пользователя в хочу прочитать или прочитанное
+  static async checkBooksLikeRead(bookId: string, token: string) {
+    const response: ICheckBooksLikeRead = await fetch(`${this.apiEndpoint}booksCheck/${bookId}`, {
+      headers: {
+        "Authorization": token,
+      }
+    })
+    return (await response.json()).status;
   }
 }
 
