@@ -1,4 +1,5 @@
 import { BooksAPI, GradesAPI, ReviewsAPI, UsersAPI } from '../../api/api';
+import Header from '../../core/components/header';
 import Page from '../../core/templates/page';
 import { IOptions } from '../../types';
 
@@ -8,7 +9,6 @@ class DescriptionPage extends Page {
     main: HTMLElement;
     bookdId: string;
     descrContentWrapper: HTMLElement;
-    
 
     constructor(id: string) {
         super(id);
@@ -20,20 +20,42 @@ class DescriptionPage extends Page {
         this.descrContentWrapper.classList.add('desc__content__wrapper');
         this.bookdId = window.location.hash.split('=')[1];
     }
-
-    static isAuthorised() {
+    
+    isAuthorised() {
         const storageStatus = localStorage.getItem('token');
         if (storageStatus !== null){
-            console.log(localStorage.getItem('token'));
             return storageStatus;
         } 
         return false;
     }
 
+    authStatus = this.isAuthorised();
+
+    showAuthPopUp() {
+        if (this.authStatus === false) {
+            Header.prototype.openAuth('authorisation');
+            const authText = document.querySelector('.authorisation__title');
+            if (authText) {
+                authText.textContent = 'Авторизуйтесь, чтобы продолжить';
+            }
+        }
+    }
+
+    listenAuthorizedAction = (event: Event) => {
+        if (event.target instanceof Element && (
+            event.target.classList.contains('button') ||
+            event.target.classList.contains('decr__form') ||
+            event.target.tagName === 'LABEL')
+        ){
+            this.showAuthPopUp();
+        }
+    }
+
     createPage() {
-        DescriptionPage.isAuthorised();
+        console.log('this.authStatus:', this.authStatus);
         const descrImgWrapper = document.createElement('div');
         descrImgWrapper.classList.add('desc__img__wrapper');
+        descrImgWrapper.addEventListener('click', this.listenAuthorizedAction);
 
         const descrName = document.createElement('div');
         descrName.classList.add('decription__name');
@@ -91,7 +113,12 @@ class DescriptionPage extends Page {
 
         ratingContainer.addEventListener('click', (event) => {
             if (event.target instanceof HTMLElement && event.target.classList.contains('descr_star')) {
+                event.preventDefault();
                 const currentRating = event.target.id.split('-')[1];
+                if (!this.authStatus){
+                    this.showAuthPopUp();
+                }
+
                 console.log(currentRating);
             }
         })
@@ -126,11 +153,10 @@ class DescriptionPage extends Page {
 
         descrImgWrapper.append(descrImgOuter)
 
-        const authStatus = DescriptionPage.isAuthorised();
         const checkButtonsAdd = () => {
 
-            if (typeof authStatus !== 'boolean'){
-                UsersAPI.checkBooksLikeRead(this.bookdId, authStatus).then(bookStatus => {
+            if (typeof this.authStatus !== 'boolean'){
+                UsersAPI.checkBooksLikeRead(this.bookdId, this.authStatus).then(bookStatus => {
                     console.log('Does user want to read this book or has already read this book?', bookStatus);
                     if (bookStatus === "false") {
                         descrImgWrapper.append(this.addToReadButton, this.wantToReadButton);
@@ -182,8 +208,10 @@ class DescriptionPage extends Page {
         newReviewForm.append(newReviewText, newReviewSubmit);
 
         const toggleReviewSubmit = () => {
-            if (newReviewText === document.activeElement){
+            if (newReviewText === document.activeElement && this.authStatus){
                 newReviewSubmit.style.display = 'block';
+            } else if (newReviewText === document.activeElement && !this.authStatus) {
+                this.showAuthPopUp();
             } else {
                 setTimeout(() => {
                     newReviewSubmit.style.display = 'none';

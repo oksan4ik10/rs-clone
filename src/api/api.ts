@@ -105,9 +105,10 @@ export class GradesAPI {
   // получаем оценку пользователя по книге
   static async getGradeByUser(userId: string, bookId: string) {
     const userParam = {
-      userId: userId
+      userId: userId,
+      bookId: bookId
     }
-    const response: IGetGradeByUserResp = await fetch(`${this.apiEndpoint}${bookId}`, {
+    const response: IGetGradeByUserResp = await fetch(`${this.apiEndpoint}user/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -116,7 +117,8 @@ export class GradesAPI {
     })
 
     if (response.status === 200){
-      return (await response.json()).value;
+      const result = await response.json();
+      return result.value;
     }
 
     return null;
