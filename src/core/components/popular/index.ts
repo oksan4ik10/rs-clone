@@ -8,6 +8,13 @@ class PopularBooks extends Component {
     constructor(tagName: string, className: string) {
         super(tagName, className);
     }
+    setHashDesc(e:Event){
+        const target = e.currentTarget as HTMLElement;
+        const id = target.dataset.id;
+        
+        window.location.hash = `id=${id}`;
+
+    }
     renderBook(obj:IOneBook){
         const elem = document.createElement('div');
         elem.className = "popular__colomn popular__colomn-second";
@@ -18,6 +25,8 @@ class PopularBooks extends Component {
         </div>
         <div class="popular__author">${obj.author}</div>
         <div class="popular__name">${obj.title}</div>`
+        
+        elem.addEventListener('click', this.setHashDesc)
          
         return elem;
     }
