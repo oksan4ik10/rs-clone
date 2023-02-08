@@ -20,10 +20,15 @@
 }
 
 .popular__book {
-    width: 130px;
-    height: 180px;
+
     
     border: 1px solid green;
+    img{
+        object-fit: cover;
+        width: 130px;
+        height: 180px;
+        display: block;
+    }
 }
 
 .popular__author {
