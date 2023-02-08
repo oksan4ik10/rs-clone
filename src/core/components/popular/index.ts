@@ -1,4 +1,6 @@
 import Component from '../../templates/components';
+import { BooksAPI } from '../../../api/api';
+import { IOneBook } from '../../../types';
 
 
 class PopularBooks extends Component {
@@ -6,29 +8,49 @@ class PopularBooks extends Component {
     constructor(tagName: string, className: string) {
         super(tagName, className);
     }
+    setHashDesc(e:Event){
+        const target = e.currentTarget as HTMLElement;
+        const id = target.dataset.id;
+        
+        window.location.hash = `id=${id}`;
 
-    renderPagePopularBooks() {
-        this.container.innerHTML = 
-            `<div class="wrapper">
-                <h3 class="reviews__title">ПОПУЛЯРНЫЕ КНИГИ</h3>
-                <div class="popular__container">
-                    <div class="popular__colomn popular__colomn-first">
-                        <div class="popular__book"></div>
-                        <div class="popular__author">Имя автора</div>
-                        <div class="popular__name">Название книги</div>
-                    </div>                
-                    <div class="popular__colomn popular__colomn-second">
-                        <div class="popular__book"></div>
-                        <div class="popular__author">Имя автора</div>
-                        <div class="popular__name">Название книги</div>
-                    </div>                
-                    <div class="popular__colomn popular__colomn-third">
-                        <div class="popular__book"></div>
-                        <div class="popular__author">Имя автора</div>
-                        <div class="popular__name">Название книги</div>
-                    </div>
-                </div>
-            </div>`
+    }
+    renderBook(obj:IOneBook){
+        const elem = document.createElement('div');
+        elem.className = "popular__colomn popular__colomn-second";
+        elem.setAttribute('data-id',obj._id);
+        elem.innerHTML = `<div class="popular__book">
+            <img src=${obj.img} alt=${obj.title}>
+            <span class="popular__raiting">${obj.raiting}</span> 
+        </div>
+        <div class="popular__author">${obj.author}</div>
+        <div class="popular__name">${obj.title}</div>`
+        
+        elem.addEventListener('click', this.setHashDesc)
+         
+        return elem;
+    }
+
+    async renderPagePopularBooks() {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'wrapper';
+        const title = document.createElement('h3');
+        title.className = 'reviews__title';
+        title.textContent = 'ПОПУЛЯРНЫЕ КНИГИ'; 
+        wrapper.append(title);
+
+        const popularContainer = document.createElement('div');
+        popularContainer.className = 'popular__container';
+        
+        const items = await BooksAPI.getBestBooks();
+        items.forEach((element, index) => {
+            if(index > 2) return
+            popularContainer.append(this.renderBook(element))
+        });
+
+        wrapper.append(popularContainer);
+        this.container.append(wrapper);
+
     }
 
     render() {

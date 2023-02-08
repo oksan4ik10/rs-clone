@@ -28,6 +28,13 @@ export class BooksAPI {
       .catch(error => console.log(error.message));
   }
 
+  static async getBestBooks() {
+    const response = await fetch(`${this.apiEndpoint}/best/list`);
+    
+      const result:[] = await response.json();
+      return result;
+  }
+
 }
 
 export class UsersAPI{
