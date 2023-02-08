@@ -182,9 +182,9 @@ class Registration extends Component {
                             }           
             
                             this.form.textContent = '';
-                            const title = document.createElement('h2');
-                            title.className = "title registrarion__title";
-                            title.textContent = 'Регистрация прошла успешно';
+                            const title = document.createElement('div');
+                            title.className = "title registration__title registration__success";
+                            title.textContent = 'Регистрация прошла успешно!';
                             this.form.append(title);
                             setTimeout(()=>{
                                 Header.prototype.closeForm('registration');

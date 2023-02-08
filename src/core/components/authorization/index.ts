@@ -9,6 +9,7 @@ class Authorization extends Component {
     password: HTMLInputElement;
     error: HTMLElement;
     submit: HTMLButtonElement;
+    button: HTMLElement;
     cross: HTMLElement;
 
     constructor(tagName: string, className: string) {
@@ -19,6 +20,7 @@ class Authorization extends Component {
         this.error = document.createElement('div');
         this.submit = document.createElement('button');
         this.cross = document.createElement('div');
+        this.button = document.createElement('div');
     }
 
     renderRegistration() {
@@ -46,6 +48,14 @@ class Authorization extends Component {
         this.submit.type = 'submit';
         this.submit.textContent = 'Войти';
 
+        const title2 = document.createElement('div');
+
+        title2.textContent = 'Еще не зарегистрированы?';
+        title2.classList.add('authorisation__subtitle');
+
+        this.button.classList.add('button', 'authorisation__submit');
+        this.button.textContent = 'Регистрация';
+
         this.container.appendChild(this.form);
         this.form.appendChild(title);
         this.form.appendChild(this.cross);
@@ -53,6 +63,8 @@ class Authorization extends Component {
         this.form.appendChild(this.password);
         this.form.appendChild(this.error);
         this.form.appendChild(this.submit);
+        this.form.appendChild(title2);
+        this.form.appendChild(this.button);
     }
 
     render() {
@@ -61,6 +73,12 @@ class Authorization extends Component {
         this.cross.addEventListener('click', () => {
             Header.prototype.closeForm('authorisation');
             Header.formActive = false;
+        })
+
+        this.button.addEventListener('click', () => {
+            Header.prototype.closeForm('authorisation');
+            Header.formActive = false;
+            Header.prototype.openRegistr('registration');
         })
 
         this.form.addEventListener('submit', async (event) => {

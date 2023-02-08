@@ -16,16 +16,23 @@
     padding: 25px;
 }
 
-.authorisation__form {
-    width: 520px;
-    height: 350px;
-}
+// .authorisation__form {
+//     width: 520px;
+//     height: 350px;
+// }
 
 .registration__title,
 .authorisation__title {
     margin-bottom: 20px;
     color: $text-dark-color;
     font-size: 26px;
+}
+
+.authorisation__subtitle {
+    margin-top: 45px;
+    margin-bottom: 5px;
+    color: $text-dark-color;
+    font-size: 22px;
 }
 
 .registration__error,
@@ -44,9 +51,16 @@
     height: 50px;
     font-size: 16px;
     border: none;
+    @include flex-center;
 }
 
 .registration__submit:hover,
 .authorisation__submit:hover {
     background: $button-form-hover;
+}
+
+.registration__success {
+    width: 100%;
+    height: 100%;
+    @include flex-center;
 }
