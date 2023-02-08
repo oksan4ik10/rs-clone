@@ -1,9 +1,10 @@
-import { BooksAPI, ReviewsAPI } from '../../api/api';
+import { BooksAPI, GradesAPI, ReviewsAPI, UsersAPI } from '../../api/api';
 import Page from '../../core/templates/page';
 import { IOptions } from '../../types';
 
 class DescriptionPage extends Page {
     addToReadButton: HTMLButtonElement;
+    wantToReadButton: HTMLButtonElement;
     main: HTMLElement;
     bookdId: string;
     descrContentWrapper: HTMLElement;
@@ -12,6 +13,7 @@ class DescriptionPage extends Page {
     constructor(id: string) {
         super(id);
         this.addToReadButton = document.createElement('button');
+        this.wantToReadButton = document.createElement('button');
         this.main = document.createElement('main');
         this.main.classList.add('description__page__wrapper');
         this.descrContentWrapper = document.createElement('div');
@@ -19,7 +21,17 @@ class DescriptionPage extends Page {
         this.bookdId = window.location.hash.split('=')[1];
     }
 
+    static isAuthorised() {
+        const storageStatus = localStorage.getItem('token');
+        if (storageStatus !== null){
+            console.log(localStorage.getItem('token'));
+            return storageStatus;
+        } 
+        return false;
+    }
+
     createPage() {
+        DescriptionPage.isAuthorised();
         const descrImgWrapper = document.createElement('div');
         descrImgWrapper.classList.add('desc__img__wrapper');
 
@@ -98,6 +110,8 @@ class DescriptionPage extends Page {
         descrImg.alt = 'Book cover picture';
         this.addToReadButton.classList.add('description__addtoread', 'button');
         this.addToReadButton.textContent = 'Добавить в прочитанное';
+        this.wantToReadButton.classList.add('description__wanttoread', 'button');
+        this.wantToReadButton.textContent = 'Хочу почитать';
 
         // присваиваем элементам информацию по книге
         BooksAPI.getBookById(this.bookdId).then(bookInfo => {
@@ -110,11 +124,36 @@ class DescriptionPage extends Page {
             descrImg.src = bookInfo.img;
         });
 
+        descrImgWrapper.append(descrImgOuter)
+
+        const authStatus = DescriptionPage.isAuthorised();
+        const checkButtonsAdd = () => {
+
+            if (typeof authStatus !== 'boolean'){
+                UsersAPI.checkBooksLikeRead(this.bookdId, authStatus).then(bookStatus => {
+                    console.log('Does user want to read this book or has already read this book?', bookStatus);
+                    if (bookStatus === "false") {
+                        descrImgWrapper.append(this.addToReadButton, this.wantToReadButton);
+                    } else if (bookStatus === 'booksLike') {
+                        this.wantToReadButton.textContent = 'Удалить из планов';
+                        descrImgWrapper.append(this.wantToReadButton);
+                    } else if (bookStatus === 'books') {
+                        this.addToReadButton.textContent = 'Удалить из прочитанного';
+                        descrImgWrapper.append(this.addToReadButton);
+                    }
+                })
+            } else {
+                descrImgWrapper.append(this.addToReadButton, this.wantToReadButton);
+            }
+
+        }
+
+        checkButtonsAdd();
+
         ratingContainer.append(myRating, myratingNumbers);
         ratingWrapper.append(myRatingText, ratingContainer, allRatingText, allRating);
         descrDescrWrapper.append(descrDescrTitle, descrDescr);
         descrImgOuter.append(descrImg);
-        descrImgWrapper.append(descrImgOuter, this.addToReadButton);
         this.descrContentWrapper.append(descrName, descrAuthor, descrYear, 
             descrGenre, descrDescrWrapper, ratingWrapper, this.createReviews());
         this.main.append(this.descrContentWrapper, descrImgWrapper);
@@ -136,14 +175,28 @@ class DescriptionPage extends Page {
         newReviewText.classList.add('decr__textarea');
         newReviewText.placeholder = "Оставить рецензию...";
         const newReviewSubmit = document.createElement('button');
+        newReviewSubmit.classList.add('button', 'desc_button__submit');
         newReviewSubmit.type = 'submit';
         newReviewSubmit.textContent = 'Отправить';
+        newReviewSubmit.style.display = 'none';
+        newReviewForm.append(newReviewText, newReviewSubmit);
+
+        const toggleReviewSubmit = () => {
+            if (newReviewText === document.activeElement){
+                newReviewSubmit.style.display = 'block';
+            } else {
+                setTimeout(() => {
+                    newReviewSubmit.style.display = 'none';
+                }, 100) 
+            }
+        }
+
+        document.addEventListener('click', toggleReviewSubmit);
 
         const reviewsWrapper = document.createElement('div');
         reviewsWrapper.classList.add('descr__reviews__wrapper');
 
-        ReviewsAPI.getAllReviews(this.bookdId).then(allReviews => {
-            console.log(allReviews);
+        ReviewsAPI.getAllReviews(this.bookdId).then( async allReviews => {
 
             if (allReviews.length === 0){
                 reviewsWrapper.textContent = 'Будьте первым, кто оставит рецензию!'
@@ -160,8 +213,8 @@ class DescriptionPage extends Page {
                 reviewUserImage.classList.add('desc__review__img');
                 reviewUserImage.alt = "";
                 reviewUserImage.src = allReviews[i].userImg;
+
                 const reviewNameDateWrapper = document.createElement('div');
-                
                 reviewNameDateWrapper.classList.add('desc__review__namedatewrap');
                 const reviewName = document.createElement('div');
                 reviewName.classList.add('desc__review__name');
@@ -170,39 +223,42 @@ class DescriptionPage extends Page {
                 reviewDate.classList.add('desc__review__date');
                 const date = new Date(allReviews[i].date);
                 const options: IOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-                reviewDate.textContent = date.toLocaleDateString("ru-RU", options);
+                reviewDate.textContent = `написал(а) ${date.toLocaleDateString("ru-RU", options)}`;
 
                 //СЮДА ДОБАВИТЬ УСЛОВИЕ ОТОБРАЖНИЯ ЭТОГО БЛОКА ПРИ УСПЕШНОМ ОТВЕТЕ НА ДОП ЗАПРОС
                 const reviewRatingWrapper = document.createElement('div');
                 reviewRatingWrapper.classList.add('desc__review__ratingwrap');
-                const reviewRatingText = document.createElement('div');
+                const reviewRatingText = document.createElement('span');
                 reviewRatingText.classList.add('desc__review__ratingtext');
-                reviewRatingText.textContent = 'Оценка книге:';
-
-                // рисуем звёздочки
-                const reviewRatingStars = document.createElement('div');
-                reviewRatingStars.classList.add('desc__review__ratingstars');
-                for (let j = 10; j > 0; j--) {
-                    const inputElement = document.createElement('input');
-                    inputElement.type = 'radio';
-                    inputElement.id = `myrating-${j}`;
-                    inputElement.name = 'myrating';
-                    inputElement.value = j + '';
-
-                    const labelElement = document.createElement('label');
-                    labelElement.htmlFor = `myrating-${j}`;
-                    labelElement.id = `myratinglbl-${j}`;
-                    labelElement.classList.add('descr_star');
-
-                    reviewRatingStars.append(inputElement, labelElement);
-                }
-
                 const reviewRatingNumber = document.createElement('span');
                 reviewRatingNumber.classList.add('desc__review__ratingnumber');
-                // В СТРОЧКУ НИЖЕ ВСТАВИТЬ ВЫЧИСЛЯЕМУЮ ПЕРЕМЕННУЮ
-                reviewRatingNumber.textContent = `0/10`;
-                // ЗАКАНЧИВАЕТСЯ УСЛОВИЕ РИСОВАНИЯ БЛОКА С ОЦЕНКОЙ
                 
+                // рисуем звёздочки и рейтинг, если он есть
+                const goldenStartNumber = await GradesAPI.getGradeByUser(allReviews[i].userId, allReviews[i].bookId).then(grade => {
+                    if (grade) {
+                        return grade;
+                    } 
+                    return 0;
+                })
+
+                const reviewRatingStars = document.createElement('div');
+                reviewRatingStars.classList.add('desc__review__ratingstars');
+                for (let j = 0; j < 10; j++) {
+                    const inputElement = document.createElement('span');
+                    inputElement.id = `therating-${j}`;
+                    if (goldenStartNumber > j){
+                        inputElement.classList.add('golden');
+                    }
+
+                    reviewRatingStars.append(inputElement);
+                }
+
+                if (goldenStartNumber > 0) {
+                    reviewRatingNumber.textContent = `${goldenStartNumber}/10`;
+                    reviewRatingText.textContent = 'Оценка:';
+                }
+
+                // продолжаем тело отзывов
                 const oneReviewBody = document.createElement('div');
                 oneReviewBody.classList.add('desc__review__body');
 
@@ -213,6 +269,7 @@ class DescriptionPage extends Page {
                 oneReviewBodyText.textContent = allReviews[i].text;
 
                 const reviewBookImg = document.createElement('img');
+                reviewBookImg.classList.add('desc__review__bookimg');
                 reviewBookImg.alt = "";
 
                 const reviewBookTitleAuthor = document.createElement('div');
@@ -222,7 +279,7 @@ class DescriptionPage extends Page {
                 BooksAPI.getBookById(this.bookdId).then(bookInfo => {
                     reviewBookTitle.textContent = bookInfo.title;
                     reviewBookAuthor.textContent = bookInfo.author;
-                    reviewUserImage.src = bookInfo.img;
+                    reviewBookImg.src = bookInfo.img;
                 });
                 
 
@@ -236,7 +293,7 @@ class DescriptionPage extends Page {
                 reviewsWrapper.append(oneReviewWrapper);
             }
         })
-        reviewsAreaWrapper.append(descrReviewsTitle, reviewsWrapper);
+        reviewsAreaWrapper.append(descrReviewsTitle, newReviewForm, reviewsWrapper);
         return reviewsAreaWrapper;
     }
 
