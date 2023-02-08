@@ -14,14 +14,17 @@ class PopularBooks extends Component {
         elem.setAttribute('data-id',obj._id);
         elem.innerHTML = `<div class="popular__book">
             <img src=${obj.img} alt=${obj.title}>
+            <span class="popular__raiting">${obj.raiting}</span> 
         </div>
         <div class="popular__author">${obj.author}</div>
-        <div class="popular__name">${obj.title}</div>`;   
+        <div class="popular__name">${obj.title}</div>`
+         
         return elem;
     }
 
     async renderPagePopularBooks() {
         const wrapper = document.createElement('div');
+        wrapper.className = 'wrapper';
         const title = document.createElement('h3');
         title.className = 'reviews__title';
         title.textContent = 'ПОПУЛЯРНЫЕ КНИГИ'; 
@@ -38,6 +41,7 @@ class PopularBooks extends Component {
 
         wrapper.append(popularContainer);
         this.container.append(wrapper);
+
     }
 
     render() {
