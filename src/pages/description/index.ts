@@ -64,6 +64,29 @@ class DescriptionPage extends Page {
         return null;
     }
 
+    async toggleToWantBook() {
+        if (this.wantToReadButton.textContent === 'Удалить из планов') {
+            this.wantToReadButton.textContent = 'Хочу почитать';
+            
+        } else {
+            //добавить книгу в планы
+            
+            this.wantToReadButton.textContent = 'Удалить из планов';
+        }
+    }
+
+    async toggleToReadBook() {
+        if (this.addToReadButton.textContent === 'Удалить из прочитанного') {
+            //удалить книгу из прочитанного
+            this.addToReadButton.textContent = 'Добавить в прочитанное';
+            return await UsersAPI.removeBooksRead(this.bookId, this.authStatus as string);
+        } else {
+            //добавить книгу в прочитанное
+            this.addToReadButton.textContent = 'Удалить из прочитанного';
+            return await UsersAPI.addBooksRead(this.bookId, this.authStatus as string);
+        }
+    }
+
     createPage() {
         const descrImgWrapper = document.createElement('div');
         descrImgWrapper.classList.add('desc__img__wrapper');
@@ -214,12 +237,29 @@ class DescriptionPage extends Page {
                     console.log('Does user want to read this book or has already read this book?', bookStatus);
                     if (bookStatus === "false") {
                         descrImgWrapper.append(this.addToReadButton, this.wantToReadButton);
+
+                        this.addToReadButton.addEventListener('click', () => {
+                            this.toggleToReadBook();
+                        })
+                        this.wantToReadButton.addEventListener('click', () => {
+                            this.toggleToWantBook();
+                        })
+
                     } else if (bookStatus === 'booksLike') {
                         this.wantToReadButton.textContent = 'Удалить из планов';
                         descrImgWrapper.append(this.wantToReadButton);
+
+                        this.wantToReadButton.addEventListener('click', () => {
+                            this.toggleToWantBook();
+                        })
+
                     } else if (bookStatus === 'books') {
                         this.addToReadButton.textContent = 'Удалить из прочитанного';
                         descrImgWrapper.append(this.addToReadButton);
+
+                        this.addToReadButton.addEventListener('click', () => {
+                            this.toggleToReadBook();
+                        })
                     }
                 })
             } else {

@@ -75,3 +75,7 @@ export interface IPostGrade {
     json(): Promise<IOneBook>;
     status: number;
 }
+
+export interface IAddBooksRead  {
+    bookId: string,
+}
