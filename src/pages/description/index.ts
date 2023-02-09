@@ -7,7 +7,7 @@ class DescriptionPage extends Page {
     addToReadButton: HTMLButtonElement;
     wantToReadButton: HTMLButtonElement;
     main: HTMLElement;
-    bookdId: string;
+    bookId: string;
     descrContentWrapper: HTMLElement;
 
     constructor(id: string) {
@@ -18,7 +18,7 @@ class DescriptionPage extends Page {
         this.main.classList.add('description__page__wrapper');
         this.descrContentWrapper = document.createElement('div');
         this.descrContentWrapper.classList.add('desc__content__wrapper');
-        this.bookdId = window.location.hash.split('=')[1];
+        this.bookId = window.location.hash.split('=')[1];
     }
     
     isAuthorised() {
@@ -49,6 +49,19 @@ class DescriptionPage extends Page {
         ){
             this.showAuthPopUp();
         }
+    }
+
+    async getRatingByAuthorizedUser() {
+        if (typeof this.authStatus === 'string'){
+            const res = await UsersAPI.infoUser(this.authStatus);
+            return await GradesAPI.getGradeByUser(res._id, this.bookId).then(grade => {
+                if (grade) {
+                    return grade;
+                } 
+                return 0;
+            })
+        }
+        return null;
     }
 
     createPage() {
@@ -82,33 +95,6 @@ class DescriptionPage extends Page {
         const myRating = document.createElement('div');
         myRating.classList.add('description__myrating');
         const ratingContainer = document.createElement('div');
-        
-        // рисуем звёздочки
-        for (let i = 10; i > 0; i--) {
-            const inputElement = document.createElement('input');
-            inputElement.type = 'radio';
-            inputElement.id = `myrating-${i}`;
-            inputElement.name = 'myrating';
-            inputElement.value = i + '';
-
-            const labelElement = document.createElement('label');
-            labelElement.htmlFor = `myrating-${i}`;
-            labelElement.id = `myratinglbl-${i}`;
-            labelElement.classList.add('descr_star');
-
-            myRating.append(inputElement, labelElement);
-        }
-        
-        const myratingNumbers = document.createElement('div');
-        myratingNumbers.classList.add('myrating__numbers');
-
-        // рисуем цифры к звёздочкам
-        for (let i = 1; i <= 10; i++) {
-            const iElement = document.createElement('i');
-            iElement.textContent = i + '';
-
-            myratingNumbers.append(iElement);
-        }
 
         const subRatingWrapper = document.createElement('div');
         subRatingWrapper.classList.add('decription__subrating__wrapper');
@@ -118,6 +104,48 @@ class DescriptionPage extends Page {
         mySubRatingText.textContent = 'Вы оценили книгу на:';
         const mySubRating = document.createElement('div');
         mySubRating.classList.add('description__mysubrating');
+        
+
+        this.getRatingByAuthorizedUser().then(rating => {
+            const ratingByUser = rating;
+            console.log(ratingByUser);
+
+            // рисуем звёздочки
+            for (let i = 10; i > 0; i--) {
+                const inputElement = document.createElement('input');
+                inputElement.type = 'radio';
+                inputElement.id = `myrating-${i}`;
+                inputElement.name = 'myrating';
+                inputElement.value = i + '';
+
+                if (ratingByUser === i) {
+                    inputElement.checked = true;
+                    mySubRating.textContent = ratingByUser.toString();
+                    subRatingWrapper.style.display = 'block';
+                }
+
+                const labelElement = document.createElement('label');
+                labelElement.htmlFor = `myrating-${i}`;
+                labelElement.id = `myratinglbl-${i}`;
+                labelElement.classList.add('descr_star');
+
+                myRating.append(inputElement, labelElement);
+            }
+            
+            const myratingNumbers = document.createElement('div');
+            myratingNumbers.classList.add('myrating__numbers');
+
+            // рисуем цифры к звёздочкам
+            for (let i = 1; i <= 10; i++) {
+                const iElement = document.createElement('i');
+                iElement.textContent = i + '';
+
+                myratingNumbers.append(iElement);
+            }
+            
+            ratingContainer.append(myRating, myratingNumbers);
+
+        })
 
         ratingContainer.addEventListener('click', async (event) => {
             if (event.target instanceof HTMLLabelElement && event.target.classList.contains('descr_star')) {
@@ -139,17 +167,13 @@ class DescriptionPage extends Page {
                     
                     console.log(currentRating);
 
-                    const newRating = await GradesAPI.postGrade(currentRating, this.bookdId, this.authStatus);
+                    const newRating = await GradesAPI.postGrade(currentRating, this.bookId, this.authStatus);
                     if (newRating){
                         allRating.textContent = newRating.toString();
                         mySubRating.textContent = currentRating.toString();
                         subRatingWrapper.style.display = 'block';
                     }
-
                 }
-
-
-                
             }
         })
 
@@ -171,7 +195,7 @@ class DescriptionPage extends Page {
         this.wantToReadButton.textContent = 'Хочу почитать';
 
         // присваиваем элементам информацию по книге
-        BooksAPI.getBookById(this.bookdId).then(bookInfo => {
+        BooksAPI.getBookById(this.bookId).then(bookInfo => {
             descrName.textContent = bookInfo.title;
             descrAuthor.textContent = `Автор книги: ${bookInfo.author}`;
             descrYear.textContent = `Год написания: ${bookInfo.year}`;
@@ -186,7 +210,7 @@ class DescriptionPage extends Page {
         const checkButtonsAdd = () => {
 
             if (typeof this.authStatus !== 'boolean'){
-                UsersAPI.checkBooksLikeRead(this.bookdId, this.authStatus).then(bookStatus => {
+                UsersAPI.checkBooksLikeRead(this.bookId, this.authStatus).then(bookStatus => {
                     console.log('Does user want to read this book or has already read this book?', bookStatus);
                     if (bookStatus === "false") {
                         descrImgWrapper.append(this.addToReadButton, this.wantToReadButton);
@@ -206,7 +230,6 @@ class DescriptionPage extends Page {
 
         checkButtonsAdd();
 
-        ratingContainer.append(myRating, myratingNumbers);
         ratingWrapper.append(myRatingText, ratingContainer, allRatingText, allRating);
         subRatingWrapper.append(mySubRatingText, mySubRating);
         descrDescrWrapper.append(descrDescrTitle, descrDescr);
@@ -255,7 +278,7 @@ class DescriptionPage extends Page {
         const reviewsWrapper = document.createElement('div');
         reviewsWrapper.classList.add('descr__reviews__wrapper');
 
-        ReviewsAPI.getAllReviews(this.bookdId).then( async allReviews => {
+        ReviewsAPI.getAllReviews(this.bookId).then( async allReviews => {
 
             if (allReviews.length === 0){
                 reviewsWrapper.textContent = 'Будьте первым, кто оставит рецензию!'
@@ -335,7 +358,7 @@ class DescriptionPage extends Page {
                 const reviewBookTitle = document.createElement('div');
                 const reviewBookAuthor = document.createElement('div');
 
-                BooksAPI.getBookById(this.bookdId).then(bookInfo => {
+                BooksAPI.getBookById(this.bookId).then(bookInfo => {
                     reviewBookTitle.textContent = bookInfo.title;
                     reviewBookAuthor.textContent = bookInfo.author;
                     reviewBookImg.src = bookInfo.img;
