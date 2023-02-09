@@ -97,6 +97,26 @@ export class ReviewsAPI {
     return await fetch(`${this.apiEndpoint}book/${bookId}`)
     .then(response => response.json());
   }
+
+  static async postNewReview(text: string, bookId: string, token: string){
+    const reviewParams = {
+      bookId,
+      text
+    }
+
+    const response = await fetch(this.apiEndpoint, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token,
+      },
+      body: JSON.stringify(reviewParams),
+    })
+
+    if (response.status === 200){
+      return await response.json();
+    }
+  }
 }
 
 export class GradesAPI {
@@ -129,7 +149,7 @@ export class GradesAPI {
       bookId: bookId,
       value: grade
     }
-    console.log('this book id', bookId);
+    
     const response: IPostGrade = await fetch (`${this.apiEndpoint}`, {
       method: 'POST',
       headers: {
@@ -141,6 +161,19 @@ export class GradesAPI {
 
     if (response.status === 200){
       return (await response.json()).raiting;
+    }
+  }
+
+  static async deleteMyRating(bookId: string, token: string){
+    const response = await fetch(`${this.apiEndpoint}${bookId}`, {
+      method: 'DELETE',
+      headers: {
+        "Authorization": token
+      }
+    })
+
+    if (response.status === 200){
+      return await response.json();
     }
   }
 }

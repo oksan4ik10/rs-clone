@@ -3,7 +3,6 @@
   grid-template-columns: 3fr 1fr;
   gap: 5%;
   padding: 70px 20% 40px 20%;
-  background-color: $color-opaque-light;
 }
 
 .desc__content__wrapper {
@@ -136,19 +135,24 @@
 
 .decr__textarea {
   padding: 5px;
-  height: 50px;
+  height: 120px;
   width: 99%;
   resize: none;
   @include border-and-backgroud;
-  height: 30px;
   font-family: inherit;
   cursor: auto;
 }
 
 .decr__textarea:focus {
   outline: 2px $border-focus-color;
-  resize: none;
-  height: 120px;  
+  height: 120px;
+}
+
+.description__delete__myrating {
+  cursor: pointer;
+  border-bottom: 1px dotted blue;
+  font-style: italic;
+  margin-left: 10px;
 }
 
 .decr__textarea::-webkit-scrollbar {
@@ -248,7 +252,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: $color-opaque-dark;
+  background-color: $color-opaque-light;
   padding: 20px 5px 10px 5px;
 }
 
@@ -272,7 +276,7 @@
   height: 30px;
 }
 
-@media screen and (max-width: 1100px) {
+@media screen and (max-width: 1200px) {
   .decription__rating__wrapper {
     flex-direction: column;
     flex-wrap: wrap;
