@@ -70,3 +70,8 @@ export interface ICheckBooksLikeRead {
         status: string;
     }>
 }
+
+export interface IPostGrade {
+    json(): Promise<IOneBook>;
+    status: number;
+}

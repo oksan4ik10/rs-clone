@@ -1,4 +1,4 @@
-import { IOneBook, IOneReview, IUserNew, IUser, IGetGradeByUserResp, ICheckBooksLikeRead} from "../types";
+import { IOneBook, IOneReview, IUserNew, IUser, IGetGradeByUserResp, ICheckBooksLikeRead, IPostGrade} from "../types";
 
 
 const baseApiEndpoint = 'http://localhost:3000/api/';
@@ -122,6 +122,26 @@ export class GradesAPI {
     }
 
     return null;
+  }
+
+  static async postGrade(grade: number, bookId: string, token: string) {
+    const gradeParams = {
+      bookId: bookId,
+      value: grade
+    }
+    console.log('this book id', bookId);
+    const response: IPostGrade = await fetch (`${this.apiEndpoint}`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token
+      },
+      body: JSON.stringify(gradeParams)
+    })
+
+    if (response.status === 200){
+      return (await response.json()).raiting;
+    }
   }
 }
 

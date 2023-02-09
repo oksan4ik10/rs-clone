@@ -1,8 +1,6 @@
 import Component from '../../templates/components';
 import Header from '../../components/header';
 import { UsersAPI } from '../../../api/api';
-import App from '../../../pages/app';
-import DescriptionPage from '../../../pages/description';
 
 
 class Authorization extends Component {
