@@ -7,14 +7,28 @@
 
 .personal__user .wrapper {
     height: 100%;
+    @include flex-space-between;
+}
+
+.personal__user__block {
+    display: flex;
 }
 
 .personal__user__name {
     color: white;
     font-size: 24px;
-    height: 100%;
     display: flex;
     align-items: center;
+}
+
+.personal__user__avatar {
+    margin-right: 40px;
+}
+
+.personal__user__img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
 }
 
 .personal__content {
@@ -61,4 +75,8 @@
 .personal__tab__content {
     display: none;
     font-size: 20px;
+}
+
+.personal__submit {
+    
 }
