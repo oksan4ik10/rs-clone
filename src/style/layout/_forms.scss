@@ -1,5 +1,6 @@
 .registration__form,
-.authorisation__form {
+.authorisation__form,
+.personal__form {
     width: 520px;
     height: 530px;
     @include flex-colomn;
@@ -16,13 +17,14 @@
     padding: 25px;
 }
 
-// .authorisation__form {
-//     width: 520px;
-//     height: 350px;
-// }
+.personal__form {
+    width: 520px;
+    height: 350px;
+}
 
 .registration__title,
-.authorisation__title {
+.authorisation__title,
+.personal__title {
     margin-bottom: 20px;
     color: $text-dark-color;
     font-size: 26px;
@@ -43,7 +45,8 @@
 }
 
 .registration__submit,
-.authorisation__submit {
+.authorisation__submit,
+.personal__submit {
     margin-top: 25px;
     margin-bottom: 5px;
     color: white;

@@ -1,13 +1,40 @@
 import Page from "../../core/templates/page";
+import Personal from '../../core/components/personal-form';
+import Header from '../../core/components/header';
+
 class PersonalArea extends Page {
     main: HTMLElement;
     readContent: HTMLElement;
+    button: HTMLButtonElement;
+
+    static formActive = false;
 
     constructor(id: string) {
         super(id);
         this.main = document.createElement('main');
-        
+        this.button = document.createElement('button');
         this.readContent = document.createElement('div');
+    }
+
+    openForm(form: string) {
+        const darkBackground = document.createElement('div');
+        const changePersonal = new Personal('section', form);
+        const body = document.querySelector('.body') as HTMLBodyElement;
+
+        body.appendChild(changePersonal.render());
+        body.appendChild(darkBackground);
+
+        setTimeout(function(){
+            darkBackground.classList.add('dark-background');
+            darkBackground.classList.add('dark-background_opacity');
+        }, 100);
+
+        PersonalArea.formActive = true;
+
+        darkBackground.addEventListener('click', () => {
+            Header.prototype.closeForm(form);
+            PersonalArea.formActive = false;
+        })
     }
 
     createMainPage() {
@@ -20,9 +47,22 @@ class PersonalArea extends Page {
         const wrapper = document.createElement('div');
         wrapper.classList.add('wrapper');
 
+        const nameBlock = document.createElement('div');
+        nameBlock.classList.add('personal__user__block');
+
+        const img = document.createElement('img');
+        img.src = './images/avatar.jpg';
+        img.classList.add('personal__user__img');
+
+        const avatar = document.createElement('div');
+        avatar.classList.add('personal__user__avatar');
+
         const name = document.createElement('div');
         name.classList.add('personal__user__name');
         name.textContent = (document.querySelector('.header__personal__name-user') as HTMLSpanElement).textContent;
+        
+        this.button.classList.add('personal__user__change', 'button');
+        this.button.textContent = 'Редактировать профиль';
 
         const content = document.createElement('div');
         content.classList.add('personal__content');
@@ -70,10 +110,18 @@ class PersonalArea extends Page {
             readContent.style.display = 'none';
         })
 
+        this.button.addEventListener('click', () => {
+            this.openForm('personal-form')
+        })
+
         section.append(this.main);
         this.main.append(infoUserContainer);
         infoUserContainer.append(wrapper);
-        wrapper.append(name);
+        wrapper.append(nameBlock);
+        nameBlock.append(avatar);
+        avatar.append(img);
+        nameBlock.append(name);
+        wrapper.append(this.button);
         this.main.append(content);
         content.append(wrapper2);
         wrapper2.append(tab);
