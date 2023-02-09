@@ -56,6 +56,7 @@ export interface IGetGradeByUserResp {
     json(): Promise<IGetGradeByUserRespGood>;
     message?: string;
     status: number;
+    ok?: boolean;
 }
 
 export interface ICheckBookReadStatus {

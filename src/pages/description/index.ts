@@ -58,7 +58,7 @@ class DescriptionPage extends Page {
                 if (grade) {
                     return grade;
                 } 
-                return 0;
+                return null;
             })
         }
         return null;
@@ -101,14 +101,32 @@ class DescriptionPage extends Page {
         subRatingWrapper.style.display = 'none';
         const mySubRatingText = document.createElement('span');
         mySubRatingText.classList.add('description__mysubrating__text');
-        mySubRatingText.textContent = 'Вы оценили книгу на:';
+        mySubRatingText.textContent = 'Вы оценили книгу на';
         const mySubRating = document.createElement('div');
         mySubRating.classList.add('description__mysubrating');
+        const deleteMyRating = document.createElement('span');
+        deleteMyRating.classList.add('description__delete__myrating');
+        deleteMyRating.textContent = 'Отменить оценку?'
         
+        deleteMyRating.addEventListener('click', async () => {
+            if (typeof this.authStatus === 'string'){
+                const newAllRating = await GradesAPI.deleteMyRating(this.bookId, this.authStatus);
+
+                const previousCheckedStars = document.querySelectorAll('.desc__my__rat');
+                previousCheckedStars.forEach(star => {
+                    if (star instanceof HTMLInputElement) {
+                        star.checked = false;
+                    }
+                })
+                
+                subRatingWrapper.style.display = 'none';
+
+                allRating.textContent = newAllRating.raiting.toString();
+            }
+        })
 
         this.getRatingByAuthorizedUser().then(rating => {
             const ratingByUser = rating;
-            console.log(ratingByUser);
 
             // рисуем звёздочки
             for (let i = 10; i > 0; i--) {
@@ -117,6 +135,7 @@ class DescriptionPage extends Page {
                 inputElement.id = `myrating-${i}`;
                 inputElement.name = 'myrating';
                 inputElement.value = i + '';
+                inputElement.classList.add('desc__my__rat')
 
                 if (ratingByUser === i) {
                     inputElement.checked = true;
@@ -164,8 +183,6 @@ class DescriptionPage extends Page {
                     if (inputChecked instanceof HTMLInputElement){
                         inputChecked.checked = true;
                     }
-                    
-                    console.log(currentRating);
 
                     const newRating = await GradesAPI.postGrade(currentRating, this.bookId, this.authStatus);
                     if (newRating){
@@ -231,7 +248,7 @@ class DescriptionPage extends Page {
         checkButtonsAdd();
 
         ratingWrapper.append(myRatingText, ratingContainer, allRatingText, allRating);
-        subRatingWrapper.append(mySubRatingText, mySubRating);
+        subRatingWrapper.append(mySubRatingText, mySubRating, deleteMyRating);
         descrDescrWrapper.append(descrDescrTitle, descrDescr);
         descrImgOuter.append(descrImg);
         this.descrContentWrapper.append(descrName, descrAuthor, descrYear, 
@@ -252,6 +269,7 @@ class DescriptionPage extends Page {
         const newReviewForm = document.createElement('form');
         newReviewForm.classList.add('decr__form');
         const newReviewText = document.createElement('textarea');
+        newReviewText.name = 'text';
         newReviewText.classList.add('decr__textarea');
         newReviewText.placeholder = "Оставить рецензию...";
         const newReviewSubmit = document.createElement('button');
@@ -261,17 +279,40 @@ class DescriptionPage extends Page {
         newReviewSubmit.style.display = 'none';
         newReviewForm.append(newReviewText, newReviewSubmit);
 
-        const toggleReviewSubmit = () => {
-            if (newReviewText === document.activeElement && this.authStatus){
+        const sendNewReview = (event: Event) => {
+            event.preventDefault();
+
+            if (newReviewText.value.length > 0 && typeof this.authStatus === 'string'){
+                ReviewsAPI.postNewReview(newReviewText.value, this.bookId, this.authStatus).then(() => {
+                    if (this.descrContentWrapper.lastChild){
+                        this.descrContentWrapper.removeChild(this.descrContentWrapper.lastChild);
+                    }                    
+                    this.descrContentWrapper.append(this.createReviews());
+                }); 
+            }
+        }
+
+        newReviewSubmit.addEventListener('click', sendNewReview);
+
+        const toggleReviewSubmit = (event: Event) => {
+            if (newReviewText === document.activeElement && this.authStatus && newReviewText.value.length > 0){
                 newReviewSubmit.style.display = 'block';
             } else if (newReviewText === document.activeElement && !this.authStatus) {
                 this.showAuthPopUp();
-            } else {
+            } else if(event.target instanceof HTMLElement && !event.target.classList.contains('desc_button__submit') && newReviewText.value.length <= 0) {
                 setTimeout(() => {
                     newReviewSubmit.style.display = 'none';
                 }, 100) 
             }
         }
+
+        newReviewText.addEventListener('input', () => {
+            if (newReviewText.value.length > 0){
+                newReviewSubmit.style.display = 'block';
+            } else {
+                newReviewSubmit.style.display = 'none';
+            }
+        })
 
         document.addEventListener('click', toggleReviewSubmit);
 
