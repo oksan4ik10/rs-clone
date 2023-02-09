@@ -30,9 +30,14 @@ export class BooksAPI {
 
   static async getBestBooks() {
     const response = await fetch(`${this.apiEndpoint}/best/list`);
-    
-      const result:[] = await response.json();
-      return result;
+    const result:[] = await response.json();
+    return result;
+  }
+
+  static async getRandomBooks(genre:string) {
+    const response = await fetch(`${this.apiEndpoint}random/${genre}`);
+    const result:IOneBook = await response.json();
+    return result;
   }
 
 }

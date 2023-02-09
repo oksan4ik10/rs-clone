@@ -2,13 +2,22 @@
     margin-top: 40px;
 
     border-bottom: 1px dashed green;
+
 }
 
 .recommend .wrapper {
-    @include flex-space-between;
+   
     margin-bottom: 40px;
-
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
     border: 1px solid black;
+}
+
+.recommend__blur{
+    @include flex-space-between;
+    background: rgba(255, 255, 255, 0.2); // Make sure this color has an opacity of less than 1
+    backdrop-filter: blur(8px);
 }
 
 .recommend__info {
