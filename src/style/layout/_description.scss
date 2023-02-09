@@ -25,9 +25,11 @@
 	overflow: hidden;
   height: 26px;
 }
+
 .description__myrating:not(:checked) > input {
 	display: none;
 }
+
 .description__myrating:not(:checked) > label {
 	float: right;
 	padding: 0;
@@ -99,6 +101,25 @@
   display: flex;
   align-items: baseline;
   gap: 10px;
+}
+
+.decription__subrating__wrapper {
+  margin-top: 10px;
+  color: $border-input-focus;
+}
+
+.description__mysubrating {
+  display: inline-block;
+  text-align: center;
+  padding-top: 4px;
+  background-color: gold;
+  text-shadow: 1px 1px #c60;
+  color: black;
+  font-weight: 700;
+  width: 30px;
+  height: 25px;
+  border-radius: 10px;
+  margin-left: 10px;
 }
 
 .desc__review__img {

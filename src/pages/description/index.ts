@@ -52,7 +52,6 @@ class DescriptionPage extends Page {
     }
 
     createPage() {
-        console.log('this.authStatus:', this.authStatus);
         const descrImgWrapper = document.createElement('div');
         descrImgWrapper.classList.add('desc__img__wrapper');
         descrImgWrapper.addEventListener('click', this.listenAuthorizedAction);
@@ -111,15 +110,46 @@ class DescriptionPage extends Page {
             myratingNumbers.append(iElement);
         }
 
-        ratingContainer.addEventListener('click', (event) => {
-            if (event.target instanceof HTMLElement && event.target.classList.contains('descr_star')) {
+        const subRatingWrapper = document.createElement('div');
+        subRatingWrapper.classList.add('decription__subrating__wrapper');
+        subRatingWrapper.style.display = 'none';
+        const mySubRatingText = document.createElement('span');
+        mySubRatingText.classList.add('description__mysubrating__text');
+        mySubRatingText.textContent = 'Вы оценили книгу на:';
+        const mySubRating = document.createElement('div');
+        mySubRating.classList.add('description__mysubrating');
+
+        ratingContainer.addEventListener('click', async (event) => {
+            if (event.target instanceof HTMLLabelElement && event.target.classList.contains('descr_star')) {
                 event.preventDefault();
-                const currentRating = event.target.id.split('-')[1];
+            
                 if (!this.authStatus){
                     this.showAuthPopUp();
+                } else if (typeof this.authStatus === 'string') {
+                    const currentRating = +event.target.id.split('-')[1];
+                    const previousCheckedStar = document.querySelector('.descr_star');
+                    if (previousCheckedStar instanceof HTMLInputElement) {
+                        previousCheckedStar.checked = false;
+                    }
+                    
+                    const inputChecked = event.target.previousElementSibling;
+                    if (inputChecked instanceof HTMLInputElement){
+                        inputChecked.checked = true;
+                    }
+                    
+                    console.log(currentRating);
+
+                    const newRating = await GradesAPI.postGrade(currentRating, this.bookdId, this.authStatus);
+                    if (newRating){
+                        allRating.textContent = newRating.toString();
+                        mySubRating.textContent = currentRating.toString();
+                        subRatingWrapper.style.display = 'block';
+                    }
+
                 }
 
-                console.log(currentRating);
+
+                
             }
         })
 
@@ -178,10 +208,11 @@ class DescriptionPage extends Page {
 
         ratingContainer.append(myRating, myratingNumbers);
         ratingWrapper.append(myRatingText, ratingContainer, allRatingText, allRating);
+        subRatingWrapper.append(mySubRatingText, mySubRating);
         descrDescrWrapper.append(descrDescrTitle, descrDescr);
         descrImgOuter.append(descrImg);
         this.descrContentWrapper.append(descrName, descrAuthor, descrYear, 
-            descrGenre, descrDescrWrapper, ratingWrapper, this.createReviews());
+            descrGenre, descrDescrWrapper, ratingWrapper, subRatingWrapper, this.createReviews());
         this.main.append(this.descrContentWrapper, descrImgWrapper);
 
         return this.main;

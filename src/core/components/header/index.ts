@@ -2,11 +2,9 @@ import Component from '../../templates/components';
 import { PageIds } from '../../../types';
 import Registration from '../registration';
 import Authorization from '../authorization';
-import MainPage from '../../../pages/main';
 import { HeaderSearch } from './header-search';
 import { BooksAPI } from '../../../api/api';
 import { UsersAPI } from '../../../api/api';
-import App from '../../../pages/app';
 
 
 class Header extends Component {
