@@ -122,6 +122,7 @@
         @include flex-space-between;
         gap: 10px;
         transition: .2s;
+        cursor: pointer;
         &:hover>div>img{
             border: 2px solid $back-dark-color; 
         } 
