@@ -1,4 +1,4 @@
-import { IOneBook, IOneReview, IUserNew, IUser, IGetGradeByUserResp, ICheckBooksLikeRead, IPostGrade} from "../types";
+import { IOneBook, IOneReview, IUserNew, IUser, IGetGradeByUserResp, ICheckBooksLikeRead, IPostGrade, IAddBooksRead} from "../types";
 
 
 const baseApiEndpoint = 'http://localhost:3000/api/';
@@ -86,7 +86,86 @@ export class UsersAPI{
     })
     return (await response.json()).status;
   }
+
+  //Добавление книги в прочитанное
+  static async addBooksRead(bookId: string, token: string) {
+    const bookParam = {
+      bookId: bookId
+    }
+
+    const response = await fetch(`${this.apiEndpoint}`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json', 
+        'Authorization': token
+      },
+      body: JSON.stringify(bookParam),
+    });
+    const result = await response.json();
+    console.log('result', result)
+    return result;
+  }
+
+  //Удаление книги из прочитанного
+  static async removeBooksRead(bookId: string, token: string) {
+    const bookParam = {
+      bookId: bookId
+    }
+
+    const response = await fetch(`${this.apiEndpoint}/delete`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json', 
+        'Authorization': token
+      },
+      body: JSON.stringify(bookParam),
+    });
+    const result = await response.json();
+    console.log('result', result)
+    return result;
+  }
+
+  //добавление книги в желаемые к прочтению
+  static async addBooksWantRead(bookId: string, token: string) {
+    const bookParam = {
+      bookId: bookId
+    }
+
+    const response = await fetch(`${this.apiEndpoint}/booksLike`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json', 
+        'Authorization': token
+      },
+      body: JSON.stringify(bookParam),
+    });
+    const result = await response.json();
+    console.log('result', result)
+    return result;
+  }
+
+  //Удаление книги из желаемых к прочтению
+  static async removeBooksWantRead(bookId: string, token: string) {
+    const bookParam = {
+      bookId: bookId
+    }
+
+    const response = await fetch(`${this.apiEndpoint}/booksLike/delete`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json', 
+        'Authorization': token
+      },
+      body: JSON.stringify(bookParam),
+    });
+    const result = await response.json();
+    console.log('result', result)
+    return result;
+  }
+
 }
+
+
 
 export class ReviewsAPI {
   static apiEndpoint = basePaths.reviews;
