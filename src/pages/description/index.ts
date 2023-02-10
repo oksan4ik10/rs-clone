@@ -287,7 +287,6 @@ class DescriptionPage extends Page {
             } else {
                 descrImgWrapper.append(this.addToReadButton, this.wantToReadButton);
             }
-
         }
 
         checkButtonsAdd();

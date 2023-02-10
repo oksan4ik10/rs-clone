@@ -162,7 +162,6 @@ export class UsersAPI{
     console.log('result', result)
     return result;
   }
-
 }
 
 
@@ -196,7 +195,27 @@ export class ReviewsAPI {
       return await response.json();
     }
   }
+
+  // получаем отзыв пользователя по книге
+
+  static async getReviewsByUser(token: string, bookId: string){
+    const response = await fetch(`${this.apiEndpoint}user/${bookId}`, {
+      method: "GET",
+      headers: {
+        'Authorization': token, 
+      },
+    })
+
+    if (response.status === 200){
+      const result = await response.json();
+      console.log(result)
+      return result;
+    } else {
+      return null;
+    }
+  }
 }
+
 
 export class GradesAPI {
   static apiEndpoint = basePaths.grades;
