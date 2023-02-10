@@ -5,15 +5,17 @@ import { BooksAPI } from '../../../api/api';
 class Recommendation extends Component {
 
     btnReview: HTMLElement;
+    blockImg: HTMLElement;
     constructor(tagName: string, className: string) {
         super(tagName, className);
         this.btnReview = document.createElement('button');
+        this.blockImg = document.createElement('div');
+
     }
 
 
     async renderRecommendation() {
         const book = await BooksAPI.getRandomBooks('all');
-        console.log(book);
         const wrapperContainer = document.createElement('div');
         wrapperContainer.className = 'wrapper';
         const wrapper = document.createElement('div');
@@ -38,25 +40,34 @@ class Recommendation extends Component {
         recommendInfo.append(desc);
 
         this.btnReview.className = 'button recomend__button';
-        this.btnReview.textContent = 'Подробнее'
+        this.btnReview.textContent = 'Подробнее';
+        this.btnReview.setAttribute('id',book._id)
         recommendInfo.append(this.btnReview);
 
         wrapper.append(recommendInfo);
 
-        const imgBook = document.createElement('div');
-        imgBook.className = 'recommend__book';
+        
+        this.blockImg.className = 'recommend__book';
         const img = document.createElement('img');
         img.src = book.img;
-        imgBook.append(img);
+        this.blockImg.append(img);
+        this.blockImg.setAttribute('id', book._id);
 
-        wrapper.append(imgBook);
+        wrapper.append(this.blockImg);
 
         wrapperContainer.style.backgroundImage = `url(${book.img})`;
         wrapperContainer.append(wrapper);
         this.container.append(wrapperContainer);
     }
+    openDesc(e:Event){
+        const target = e.currentTarget as HTMLElement;
+        const id = target.getAttribute('id');
+        window.location.hash = `id=${id}`;
+    }
 
     render() {
+        this.btnReview.addEventListener('click', this.openDesc.bind(this));
+        this.blockImg.addEventListener('click', this.openDesc.bind(this));
         this.renderRecommendation();
         return this.container;
     }
