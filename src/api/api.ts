@@ -1,4 +1,4 @@
-import { IOneBook, IOneReview, IUserNew, IUser, IGetGradeByUserResp, ICheckBooksLikeRead, IPostGrade, IAddBooksRead} from "../types";
+import { IOneBook, IOneReview, IUserNew, IUser, IGetGradeByUserResp, ICheckBooksLikeRead, IPostGrade, IAddBooksRead, IUserUpdate} from "../types";
 
 
 const baseApiEndpoint = 'http://localhost:3000/api/';
@@ -178,6 +178,20 @@ export class UsersAPI{
       body: files,
     });
     const result = await response.json();
+    return result;
+  }
+
+  static async userUpdate(obj:IUserUpdate, token: string) {
+    const response = await fetch(`${this.apiEndpoint}update`, {
+      method: "PATCH",
+      headers: {
+        'Content-Type': 'application/json', 
+        'Authorization': token
+      },
+      body: JSON.stringify(obj),
+    });
+    const result = await response.json();
+
     return result;
   }
 

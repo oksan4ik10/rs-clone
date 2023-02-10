@@ -77,9 +77,14 @@ class Personal extends Component {
         }
         
     }
+    closeBtn(){
+        this.submit.removeAttribute('disabled');
+    }
     async openFile(e:Event){
+
         const target = e.currentTarget as HTMLInputElement ;
         const file = target.files;
+        this.submit.setAttribute('disabled','true');
         if(file){
             const formData = new FormData();
             formData.append("avatar",file[0], file[0].name);
@@ -88,17 +93,26 @@ class Personal extends Component {
             if(token) {
                 const res = await UsersAPI.getAvatar(formData, token);
                 this.avatar.src = res.img;
+                setTimeout(this.closeBtn.bind(this),1200);
+                
             }
         }
 
     }
-    submitForm(e: Event){
+    async submitForm(e: Event){
         e.preventDefault();
-        const form = new FormData(this.form);
-        console.log(form);
+        const obj = {
+            name: this.name.value,
+            img: this.avatar.src
+        }        
         
-        
-                   
+        const token = localStorage.getItem('token');
+        if(token) {
+            await UsersAPI.userUpdate(obj, token);
+            window.location.hash = 'personal-area';
+            
+        }
+
         Header.prototype.closeForm('personal-form');
         Header.formActive = false;
     }

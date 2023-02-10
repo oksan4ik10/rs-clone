@@ -78,3 +78,8 @@
     padding: 5px;
     font-size: 0.8em;
 }
+
+.personal__submit:disabled{
+    background-color:$border-input;
+    cursor: not-allowed;
+}
