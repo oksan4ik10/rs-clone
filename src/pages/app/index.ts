@@ -17,7 +17,7 @@ class App {
 
     static renderNewPage(idPage: string) {
         const footer = new Footer('footer', 'footer'); 
-        if (idPage === '') return;
+        if (idPage === '') idPage = 'main-page';
         const currentPageHTML = document.querySelector(`#${App.defaultPageId}`);
         const footerOld = document.querySelector('footer');
         if(footerOld) footerOld.remove();
