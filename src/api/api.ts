@@ -1,4 +1,4 @@
-import { IOneBook, IOneReview, IUserNew, IUser, IGetGradeByUserResp, ICheckBooksLikeRead, IPostGrade, IAddBooksRead} from "../types";
+import { IOneBook, IOneReview, IUserNew, IUser, IGetGradeByUserResp, ICheckBooksLikeRead, IPostGrade, IAddBooksRead, IUserUpdate} from "../types";
 
 
 const baseApiEndpoint = 'http://localhost:3000/api/';
@@ -30,9 +30,14 @@ export class BooksAPI {
 
   static async getBestBooks() {
     const response = await fetch(`${this.apiEndpoint}/best/list`);
-    
-      const result:[] = await response.json();
-      return result;
+    const result:[] = await response.json();
+    return result;
+  }
+
+  static async getRandomBooks(genre:string) {
+    const response = await fetch(`${this.apiEndpoint}random/${genre}`);
+    const result:IOneBook = await response.json();
+    return result;
   }
 
 }
@@ -157,6 +162,41 @@ export class UsersAPI{
     });
     const result = await response.json();
     return result;
+  }
+
+  //загрузка аватарки
+  static async getAvatar(files:FormData, token:string){
+    const response = await fetch(`${this.apiEndpoint}avatar`, {
+      method: "POST",
+      headers: {
+        'Authorization': token
+      },
+      body: files,
+    });
+    try{
+      const result = await response.json();
+      console.log(result);
+      return result;
+    } catch{
+      return;
+    }
+  }
+
+  static async userUpdate(obj:IUserUpdate, token: string) {
+    const response = await fetch(`${this.apiEndpoint}update`, {
+      method: "PATCH",
+      headers: {
+        'Content-Type': 'application/json', 
+        'Authorization': token
+      },
+      body: JSON.stringify(obj),
+    });
+    try{
+      const result = await response.json();      
+      return result;
+    }catch{
+      return;
+    }
   }
 }
 

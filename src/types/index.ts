@@ -80,3 +80,7 @@ export interface IPostGrade {
 export interface IAddBooksRead  {
     bookId: string,
 }
+export interface IUserUpdate{
+    name: string,
+    img: string
+}
