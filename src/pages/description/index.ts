@@ -67,7 +67,7 @@ class DescriptionPage extends Page {
     async toggleToWantBook() {
         if (this.wantToReadButton.textContent === 'Удалить из планов') {
             //удалить книгу из планов
-            this.wantToReadButton.textContent = 'Хочу почитать';
+            this.wantToReadButton.textContent = 'Хочу прочитать';
             this.addToReadButton.style.display = 'block';
             return await UsersAPI.removeBooksWantRead(this.bookId, this.authStatus as string);
         } else {
@@ -83,12 +83,69 @@ class DescriptionPage extends Page {
             //удалить книгу из прочитанного
             this.wantToReadButton.style.display = 'block';
             this.addToReadButton.textContent = 'Добавить в прочитанное';
-            return await UsersAPI.removeBooksRead(this.bookId, this.authStatus as string);
+
+            const result = await UsersAPI.removeBooksRead(this.bookId, this.authStatus as string);
+            // проверка, есть ли у этого юзера отзыв, если есть, то обновляем отзывы
+            if (true) {
+                this.reCreateReviews();
+                /*
+                const currentBookId = window.location.hash.split('=')[1]
+                window.location.hash = '';
+                window.location.hash = `id=${currentBookId}`;
+                */
+            }
+
+            return result;
         } else {
             //добавить книгу в прочитанное
             this.wantToReadButton.style.display = 'none';
             this.addToReadButton.textContent = 'Удалить из прочитанного';
             return await UsersAPI.addBooksRead(this.bookId, this.authStatus as string);
+        }
+    }
+
+    checkButtonsAdd() {
+        if (typeof this.authStatus !== 'boolean'){
+            UsersAPI.checkBooksLikeRead(this.bookId, this.authStatus).then(bookStatus => {
+                console.log('Does user want to read this book or has already read this book?', bookStatus);
+                if (bookStatus === "false") {
+                    this.wantToReadButton.style.display = 'block';
+                    this.addToReadButton.style.display = 'block';
+                    
+                    this.addToReadButton.addEventListener('click', () => {
+                        this.toggleToReadBook();
+                    })
+                    this.wantToReadButton.addEventListener('click', () => {
+                        this.toggleToWantBook();
+                    })
+
+                } else if (bookStatus === 'booksLike') {
+                    this.wantToReadButton.textContent = 'Удалить из планов';
+                    this.wantToReadButton.style.display = 'block';
+
+                    this.wantToReadButton.addEventListener('click', () => {
+                        this.toggleToWantBook();
+                    })
+                    this.addToReadButton.addEventListener('click', () => {
+                        this.toggleToReadBook();
+                    })
+
+                } else if (bookStatus === 'books') {
+                    this.addToReadButton.textContent = 'Удалить из прочитанного';
+                    this.addToReadButton.style.display = 'block';
+
+                    this.wantToReadButton.addEventListener('click', () => {
+                        this.toggleToWantBook();
+                    })
+                    this.addToReadButton.addEventListener('click', () => {
+                        this.toggleToReadBook();
+                    })
+                }
+            })
+
+        } else {
+            this.wantToReadButton.style.display = 'block';
+            this.addToReadButton.style.display = 'block';
         }
     }
 
@@ -148,7 +205,6 @@ class DescriptionPage extends Page {
                 })
                 
                 subRatingWrapper.style.display = 'none';
-
                 allRating.textContent = newAllRating.raiting.toString();
             }
         })
@@ -237,7 +293,9 @@ class DescriptionPage extends Page {
         this.addToReadButton.classList.add('description__addtoread', 'button');
         this.addToReadButton.textContent = 'Добавить в прочитанное';
         this.wantToReadButton.classList.add('description__wanttoread', 'button');
-        this.wantToReadButton.textContent = 'Хочу почитать';
+        this.wantToReadButton.textContent = 'Хочу прочитать';
+        this.wantToReadButton.style.display = 'none';
+        this.addToReadButton.style.display = 'none';
 
         // присваиваем элементам информацию по книге
         BooksAPI.getBookById(this.bookId).then(bookInfo => {
@@ -250,47 +308,11 @@ class DescriptionPage extends Page {
             descrImg.src = bookInfo.img;
         });
 
-        descrImgWrapper.append(descrImgOuter)
+        descrImgWrapper.append(descrImgOuter);
 
-        const checkButtonsAdd = () => {
+        this.checkButtonsAdd();
 
-            if (typeof this.authStatus !== 'boolean'){
-                UsersAPI.checkBooksLikeRead(this.bookId, this.authStatus).then(bookStatus => {
-                    console.log('Does user want to read this book or has already read this book?', bookStatus);
-                    if (bookStatus === "false") {
-                        descrImgWrapper.append(this.addToReadButton, this.wantToReadButton);
-
-                        this.addToReadButton.addEventListener('click', () => {
-                            this.toggleToReadBook();
-                        })
-                        this.wantToReadButton.addEventListener('click', () => {
-                            this.toggleToWantBook();
-                        })
-
-                    } else if (bookStatus === 'booksLike') {
-                        this.wantToReadButton.textContent = 'Удалить из планов';
-                        descrImgWrapper.append(this.wantToReadButton);
-
-                        this.wantToReadButton.addEventListener('click', () => {
-                            this.toggleToWantBook();
-                        })
-
-                    } else if (bookStatus === 'books') {
-                        this.addToReadButton.textContent = 'Удалить из прочитанного';
-                        descrImgWrapper.append(this.addToReadButton);
-
-                        this.addToReadButton.addEventListener('click', () => {
-                            this.toggleToReadBook();
-                        })
-                    }
-                })
-            } else {
-                descrImgWrapper.append(this.addToReadButton, this.wantToReadButton);
-            }
-
-        }
-
-        checkButtonsAdd();
+        descrImgWrapper.append(this.addToReadButton, this.wantToReadButton);
 
         ratingWrapper.append(myRatingText, ratingContainer, allRatingText, allRating);
         subRatingWrapper.append(mySubRatingText, mySubRating, deleteMyRating);
@@ -301,6 +323,14 @@ class DescriptionPage extends Page {
         this.main.append(this.descrContentWrapper, descrImgWrapper);
 
         return this.main;
+    }
+
+    reCreateReviews() {
+        if (this.descrContentWrapper.lastChild){
+            this.descrContentWrapper.removeChild(this.descrContentWrapper.lastChild);
+        }
+
+        this.descrContentWrapper.append(this.createReviews());
     }
 
     createReviews() {
@@ -329,10 +359,12 @@ class DescriptionPage extends Page {
 
             if (newReviewText.value.length > 0 && typeof this.authStatus === 'string'){
                 ReviewsAPI.postNewReview(newReviewText.value, this.bookId, this.authStatus).then(() => {
-                    if (this.descrContentWrapper.lastChild){
-                        this.descrContentWrapper.removeChild(this.descrContentWrapper.lastChild);
-                    }                    
-                    this.descrContentWrapper.append(this.createReviews());
+                    this.reCreateReviews();
+
+                    this.wantToReadButton.style.display = 'none';
+                    this.addToReadButton.style.display = 'block';
+                    this.addToReadButton.textContent = 'Удалить из прочитанного';
+                    this.wantToReadButton.textContent= 'Хочу прочитать';
                 }); 
             }
         }
