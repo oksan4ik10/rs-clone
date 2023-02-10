@@ -69,8 +69,9 @@ class Personal extends Component {
         
             this.form.appendChild(title);
             this.form.appendChild(wrapperPersonalFile);
-            this.form.appendChild(this.name);
             this.form.appendChild(this.error);
+            this.form.appendChild(this.name);
+            
             this.form.appendChild(this.cross);
             this.form.appendChild(this.submit);
             this.container.appendChild(this.form);
@@ -92,8 +93,14 @@ class Personal extends Component {
             const token = localStorage.getItem('token');
             if(token) {
                 const res = await UsersAPI.getAvatar(formData, token);
-                this.avatar.src = res.img;
-                setTimeout(this.closeBtn.bind(this),1200);
+                
+                if(res) {
+                    this.avatar.src = res.img;
+                    setTimeout(this.closeBtn.bind(this),1200);
+                } else{
+                    this.error.textContent = 'Неверный формат (png/jpg) или изображение весит больше 2 Мб'
+                    this.closeBtn();
+                }
                 
             }
         }

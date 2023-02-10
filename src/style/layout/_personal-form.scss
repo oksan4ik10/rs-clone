@@ -79,6 +79,9 @@
     font-size: 0.8em;
 }
 
+.personal__submit{
+    padding: 20px;
+}
 .personal__submit:disabled{
     background-color:$border-input;
     cursor: not-allowed;

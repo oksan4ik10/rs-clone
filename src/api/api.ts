@@ -177,8 +177,13 @@ export class UsersAPI{
       },
       body: files,
     });
-    const result = await response.json();
-    return result;
+    try{
+      const result = await response.json();
+      console.log(result);
+      return result;
+    } catch{
+      return;
+    }
   }
 
   static async userUpdate(obj:IUserUpdate, token: string) {
@@ -190,9 +195,12 @@ export class UsersAPI{
       },
       body: JSON.stringify(obj),
     });
-    const result = await response.json();
-
-    return result;
+    try{
+      const result = await response.json();      
+      return result;
+    }catch{
+      return;
+    }
   }
 
 }
