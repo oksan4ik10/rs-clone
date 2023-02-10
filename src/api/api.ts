@@ -1,4 +1,4 @@
-import { IOneBook, IOneReview, IUserNew, IUser, IGetGradeByUserResp, ICheckBooksLikeRead, IPostGrade, IAddBooksRead} from "../types";
+import { IOneBook, IOneReview, IUserNew, IUser, IGetGradeByUserResp, ICheckBooksLikeRead, IPostGrade, IAddBooksRead, IUserUpdate} from "../types";
 
 
 const baseApiEndpoint = 'http://localhost:3000/api/';
@@ -101,7 +101,6 @@ export class UsersAPI{
       body: JSON.stringify(bookParam),
     });
     const result = await response.json();
-    console.log('result', result)
     return result;
   }
 
@@ -120,7 +119,6 @@ export class UsersAPI{
       body: JSON.stringify(bookParam),
     });
     const result = await response.json();
-    console.log('result', result)
     return result;
   }
 
@@ -139,7 +137,6 @@ export class UsersAPI{
       body: JSON.stringify(bookParam),
     });
     const result = await response.json();
-    console.log('result', result)
     return result;
   }
 
@@ -158,10 +155,43 @@ export class UsersAPI{
       body: JSON.stringify(bookParam),
     });
     const result = await response.json();
-    console.log('result', result)
     return result;
   }
 
+  //загрузка аватарки
+  static async getAvatar(files:FormData, token:string){
+    const response = await fetch(`${this.apiEndpoint}avatar`, {
+      method: "POST",
+      headers: {
+        'Authorization': token
+      },
+      body: files,
+    });
+    try{
+      const result = await response.json();
+      console.log(result);
+      return result;
+    } catch{
+      return;
+    }
+  }
+
+  static async userUpdate(obj:IUserUpdate, token: string) {
+    const response = await fetch(`${this.apiEndpoint}update`, {
+      method: "PATCH",
+      headers: {
+        'Content-Type': 'application/json', 
+        'Authorization': token
+      },
+      body: JSON.stringify(obj),
+    });
+    try{
+      const result = await response.json();      
+      return result;
+    }catch{
+      return;
+    }
+  }
 }
 
 export class ReviewsAPI {
@@ -202,9 +232,24 @@ export class ReviewsAPI {
 
     if (response.status === 200){
       return (await response.json()).status;
+
+  static async getReviewsByUser(token: string, bookId: string){
+    const response = await fetch(`${this.apiEndpoint}user/${bookId}`, {
+      method: "GET",
+      headers: {
+        'Authorization': token, 
+      },
+    })
+
+    if (response.status === 200){
+      const result = await response.json();
+      return result;
+    } else {
+      return null;
     }
   }
 }
+
 
 export class GradesAPI {
   static apiEndpoint = basePaths.grades;
