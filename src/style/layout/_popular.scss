@@ -1,11 +1,10 @@
 .popular {
-    border-bottom: 1px green dashed;
+
 }
 
 .popular__container {
     width: 100%;
     @include flex-space-between;
-    justify-content: space-evenly;
 
 }
 
