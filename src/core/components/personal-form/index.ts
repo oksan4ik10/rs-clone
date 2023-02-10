@@ -10,6 +10,7 @@ class Personal extends Component {
     input: HTMLInputElement;
     avatar: HTMLImageElement;
     name: HTMLInputElement;
+    error: HTMLElement;
 
     constructor(tagName: string, className: string) {
         super(tagName, className);
@@ -19,6 +20,7 @@ class Personal extends Component {
         this.input = document.createElement('input');
         this.avatar = document.createElement('img');
         this.name = document.createElement('input');
+        this.error = document.createElement('span');
     }
 
     async renderEdit() {
@@ -26,9 +28,7 @@ class Personal extends Component {
 
         if(token) {
             const user = await UsersAPI.infoUser(token);
-            console.log(user);
-            
-   
+
             this.form.classList.add('personal__form');
 
             const title = document.createElement('div');
@@ -60,6 +60,8 @@ class Personal extends Component {
             this.name.className = 'personal__name';
             this.name.value = user.name;
 
+            this.error.className = 'personal__error';            
+
             this.submit.classList.add('button', 'personal__submit');
             this.submit.type = 'submit';
             this.submit.textContent = 'Сохранить';
@@ -68,27 +70,49 @@ class Personal extends Component {
             this.form.appendChild(title);
             this.form.appendChild(wrapperPersonalFile);
             this.form.appendChild(this.name);
+            this.form.appendChild(this.error);
             this.form.appendChild(this.cross);
             this.form.appendChild(this.submit);
             this.container.appendChild(this.form);
-    }
+        }
         
+    }
+    async openFile(e:Event){
+        const target = e.currentTarget as HTMLInputElement ;
+        const file = target.files;
+        if(file){
+            const formData = new FormData();
+            formData.append("avatar",file[0], file[0].name);
+     
+            const token = localStorage.getItem('token');
+            if(token) {
+                const res = await UsersAPI.getAvatar(formData, token);
+                this.avatar.src = res.img;
+            }
+        }
+
+    }
+    submitForm(e: Event){
+        e.preventDefault();
+        const form = new FormData(this.form);
+        console.log(form);
+        
+        
+                   
+        Header.prototype.closeForm('personal-form');
+        Header.formActive = false;
     }
 
     render() {
         this.renderEdit();
+        this.input.addEventListener('change',this.openFile.bind(this));
 
         this.cross.addEventListener('click', () => {
             Header.prototype.closeForm('personal-form');
             Header.formActive = false;
         })
 
-        this.form.addEventListener('submit', async (event) => {
-            event.preventDefault();
-                   
-            Header.prototype.closeForm('personal-form');
-            Header.formActive = false;
-        })
+        this.form.addEventListener('submit', this.submitForm.bind(this));
         
         return this.container;
     }

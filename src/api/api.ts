@@ -168,6 +168,19 @@ export class UsersAPI{
     return result;
   }
 
+  //загрузка аватарки
+  static async getAvatar(files:FormData, token:string){
+    const response = await fetch(`${this.apiEndpoint}avatar`, {
+      method: "POST",
+      headers: {
+        'Authorization': token
+      },
+      body: files,
+    });
+    const result = await response.json();
+    return result;
+  }
+
 }
 
 
