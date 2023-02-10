@@ -66,22 +66,27 @@ class DescriptionPage extends Page {
 
     async toggleToWantBook() {
         if (this.wantToReadButton.textContent === 'Удалить из планов') {
+            //удалить книгу из планов
             this.wantToReadButton.textContent = 'Хочу почитать';
-            
+            this.addToReadButton.style.display = 'block';
+            return await UsersAPI.removeBooksWantRead(this.bookId, this.authStatus as string);
         } else {
             //добавить книгу в планы
-            
             this.wantToReadButton.textContent = 'Удалить из планов';
+            this.addToReadButton.style.display = 'none';
+            return await UsersAPI.addBooksWantRead(this.bookId, this.authStatus as string);
         }
     }
 
     async toggleToReadBook() {
         if (this.addToReadButton.textContent === 'Удалить из прочитанного') {
             //удалить книгу из прочитанного
+            this.wantToReadButton.style.display = 'block';
             this.addToReadButton.textContent = 'Добавить в прочитанное';
             return await UsersAPI.removeBooksRead(this.bookId, this.authStatus as string);
         } else {
             //добавить книгу в прочитанное
+            this.wantToReadButton.style.display = 'none';
             this.addToReadButton.textContent = 'Удалить из прочитанного';
             return await UsersAPI.addBooksRead(this.bookId, this.authStatus as string);
         }

@@ -124,8 +124,46 @@ export class UsersAPI{
     console.log('result', result)
     return result;
   }
-}
 
+  //добавление книги в желаемые к прочтению
+  static async addBooksWantRead(bookId: string, token: string) {
+    const bookParam = {
+      bookId: bookId
+    }
+
+    const response = await fetch(`${this.apiEndpoint}/booksLike`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json', 
+        'Authorization': token
+      },
+      body: JSON.stringify(bookParam),
+    });
+    const result = await response.json();
+    console.log('result', result)
+    return result;
+  }
+
+  //Удаление книги из желаемых к прочтению
+  static async removeBooksWantRead(bookId: string, token: string) {
+    const bookParam = {
+      bookId: bookId
+    }
+
+    const response = await fetch(`${this.apiEndpoint}/booksLike/delete`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json', 
+        'Authorization': token
+      },
+      body: JSON.stringify(bookParam),
+    });
+    const result = await response.json();
+    console.log('result', result)
+    return result;
+  }
+
+}
 
 
 
