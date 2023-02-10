@@ -12,20 +12,14 @@ const basePaths = {
 export class BooksAPI {
   static apiEndpoint = basePaths.books;
 
-  // получаем массив из всех книг. пример использования:
-  // BooksAPI.getAllBooks().then(data => console.log(data));
   static async getAllBooks(): Promise<IOneBook[]> {
       return await fetch(this.apiEndpoint)
-      .then(response => response.json())
-      .catch(error => console.log(error.message));
+      .then(response => response.json());
   }
 
-  // получаем одну книгу по её ID. пример использования:
-  // BooksAPI.getBookById("63dbd4fe942b52bc2a107c5d").then(data => console.log(data))
   static async getBookById(id: string): Promise<IOneBook> {
     return await fetch(`${this.apiEndpoint}${id}`)
-      .then(response => response.json())
-      .catch(error => console.log(error.message));
+      .then(response => response.json());
   }
 
   static async getBestBooks() {
@@ -200,13 +194,9 @@ export class UsersAPI{
   }
 }
 
-
-
 export class ReviewsAPI {
   static apiEndpoint = basePaths.reviews;
 
-  // получаем массив из всех отзывов
-  // отзыв есть у книги "bookId": "63dbd4fe942b52bc2a107c35",
   static async getAllReviews(bookId: string): Promise<Array<IOneReview>> {
     return await fetch(`${this.apiEndpoint}book/${bookId}`)
     .then(response => response.json());
@@ -232,7 +222,16 @@ export class ReviewsAPI {
     }
   }
 
-  // получаем отзыв пользователя по книге
+  // проверка есть ли рецензия у пользователя на книгу
+  static async hasUserReview(bookId: string, token: string) {
+    const response = await fetch(`${this.apiEndpoint}check/${bookId}`, {
+      headers: {
+        "Authorization": token
+      }
+    })
+
+    if (response.status === 200){
+      return (await response.json()).status;
 
   static async getReviewsByUser(token: string, bookId: string){
     const response = await fetch(`${this.apiEndpoint}user/${bookId}`, {

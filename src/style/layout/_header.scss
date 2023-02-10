@@ -92,6 +92,10 @@
     filter: brightness(0) saturate(100%) invert(81%) sepia(47%) saturate(314%) hue-rotate(2deg) brightness(90%) contrast(87%);
 }
 
+.header__personal__name-user {
+    cursor: pointer;
+}
+
 .header__random {
     width: 30px;
     height: 30px;

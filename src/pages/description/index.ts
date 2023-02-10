@@ -1,5 +1,6 @@
 import { BooksAPI, GradesAPI, ReviewsAPI, UsersAPI } from '../../api/api';
 import Header from '../../core/components/header';
+import { OneReview } from '../../core/components/one-review/review';
 import Page from '../../core/templates/page';
 import { IOptions } from '../../types';
 
@@ -67,7 +68,7 @@ class DescriptionPage extends Page {
     async toggleToWantBook() {
         if (this.wantToReadButton.textContent === 'Удалить из планов') {
             //удалить книгу из планов
-            this.wantToReadButton.textContent = 'Хочу почитать';
+            this.wantToReadButton.textContent = 'Хочу прочитать';
             this.addToReadButton.style.display = 'block';
             return await UsersAPI.removeBooksWantRead(this.bookId, this.authStatus as string);
         } else {
@@ -83,12 +84,69 @@ class DescriptionPage extends Page {
             //удалить книгу из прочитанного
             this.wantToReadButton.style.display = 'block';
             this.addToReadButton.textContent = 'Добавить в прочитанное';
-            return await UsersAPI.removeBooksRead(this.bookId, this.authStatus as string);
+            
+            // проверка, есть ли у этого юзера отзыв, если есть, то обновляем отзывы
+            let result;
+            if (typeof this.authStatus === 'string'){
+                const hasReview = await ReviewsAPI.hasUserReview(this.bookId, this.authStatus);
+                
+                result = await UsersAPI.removeBooksRead(this.bookId, this.authStatus as string);
+
+                if (hasReview) {
+                    this.reCreateReviews();
+                }
+            }
+            return result;
         } else {
             //добавить книгу в прочитанное
             this.wantToReadButton.style.display = 'none';
             this.addToReadButton.textContent = 'Удалить из прочитанного';
             return await UsersAPI.addBooksRead(this.bookId, this.authStatus as string);
+        }
+    }
+
+    checkButtonsAdd() {
+        if (typeof this.authStatus !== 'boolean'){
+            UsersAPI.checkBooksLikeRead(this.bookId, this.authStatus).then(bookStatus => {
+
+                if (bookStatus === "false") {
+                    this.wantToReadButton.style.display = 'block';
+                    this.addToReadButton.style.display = 'block';
+                    
+                    this.addToReadButton.addEventListener('click', () => {
+                        this.toggleToReadBook();
+                    })
+                    this.wantToReadButton.addEventListener('click', () => {
+                        this.toggleToWantBook();
+                    })
+
+                } else if (bookStatus === 'booksLike') {
+                    this.wantToReadButton.textContent = 'Удалить из планов';
+                    this.wantToReadButton.style.display = 'block';
+
+                    this.wantToReadButton.addEventListener('click', () => {
+                        this.toggleToWantBook();
+                    })
+                    this.addToReadButton.addEventListener('click', () => {
+                        this.toggleToReadBook();
+                    })
+
+                } else if (bookStatus === 'books') {
+                    this.addToReadButton.textContent = 'Удалить из прочитанного';
+                    this.addToReadButton.style.display = 'block';
+
+                    this.wantToReadButton.addEventListener('click', () => {
+                        this.toggleToWantBook();
+                    })
+                    this.addToReadButton.addEventListener('click', () => {
+                        this.toggleToReadBook();
+                    })
+                }
+            })
+
+        } else {
+            this.wantToReadButton.style.display = 'block';
+            this.addToReadButton.style.display = 'block';
         }
     }
 
@@ -148,8 +206,13 @@ class DescriptionPage extends Page {
                 })
                 
                 subRatingWrapper.style.display = 'none';
-
                 allRating.textContent = newAllRating.raiting.toString();
+
+                const hasReview = await ReviewsAPI.hasUserReview(this.bookId, this.authStatus);
+                if (hasReview) {
+                    console.log(hasReview);
+                    this.reCreateReviews();
+                }
             }
         })
 
@@ -217,6 +280,12 @@ class DescriptionPage extends Page {
                         allRating.textContent = newRating.toString();
                         mySubRating.textContent = currentRating.toString();
                         subRatingWrapper.style.display = 'block';
+
+                        const hasReview = await ReviewsAPI.hasUserReview(this.bookId, this.authStatus);
+                        if (hasReview) {
+                            console.log(hasReview);
+                            this.reCreateReviews();
+                        }
                     }
                 }
             }
@@ -237,7 +306,9 @@ class DescriptionPage extends Page {
         this.addToReadButton.classList.add('description__addtoread', 'button');
         this.addToReadButton.textContent = 'Добавить в прочитанное';
         this.wantToReadButton.classList.add('description__wanttoread', 'button');
-        this.wantToReadButton.textContent = 'Хочу почитать';
+        this.wantToReadButton.textContent = 'Хочу прочитать';
+        this.wantToReadButton.style.display = 'none';
+        this.addToReadButton.style.display = 'none';
 
         // присваиваем элементам информацию по книге
         BooksAPI.getBookById(this.bookId).then(bookInfo => {
@@ -250,46 +321,11 @@ class DescriptionPage extends Page {
             descrImg.src = bookInfo.img;
         });
 
-        descrImgWrapper.append(descrImgOuter)
+        descrImgWrapper.append(descrImgOuter);
 
-        const checkButtonsAdd = () => {
+        this.checkButtonsAdd();
 
-            if (typeof this.authStatus !== 'boolean'){
-                UsersAPI.checkBooksLikeRead(this.bookId, this.authStatus).then(bookStatus => {
-                    console.log('Does user want to read this book or has already read this book?', bookStatus);
-                    if (bookStatus === "false") {
-                        descrImgWrapper.append(this.addToReadButton, this.wantToReadButton);
-
-                        this.addToReadButton.addEventListener('click', () => {
-                            this.toggleToReadBook();
-                        })
-                        this.wantToReadButton.addEventListener('click', () => {
-                            this.toggleToWantBook();
-                        })
-
-                    } else if (bookStatus === 'booksLike') {
-                        this.wantToReadButton.textContent = 'Удалить из планов';
-                        descrImgWrapper.append(this.wantToReadButton);
-
-                        this.wantToReadButton.addEventListener('click', () => {
-                            this.toggleToWantBook();
-                        })
-
-                    } else if (bookStatus === 'books') {
-                        this.addToReadButton.textContent = 'Удалить из прочитанного';
-                        descrImgWrapper.append(this.addToReadButton);
-
-                        this.addToReadButton.addEventListener('click', () => {
-                            this.toggleToReadBook();
-                        })
-                    }
-                })
-            } else {
-                descrImgWrapper.append(this.addToReadButton, this.wantToReadButton);
-            }
-        }
-
-        checkButtonsAdd();
+        descrImgWrapper.append(this.addToReadButton, this.wantToReadButton);
 
         ratingWrapper.append(myRatingText, ratingContainer, allRatingText, allRating);
         subRatingWrapper.append(mySubRatingText, mySubRating, deleteMyRating);
@@ -300,6 +336,14 @@ class DescriptionPage extends Page {
         this.main.append(this.descrContentWrapper, descrImgWrapper);
 
         return this.main;
+    }
+
+    reCreateReviews() {
+        if (this.descrContentWrapper.lastChild){
+            this.descrContentWrapper.removeChild(this.descrContentWrapper.lastChild);
+        }
+
+        this.descrContentWrapper.append(this.createReviews());
     }
 
     createReviews() {
@@ -328,10 +372,12 @@ class DescriptionPage extends Page {
 
             if (newReviewText.value.length > 0 && typeof this.authStatus === 'string'){
                 ReviewsAPI.postNewReview(newReviewText.value, this.bookId, this.authStatus).then(() => {
-                    if (this.descrContentWrapper.lastChild){
-                        this.descrContentWrapper.removeChild(this.descrContentWrapper.lastChild);
-                    }                    
-                    this.descrContentWrapper.append(this.createReviews());
+                    this.reCreateReviews();
+
+                    this.wantToReadButton.style.display = 'none';
+                    this.addToReadButton.style.display = 'block';
+                    this.addToReadButton.textContent = 'Удалить из прочитанного';
+                    this.wantToReadButton.textContent= 'Хочу прочитать';
                 }); 
             }
         }
@@ -370,96 +416,11 @@ class DescriptionPage extends Page {
             }
 
             for (let i = 0; i < allReviews.length; i++) {
-                const oneReviewWrapper = document.createElement('div');
-                oneReviewWrapper.classList.add('decr__onereiew__wrapper');
-
-                const oneReviewHeader = document.createElement('div');
-                oneReviewHeader.classList.add('desc__review__header');
-
-                const reviewUserImage = document.createElement('img');
-                reviewUserImage.classList.add('desc__review__img');
-                reviewUserImage.alt = "";
-                reviewUserImage.src = allReviews[i].userImg;
-
-                const reviewNameDateWrapper = document.createElement('div');
-                reviewNameDateWrapper.classList.add('desc__review__namedatewrap');
-                const reviewName = document.createElement('div');
-                reviewName.classList.add('desc__review__name');
-                reviewName.textContent = allReviews[i].userName;
-                const reviewDate = document.createElement('div');
-                reviewDate.classList.add('desc__review__date');
-                const date = new Date(allReviews[i].date);
-                const options: IOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-                reviewDate.textContent = `написал(а) ${date.toLocaleDateString("ru-RU", options)}`;
-
-                //СЮДА ДОБАВИТЬ УСЛОВИЕ ОТОБРАЖНИЯ ЭТОГО БЛОКА ПРИ УСПЕШНОМ ОТВЕТЕ НА ДОП ЗАПРОС
-                const reviewRatingWrapper = document.createElement('div');
-                reviewRatingWrapper.classList.add('desc__review__ratingwrap');
-                const reviewRatingText = document.createElement('span');
-                reviewRatingText.classList.add('desc__review__ratingtext');
-                const reviewRatingNumber = document.createElement('span');
-                reviewRatingNumber.classList.add('desc__review__ratingnumber');
-                
-                // рисуем звёздочки и рейтинг, если он есть
-                const goldenStartNumber = await GradesAPI.getGradeByUser(allReviews[i].userId, allReviews[i].bookId).then(grade => {
-                    if (grade) {
-                        return grade;
-                    } 
-                    return 0;
-                })
-
-                const reviewRatingStars = document.createElement('div');
-                reviewRatingStars.classList.add('desc__review__ratingstars');
-                for (let j = 0; j < 10; j++) {
-                    const inputElement = document.createElement('span');
-                    inputElement.id = `therating-${j}`;
-                    if (goldenStartNumber > j){
-                        inputElement.classList.add('golden');
-                    }
-
-                    reviewRatingStars.append(inputElement);
-                }
-
-                if (goldenStartNumber > 0) {
-                    reviewRatingNumber.textContent = `${goldenStartNumber}/10`;
-                    reviewRatingText.textContent = 'Оценка:';
-                }
-
-                // продолжаем тело отзывов
-                const oneReviewBody = document.createElement('div');
-                oneReviewBody.classList.add('desc__review__body');
-
-                const oneReviewBodyHeader = document.createElement('div');
-                oneReviewBodyHeader.classList.add('desc__review__bodyhead');
-                const oneReviewBodyText = document.createElement('div');
-                oneReviewBodyText.classList.add('desc__review__bodytext');
-                oneReviewBodyText.textContent = allReviews[i].text;
-
-                const reviewBookImg = document.createElement('img');
-                reviewBookImg.classList.add('desc__review__bookimg');
-                reviewBookImg.alt = "";
-
-                const reviewBookTitleAuthor = document.createElement('div');
-                const reviewBookTitle = document.createElement('div');
-                const reviewBookAuthor = document.createElement('div');
-
-                BooksAPI.getBookById(this.bookId).then(bookInfo => {
-                    reviewBookTitle.textContent = bookInfo.title;
-                    reviewBookAuthor.textContent = bookInfo.author;
-                    reviewBookImg.src = bookInfo.img;
-                });
-                
-
-                reviewNameDateWrapper.append(reviewName, reviewDate);
-                reviewRatingWrapper.append(reviewRatingText, reviewRatingStars, reviewRatingNumber);
-                oneReviewHeader.append(reviewUserImage, reviewNameDateWrapper, reviewRatingWrapper);
-                reviewBookTitleAuthor.append(reviewBookTitle, reviewBookAuthor);
-                oneReviewBodyHeader.append(reviewBookImg, reviewBookTitleAuthor),
-                oneReviewBody.append(oneReviewBodyHeader, oneReviewBodyText);
-                oneReviewWrapper.append(oneReviewHeader, oneReviewBody);
-                reviewsWrapper.append(oneReviewWrapper);
+                const newReview = new OneReview('div', '', allReviews, this.bookId, i);
+                reviewsWrapper.append(newReview.render());
             }
         })
+
         reviewsAreaWrapper.append(descrReviewsTitle, newReviewForm, reviewsWrapper);
         return reviewsAreaWrapper;
     }
