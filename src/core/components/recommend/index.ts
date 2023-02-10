@@ -54,17 +54,6 @@ class Recommendation extends Component {
         wrapperContainer.style.backgroundImage = `url(${book.img})`;
         wrapperContainer.append(wrapper);
         this.container.append(wrapperContainer);
-
-        // this.container.innerHTML = 
-        //     `<div class="wrapper">
-        //         <div class="recommend__info">
-        //             <div class="recommend__name">Наименование книги</div>
-        //             <div class="recommend__author">Автор</div>
-        //             <div class="recomend__discr">Красивое и длинное описание книги. Красивое и длинное описание книги. Красивое и длинное описание книги.</div>
-        //             <button class="button recomend__button">Рецензии</button>
-        //         </div>
-        //         <div class="recommend__book"></div>
-        //     </div>`
     }
 
     render() {
