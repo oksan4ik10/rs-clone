@@ -110,7 +110,7 @@ class Personal extends Component {
         if(token) {
             await UsersAPI.userUpdate(obj, token);
             window.location.hash = 'personal-area';
-            
+            Header.renderPersonalCabinet(token);
         }
 
         Header.prototype.closeForm('personal-form');
