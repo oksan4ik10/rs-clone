@@ -232,6 +232,9 @@ export class ReviewsAPI {
 
     if (response.status === 200){
       return (await response.json()).status;
+    }
+
+  }
 
   static async getReviewsByUser(token: string, bookId: string){
     const response = await fetch(`${this.apiEndpoint}user/${bookId}`, {
