@@ -83,18 +83,19 @@ class DescriptionPage extends Page {
             //удалить книгу из прочитанного
             this.wantToReadButton.style.display = 'block';
             this.addToReadButton.textContent = 'Добавить в прочитанное';
-
-            const result = await UsersAPI.removeBooksRead(this.bookId, this.authStatus as string);
+            
             // проверка, есть ли у этого юзера отзыв, если есть, то обновляем отзывы
-            if (true) {
-                this.reCreateReviews();
-                /*
-                const currentBookId = window.location.hash.split('=')[1]
-                window.location.hash = '';
-                window.location.hash = `id=${currentBookId}`;
-                */
-            }
+            let result;
+            if (typeof this.authStatus === 'string'){
+                const hasReview = await ReviewsAPI.hasUserReview(this.bookId, this.authStatus);
+                
+                result = await UsersAPI.removeBooksRead(this.bookId, this.authStatus as string);
 
+                if (hasReview) {
+                    console.log(hasReview);
+                    this.reCreateReviews();
+                }
+            }
             return result;
         } else {
             //добавить книгу в прочитанное
@@ -107,7 +108,7 @@ class DescriptionPage extends Page {
     checkButtonsAdd() {
         if (typeof this.authStatus !== 'boolean'){
             UsersAPI.checkBooksLikeRead(this.bookId, this.authStatus).then(bookStatus => {
-                console.log('Does user want to read this book or has already read this book?', bookStatus);
+
                 if (bookStatus === "false") {
                     this.wantToReadButton.style.display = 'block';
                     this.addToReadButton.style.display = 'block';
@@ -206,6 +207,12 @@ class DescriptionPage extends Page {
                 
                 subRatingWrapper.style.display = 'none';
                 allRating.textContent = newAllRating.raiting.toString();
+
+                const hasReview = await ReviewsAPI.hasUserReview(this.bookId, this.authStatus);
+                if (hasReview) {
+                    console.log(hasReview);
+                    this.reCreateReviews();
+                }
             }
         })
 
@@ -273,6 +280,12 @@ class DescriptionPage extends Page {
                         allRating.textContent = newRating.toString();
                         mySubRating.textContent = currentRating.toString();
                         subRatingWrapper.style.display = 'block';
+
+                        const hasReview = await ReviewsAPI.hasUserReview(this.bookId, this.authStatus);
+                        if (hasReview) {
+                            console.log(hasReview);
+                            this.reCreateReviews();
+                        }
                     }
                 }
             }
@@ -425,7 +438,6 @@ class DescriptionPage extends Page {
                 const options: IOptions = { year: 'numeric', month: 'long', day: 'numeric' };
                 reviewDate.textContent = `написал(а) ${date.toLocaleDateString("ru-RU", options)}`;
 
-                //СЮДА ДОБАВИТЬ УСЛОВИЕ ОТОБРАЖНИЯ ЭТОГО БЛОКА ПРИ УСПЕШНОМ ОТВЕТЕ НА ДОП ЗАПРОС
                 const reviewRatingWrapper = document.createElement('div');
                 reviewRatingWrapper.classList.add('desc__review__ratingwrap');
                 const reviewRatingText = document.createElement('span');
