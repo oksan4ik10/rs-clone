@@ -46,7 +46,7 @@
 }
 
 .personal__tab__button {
-    width: 210px;
+    width: 270px;
     height: 50px;
     background: none;
     border: none;
@@ -77,6 +77,73 @@
     font-size: 20px;
 }
 
-.personal__submit {
-    
+
+.personal__read__book {
+    width: 100%;
+    @include flex-space-between;
+    margin-bottom: 30px;
+    color: $text-dark-color;
+}
+
+.personal__read__box {
+    @include flex-colomn;
+    align-items: center;
+}
+
+.personal__read__info {
+    width: 270px;
+    padding: 20px;
+    @include flex-colomn;
+    align-items: center;
+    border: 1px solid $border-container;
+}
+
+.personal__read__info__img {
+    width: 170px;
+    height: 250px;
+    background-size: cover;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.personal__read__info__name {
+    font-weight: bold;
+}
+
+.personal__reviews__title {
+    font-size: 18px;
+}
+
+.personal__reviews {
+    width: 70%;
+    padding: 20px;
+    @include flex-colomn;
+    align-items: center;
+}
+
+.personal__reviews__container {
+    width: 100%;
+    @include flex-colomn;
+    align-items: center;
+}
+
+.personal__reviews__grade {
+    width: 200px;
+    height: 30px;
+    @include flex-center;
+}
+
+.personal__reviews__review {
+    width: 100%;
+    height: 300px;
+    margin-top: 10px;
+    overflow: auto;
+}
+
+.personal__reviews__button {
+    color: $text-dark-color;
+    margin: auto;
+    margin-top: 40px;
+    @include flex-center;
+    font-size: 16px;
 }
