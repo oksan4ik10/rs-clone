@@ -1,0 +1,75 @@
+.personal__file {
+	position: relative;
+	display: inline-block;
+}
+.personal__file-btn {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+	outline: none;
+	text-decoration: none;
+	font-size: 14px;
+	vertical-align: middle;
+	color: white;
+	text-align: center;
+	border-radius: 4px;
+	background-color: #419152;
+	line-height: 22px;
+	height: 40px;
+	padding: 10px 20px;
+	box-sizing: border-box;
+	border: none;
+	margin: 0;
+	transition: background-color 0.2s;
+}
+
+.personal__file input[type=file] {
+	position: absolute;
+	z-index: -1;
+	opacity: 0;
+	display: block;
+	width: 0;
+	height: 0;
+}
+
+/* Focus */
+.personal__file input[type=file]:focus + .personal__file-btn {
+	box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+/* Hover/Active */
+.personal__file:hover .personal__file-btn {
+	background-color: #59be6e;
+}
+.personal__file:active .personal__file-btn {
+	background-color: #2E703A;
+}
+
+/* Disabled */
+.personal__file input[type=file]:disabled + .personal__file-btn {
+	background-color: #eee;
+}
+.personal__avatar{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 2px solid $back-dark-color;
+    border-radius: 50%;
+}
+.personal__wrapper-file{
+    @include flex-space-between;
+    gap:20px
+}
+
+.personal__name{
+    padding: 10px 5px;
+    border-radius:5px;
+    border: 1px solid $border-input;
+    width: 80%;
+    margin-top: 20px;
+    font-size: 1.2em;
+    &:focus{
+        border: 1px solid $border-focus-color;
+        outline: none;
+    }
+}
