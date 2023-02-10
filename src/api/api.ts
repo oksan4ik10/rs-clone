@@ -102,7 +102,6 @@ export class UsersAPI{
       body: JSON.stringify(bookParam),
     });
     const result = await response.json();
-    console.log('result', result)
     return result;
   }
 
@@ -121,7 +120,6 @@ export class UsersAPI{
       body: JSON.stringify(bookParam),
     });
     const result = await response.json();
-    console.log('result', result)
     return result;
   }
 
@@ -140,7 +138,6 @@ export class UsersAPI{
       body: JSON.stringify(bookParam),
     });
     const result = await response.json();
-    console.log('result', result)
     return result;
   }
 
@@ -159,7 +156,6 @@ export class UsersAPI{
       body: JSON.stringify(bookParam),
     });
     const result = await response.json();
-    console.log('result', result)
     return result;
   }
 }
@@ -208,7 +204,6 @@ export class ReviewsAPI {
 
     if (response.status === 200){
       const result = await response.json();
-      console.log(result)
       return result;
     } else {
       return null;

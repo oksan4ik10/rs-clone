@@ -47,10 +47,6 @@ class PersonalArea extends Page {
         return false;
     }
 
-    // async getInfoUser() {
-    //     return awa
-    // }
-
     authStatus = this.isAuthorised();
 
     async getInfoUser() {
@@ -60,6 +56,9 @@ class PersonalArea extends Page {
     showReadBook(data: IOneBook) {
         const container = document.createElement('div');
         container.classList.add('personal__read__book');
+
+        const colomn = document.createElement('div');
+        colomn.classList.add('personal__read__box');
 
         const infoBook = document.createElement('div');
         infoBook.classList.add('personal__read__info');
@@ -76,12 +75,16 @@ class PersonalArea extends Page {
         author.classList.add('personal__read__info__author');
         author.textContent = `${data.author}`;
 
+        const buttonRemove = document.createElement('button');
+        buttonRemove.classList.add('button', 'personal__reviews__button');
+        buttonRemove.textContent = 'Удалить из прочитанного';
+
         const reviewsBlock = document.createElement('div');
         reviewsBlock.classList.add('personal__reviews');
 
-        const title = document.createElement('div');
+        const title = document.createElement('h3');
         title.classList.add('personal__reviews__title');
-        title.textContent = 'Мой отзыв';
+        title.textContent = 'МОЙ ОТЗЫВ';
 
         const reviewsContainer = document.createElement('div');
         reviewsContainer.classList.add('personal__reviews__container');
@@ -106,7 +109,6 @@ class PersonalArea extends Page {
             })
             ReviewsAPI.getReviewsByUser(this.authStatus as string, data._id).then((res) => {
                 if (res) {
-                    console.log(res.text)
                     containerForReview.textContent = res.text;
                 } else {
                     const button = document.createElement('div');
@@ -124,7 +126,9 @@ class PersonalArea extends Page {
 
 
         this.readContent.append(container);
-        container.append(infoBook);
+        container.append(colomn);
+        colomn.append(infoBook);
+        colomn.append(buttonRemove);
         infoBook.append(img);
         infoBook.append(name);
         infoBook.append(author);
@@ -134,13 +138,23 @@ class PersonalArea extends Page {
         reviewsContainer.append(containerForGrade);
         reviewsContainer.append(containerForReview);
 
+        buttonRemove.addEventListener('click', () => {
+            buttonRemove.textContent = 'Подтвердите удаление';
+            buttonRemove.addEventListener('click', () => {
+                UsersAPI.removeBooksRead(data._id, this.authStatus as string);
+                container.remove();
+            })
+            document.addEventListener('click', (e) => {
+                if(e.target !== buttonRemove) {
+                    buttonRemove.textContent = 'Удалить из прочитанного';
+                }
+            })
+        })
 
         img.addEventListener('click', () => {
             const id = data._id;
             window.location.hash = `id=${id}`;
         })
-
-        console.log(data.img)
     }
 
     createMainPage() {
@@ -165,7 +179,10 @@ class PersonalArea extends Page {
 
         const name = document.createElement('div');
         name.classList.add('personal__user__name');
-        name.textContent = (document.querySelector('.header__personal__name-user') as HTMLSpanElement).textContent;
+
+        this.getInfoUser().then((res) => {
+            name.textContent = res.name;
+        })
         
         this.button.classList.add('personal__user__change', 'button');
         this.button.textContent = 'Редактировать профиль';
@@ -190,8 +207,10 @@ class PersonalArea extends Page {
         const readWrapper = document.createElement('div');
         readWrapper.classList.add('personal__tab__wrapper')
 
-        // const readContent = document.createElement('div');
         this.readContent.classList.add('personal__tab__content');
+        this.readContent.style.display = 'block';
+        read.classList.add('personal__button-active');
+
 
         //добавить проверку на наличие книг в списке прочитанных 
         this.getInfoUser().then((res) => {
@@ -202,10 +221,8 @@ class PersonalArea extends Page {
             } else {
                 for (let i = 0; i < res.books.length; i ++) {
                     BooksAPI.getBookById(res.books[i]).then(data => {
-                        console.log(data)
                         //отрисовка каждой книги из списка прочитанных
                         this.showReadBook(data);
-
                     })
                 }
             }
@@ -258,10 +275,6 @@ class PersonalArea extends Page {
         
         return section;
     }
-
-    //добавление прочитанных книг
-
-
 
     render() {
         this.container.append(this.createMainPage());
