@@ -1,5 +1,6 @@
 import { BooksAPI, GradesAPI, ReviewsAPI, UsersAPI } from '../../api/api';
 import Header from '../../core/components/header';
+import { OneReview } from '../../core/components/one-review/review';
 import Page from '../../core/templates/page';
 import { IOptions } from '../../types';
 
@@ -92,7 +93,6 @@ class DescriptionPage extends Page {
                 result = await UsersAPI.removeBooksRead(this.bookId, this.authStatus as string);
 
                 if (hasReview) {
-                    console.log(hasReview);
                     this.reCreateReviews();
                 }
             }
@@ -416,95 +416,11 @@ class DescriptionPage extends Page {
             }
 
             for (let i = 0; i < allReviews.length; i++) {
-                const oneReviewWrapper = document.createElement('div');
-                oneReviewWrapper.classList.add('decr__onereiew__wrapper');
-
-                const oneReviewHeader = document.createElement('div');
-                oneReviewHeader.classList.add('desc__review__header');
-
-                const reviewUserImage = document.createElement('img');
-                reviewUserImage.classList.add('desc__review__img');
-                reviewUserImage.alt = "";
-                reviewUserImage.src = allReviews[i].userImg;
-
-                const reviewNameDateWrapper = document.createElement('div');
-                reviewNameDateWrapper.classList.add('desc__review__namedatewrap');
-                const reviewName = document.createElement('div');
-                reviewName.classList.add('desc__review__name');
-                reviewName.textContent = allReviews[i].userName;
-                const reviewDate = document.createElement('div');
-                reviewDate.classList.add('desc__review__date');
-                const date = new Date(allReviews[i].date);
-                const options: IOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-                reviewDate.textContent = `написал(а) ${date.toLocaleDateString("ru-RU", options)}`;
-
-                const reviewRatingWrapper = document.createElement('div');
-                reviewRatingWrapper.classList.add('desc__review__ratingwrap');
-                const reviewRatingText = document.createElement('span');
-                reviewRatingText.classList.add('desc__review__ratingtext');
-                const reviewRatingNumber = document.createElement('span');
-                reviewRatingNumber.classList.add('desc__review__ratingnumber');
-                
-                // рисуем звёздочки и рейтинг, если он есть
-                const goldenStartNumber = await GradesAPI.getGradeByUser(allReviews[i].userId, allReviews[i].bookId).then(grade => {
-                    if (grade) {
-                        return grade;
-                    } 
-                    return 0;
-                })
-
-                const reviewRatingStars = document.createElement('div');
-                reviewRatingStars.classList.add('desc__review__ratingstars');
-                for (let j = 0; j < 10; j++) {
-                    const inputElement = document.createElement('span');
-                    inputElement.id = `therating-${j}`;
-                    if (goldenStartNumber > j){
-                        inputElement.classList.add('golden');
-                    }
-
-                    reviewRatingStars.append(inputElement);
-                }
-
-                if (goldenStartNumber > 0) {
-                    reviewRatingNumber.textContent = `${goldenStartNumber}/10`;
-                    reviewRatingText.textContent = 'Оценка:';
-                }
-
-                // продолжаем тело отзывов
-                const oneReviewBody = document.createElement('div');
-                oneReviewBody.classList.add('desc__review__body');
-
-                const oneReviewBodyHeader = document.createElement('div');
-                oneReviewBodyHeader.classList.add('desc__review__bodyhead');
-                const oneReviewBodyText = document.createElement('div');
-                oneReviewBodyText.classList.add('desc__review__bodytext');
-                oneReviewBodyText.textContent = allReviews[i].text;
-
-                const reviewBookImg = document.createElement('img');
-                reviewBookImg.classList.add('desc__review__bookimg');
-                reviewBookImg.alt = "";
-
-                const reviewBookTitleAuthor = document.createElement('div');
-                const reviewBookTitle = document.createElement('div');
-                const reviewBookAuthor = document.createElement('div');
-
-                BooksAPI.getBookById(this.bookId).then(bookInfo => {
-                    reviewBookTitle.textContent = bookInfo.title;
-                    reviewBookAuthor.textContent = bookInfo.author;
-                    reviewBookImg.src = bookInfo.img;
-                });
-                
-
-                reviewNameDateWrapper.append(reviewName, reviewDate);
-                reviewRatingWrapper.append(reviewRatingText, reviewRatingStars, reviewRatingNumber);
-                oneReviewHeader.append(reviewUserImage, reviewNameDateWrapper, reviewRatingWrapper);
-                reviewBookTitleAuthor.append(reviewBookTitle, reviewBookAuthor);
-                oneReviewBodyHeader.append(reviewBookImg, reviewBookTitleAuthor),
-                oneReviewBody.append(oneReviewBodyHeader, oneReviewBodyText);
-                oneReviewWrapper.append(oneReviewHeader, oneReviewBody);
-                reviewsWrapper.append(oneReviewWrapper);
+                const newReview = new OneReview('div', '', allReviews, this.bookId, i);
+                reviewsWrapper.append(newReview.render());
             }
         })
+
         reviewsAreaWrapper.append(descrReviewsTitle, newReviewForm, reviewsWrapper);
         return reviewsAreaWrapper;
     }
