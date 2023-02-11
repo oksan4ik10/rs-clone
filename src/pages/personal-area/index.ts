@@ -7,6 +7,7 @@ import { IOneBook } from '../../types';
 class PersonalArea extends Page {
     main: HTMLElement;
     readContent: HTMLElement;
+    willReadContent: HTMLElement;
     button: HTMLButtonElement;
 
     static formActive = false;
@@ -16,6 +17,7 @@ class PersonalArea extends Page {
         this.main = document.createElement('main');
         this.button = document.createElement('button');
         this.readContent = document.createElement('div');
+        this.willReadContent = document.createElement('div');
     }
 
     openForm(form: string) {
@@ -172,6 +174,97 @@ class PersonalArea extends Page {
         })
     }
 
+    showWantReadBook (data: IOneBook) {
+        const container = document.createElement('div');
+        container.classList.add('personal__read__book');
+
+        const colomn = document.createElement('div');
+        colomn.classList.add('personal__read__box');
+
+        const infoBook = document.createElement('div');
+        infoBook.classList.add('personal__read__info');
+
+        const img = document.createElement('div');
+        img.classList.add('personal__read__info__img');
+        img.style.backgroundImage = `url('${data.img}')`;
+
+        const name = document.createElement('div');
+        name.classList.add('personal__read__info__name');
+        name.textContent = data.title;
+
+        const author = document.createElement('div');
+        author.classList.add('personal__read__info__author');
+        author.textContent = data.author;
+
+        const buttonsContainer = document.createElement('div');
+        buttonsContainer.classList.add('personal__read__buttons');
+
+        const buttonRemove = document.createElement('button');
+        buttonRemove.classList.add('button', 'personal__reviews__button');
+        buttonRemove.textContent = 'Удалить из списка';
+
+        const buttonRead = document.createElement('button');
+        buttonRead.classList.add('button', 'personal__reviews__button');
+        buttonRead.textContent = 'Уже прочитал';
+
+        const descrBlock = document.createElement('div');
+        descrBlock.classList.add('personal__descr');
+
+        const descrText = document.createElement('div');
+        descrText.classList.add('personal__descr__text');
+        descrText.textContent = data.desc;
+
+        this.willReadContent.append(container);
+        container.append(colomn);
+        colomn.append(infoBook);
+        infoBook.append(img);
+        infoBook.append(name);
+        infoBook.append(author);
+        container.append(descrBlock);
+        descrBlock.append(descrText);
+        descrBlock.append(buttonsContainer);
+        buttonsContainer.append(buttonRead);
+        buttonsContainer.append(buttonRemove);
+
+        img.addEventListener('click', () => {
+            const id = data._id;
+            window.location.hash = `id=${id}`;
+        })
+
+
+        // нажатие на кнопку Уже прочитал
+        buttonRead.addEventListener('click', () => {
+            //удаление из списка книг, планируемых к прочтению
+            UsersAPI.removeBooksWantRead(data._id, this.authStatus as string).then((res) => {
+                UsersAPI.addBooksRead(data._id, this.authStatus as string).then((res) => {
+                    const readBooks = document.querySelector('.personal__tab__content-read') as HTMLElement;
+                    
+                    for (let i = 0; i < readBooks.children.length; i++) {
+                        (readBooks.children[i] as HTMLElement).style.display = 'none';
+                    }
+
+                    this.getInfoUser().then((res) => {  
+                        for (let i = 0; i < res.books.length; i ++) {
+                            BooksAPI.getBookById(res.books[i]).then(data => {
+                                this.showReadBook(data);
+                            })
+                        }
+                    })
+                container.remove();
+                });
+            });
+        })
+
+
+        // нажатие на кнопку Удалить из списка
+
+        buttonRemove.addEventListener('click', () => {
+            UsersAPI.removeBooksWantRead(data._id, this.authStatus as string).then((res) => {
+                container.remove();
+            })
+        })
+    }
+
     createMainPage() {
         this.main.classList.add('personal__page__wrapper');
         const section = document.createElement('section');
@@ -222,7 +315,7 @@ class PersonalArea extends Page {
         const readWrapper = document.createElement('div');
         readWrapper.classList.add('personal__tab__wrapper')
 
-        this.readContent.classList.add('personal__tab__content');
+        this.readContent.classList.add('personal__tab__content', 'personal__tab__content-read');
         this.readContent.style.display = 'block';
         read.classList.add('personal__button-active');
 
@@ -243,25 +336,34 @@ class PersonalArea extends Page {
             }
         })
 
-
-        const willReadContent = document.createElement('div');
-        willReadContent.classList.add('personal__tab__content');
+        this.willReadContent.classList.add('personal__tab__content');
 
         //добавить проверку на наличие книг в списке желаемых к прочитаннию
 
-        const willReadTitle = document.createElement('div');
-        willReadTitle.textContent = 'У вас пока нет книг, которые вы хотите прочесть';
-        willReadContent.append(willReadTitle);
+        this.getInfoUser().then((res) => {
+            if(res.booksLike.length === 0) {
+                const willReadTitle = document.createElement('div');
+                willReadTitle.textContent = 'У вас пока нет книг, которые вы хотите прочесть';
+                this.willReadContent.append(willReadTitle);
+            } else {
+                for (let i = 0; i < res.booksLike.length; i ++) {
+                    BooksAPI.getBookById(res.booksLike[i]).then(data => {
+                        //отрисовка каждой книги из списка желаемых к прочитаннию
+                        this.showWantReadBook(data);
+                    })
+                }
+            }
+        })
 
         read.addEventListener('click', () => {
             this.readContent.style.display = 'block';
             read.classList.add('personal__button-active');
             willRead.classList.remove('personal__button-active');
-            willReadContent.style.display = 'none';
+            this.willReadContent.style.display = 'none';
         })
 
         willRead.addEventListener('click', () => {
-            willReadContent.style.display = 'block';
+            this.willReadContent.style.display = 'block';
             willRead.classList.add('personal__button-active');
             read.classList.remove('personal__button-active');
             this.readContent.style.display = 'none';
@@ -286,7 +388,7 @@ class PersonalArea extends Page {
         tab.append(willRead);
         wrapper2.append(readWrapper);
         readWrapper.append(this.readContent);
-        readWrapper.append(willReadContent);
+        readWrapper.append(this.willReadContent);
         
         return section;
     }
