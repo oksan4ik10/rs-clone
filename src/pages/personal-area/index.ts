@@ -93,6 +93,10 @@ class PersonalArea extends Page {
 
         const containerForGrade = document.createElement('div');
         containerForGrade.classList.add('personal__reviews__grade');
+        const gradeStars = document.createElement('div');
+        gradeStars.classList.add('personal__reviews__grade__stars');
+        const gradeNumber = document.createElement('div');
+        gradeNumber.classList.add('personal__reviews__grade__number');
 
         const containerForReview = document.createElement('div');
         containerForReview.classList.add('personal__reviews__review');
@@ -101,10 +105,20 @@ class PersonalArea extends Page {
             GradesAPI.getGradeByUser(res._id, data._id).then((result) => {
                 //есть ли оценка?
                 if (result) {
-                    // Оля рисует звездочки
-                    containerForGrade.textContent = `${result}/10`;
+                    for (let j = 0; j < 10; j++) {
+                        const inputElement = document.createElement('span');
+                        if (result > j){
+                            inputElement.classList.add('golden');
+                        }                
+                        gradeStars.append(inputElement);
+                      }
+                
+                      if (result > 0) {
+                        gradeNumber.textContent = `${result}/10`;
+                      }
                 } else {
-                    containerForGrade.textContent = 'Оценка не выставлена';
+                    gradeNumber.textContent = 'Оценка не выставлена';
+                    gradeStars.style.display = 'none';
                 }
             })
             ReviewsAPI.getReviewsByUser(this.authStatus as string, data._id).then((res) => {
@@ -135,6 +149,7 @@ class PersonalArea extends Page {
         container.append(reviewsBlock);
         reviewsBlock.append(title);
         reviewsBlock.append(reviewsContainer);
+        containerForGrade.append(gradeStars, gradeNumber);
         reviewsContainer.append(containerForGrade);
         reviewsContainer.append(containerForReview);
 

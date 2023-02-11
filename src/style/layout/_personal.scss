@@ -133,6 +133,30 @@
     @include flex-center;
 }
 
+.personal__reviews__grade__stars {
+    display: inline-block;
+    width: 100px;
+    margin-right: 10px;
+}
+
+.personal__reviews__grade__stars span {
+    padding: 0;
+      font-size: 12px;
+      margin: 0;
+      line-height: 1;
+      color: lightgrey;
+      text-shadow: 1px 1px #bbb;
+}
+
+.personal__reviews__grade__stars > span:before {
+	content: '★';
+}
+
+.personal__reviews__grade__stars > span.golden {
+	color: goldenrod;
+	text-shadow: 1px 1px #c60;
+}
+
 .personal__reviews__review {
     width: 100%;
     height: 300px;
