@@ -1,5 +1,9 @@
-import Component from '../../templates/components';
 
+
+import Component from '../../templates/components';
+import { ReviewsAPI } from '../../../api/api';
+import { BooksAPI } from '../../../api/api';
+import { IOneReview } from '../../../types';
 
 class Reviews extends Component {
 
@@ -7,71 +11,154 @@ class Reviews extends Component {
         super(tagName, className);
     }
 
-    renderPageReviews() {
-        this.container.innerHTML = 
-            `<div class="wrapper">
-                <h3 class="reviews__title">ПОСЛЕДНИЕ РЕЦЕНЗИИ НА КНИГИ</h3>
-                <div class="reviews__block">
-                    <div class="review__container">
-                        <div class="review__block review__first">
-                            <div class="review__book">
-                                <div class="review__book__img"></div>
-                                <div class="review__book__info">
-                                    <div class="review__book__author">Автор</div>
-                                    <div class="review__book__name">Наименование книги</div>
-                                </div>
-                            </div>
-                            <div class="review__text"></div>
-                            <div class="review__info">   
-                                <div class="review__info__foto"></div>
-                                <div class="review__info__name">Никнейм</div>
-                            </div>
+    async renderReview(obj: IOneReview){
+        const book = await BooksAPI.getBookById(obj.bookId);
+        console.log(book);
+        
+        const element = document.createElement('swiper-slide');
+        element.className = ('swiper-slide');
+        element.innerHTML = `
+            <div class="review__block review__first">
+                <div class="review__book">
+                    <img class="review__book__img" src=${book.img}>
+                        <div class="review__book__info">
+                            <div class="review__book__author">${book.author}</div>
+                            <div class="review__book__name">${book.title}</div> 
                         </div>
                     </div>
-                    <div class="review__container">
-                        <div class="review__block review__first">
-                            <div class="review__book">
-                                <div class="review__book__img"></div>
-                                <div class="review__book__info">
-                                    <div class="review__book__author">Автор</div>
-                                    <div class="review__book__name">Наименование книги</div>
-                                </div>
-                            </div>
-                            <div class="review__text"></div>
-                            <div class="review__info">   
-                                <div class="review__info__foto"></div>
-                                <div class="review__info__name">Никнейм</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="review__container">
-                        <div class="review__block review__first">
-                            <div class="review__book">
-                                <div class="review__book__img"></div>
-                                <div class="review__book__info">
-                                    <div class="review__book__author">Автор</div>
-                                    <div class="review__book__name">Наименование книги</div>
-                                </div>
-                            </div>
-                            <div class="review__text"></div>
-                            <div class="review__info">   
-                                <div class="review__info__foto"></div>
-                                <div class="review__info__name">Никнейм</div>
-                            </div>
-                        </div>
+                    <div class="review__text"></div>
+                    <div class="review__info">   
+                        <img class="review__info__foto" src=${obj.userImg}>
+                        <div class="review__info__name">${obj.userName}</div>
                     </div>
                 </div>
-                <div class="reviews__control">
-                    <div class="reviews__control_button"></div>
-                    <div class="reviews__control_button"></div>
-                    <div class="reviews__control_button"></div>
-                    <div class="reviews__control_button"></div>
-                    <div class="reviews__control_button"></div>
-                    <div class="reviews__control_button"></div>
-                    <div class="reviews__control_button"></div>
-                    <div class="reviews__control_button"></div>
-                </div>
-            </div>`
+            </div>`;
+            return element;
+    }
+
+    async renderPageReviews() {
+        const data:IOneReview[] = await ReviewsAPI.getLastReviews();
+        console.log(data);
+        const wrapper = document.createElement('div');
+        wrapper.className = 'wrapper';
+        const title = document.createElement('h3');
+        title.className = 'reviews__title';
+        title.textContent = 'ПОСЛЕДНИЕ РЕЦЕНЗИИ НА КНИГИ';
+        wrapper.append(title);
+
+        const swiper = document.createElement('swiper-container');
+        swiper.className = 'reviews__block swiper mySwiper';
+        swiper.setAttribute('pagination', 'true');
+        swiper.setAttribute('pagination-clickable', 'true');
+        swiper.setAttribute('space-between','30');
+        swiper.setAttribute('slides-per-view','3');
+
+        data.forEach(async element => {
+            const el = await this.renderReview(element);
+            swiper.append(el);
+        });
+
+
+
+
+        wrapper.append(swiper);
+        this.container.append(wrapper);
+
+    //     this.container.innerHTML = `  <swiper-container class="mySwiper" pagination="true" pagination-clickable="true" space-between="30"
+    //     slides-per-view="3">
+    //     <swiper-slide>Slide 1</swiper-slide>
+    //     <swiper-slide>Slide 2</swiper-slide>
+    //     <swiper-slide>Slide 3</swiper-slide>
+    //     <swiper-slide>Slide 4</swiper-slide>
+    //     <swiper-slide>Slide 5</swiper-slide>
+    //     <swiper-slide>Slide 6</swiper-slide>
+    //     <swiper-slide>Slide 7</swiper-slide>
+    //     <swiper-slide>Slide 8</swiper-slide>
+    //     <swiper-slide>Slide 9</swiper-slide>
+    //   </swiper-container>`
+
+        
+        // this.container.innerHTML = 
+        //     `<div class="wrapper">
+        //         <h3 class="reviews__title">ПОСЛЕДНИЕ РЕЦЕНЗИИ НА КНИГИ</h3>
+        //         <div class="reviews__block">
+        //             <div class="review__container">
+        //                 <div class="review__block review__first">
+        //                     <div class="review__book">
+        //                         <div class="review__book__img"></div>
+        //                         <div class="review__book__info">
+        //                             <div class="review__book__author">Автор</div>
+        //                             <div class="review__book__name">Наименование книги</div>
+        //                         </div>
+        //                     </div>
+        //                     <div class="review__text"></div>
+        //                     <div class="review__info">   
+        //                         <div class="review__info__foto"></div>
+        //                         <div class="review__info__name">Никнейм</div>
+        //                     </div>
+        //                 </div>
+        //             </div>
+        //             <div class="review__container">
+        //                 <div class="review__block review__first">
+        //                     <div class="review__book">
+        //                         <div class="review__book__img"></div>
+        //                         <div class="review__book__info">
+        //                             <div class="review__book__author">Автор</div>
+        //                             <div class="review__book__name">Наименование книги</div>
+        //                         </div>
+        //                     </div>
+        //                     <div class="review__text"></div>
+        //                     <div class="review__info">   
+        //                         <div class="review__info__foto"></div>
+        //                         <div class="review__info__name">Никнейм</div>
+        //                     </div>
+        //                 </div>
+        //             </div>
+        //             <div class="review__container">
+        //                 <div class="review__block review__first">
+        //                     <div class="review__book">
+        //                         <div class="review__book__img"></div>
+        //                         <div class="review__book__info">
+        //                             <div class="review__book__author">Автор</div>
+        //                             <div class="review__book__name">Наименование книги</div>
+        //                         </div>
+        //                     </div>
+        //                     <div class="review__text"></div>
+        //                     <div class="review__info">   
+        //                         <div class="review__info__foto"></div>
+        //                         <div class="review__info__name">Никнейм</div>
+        //                     </div>
+        //                 </div>
+        //             </div>
+        //         </div>
+        //         <div class="reviews__control">
+        //             <div class="reviews__control_button"></div>
+        //             <div class="reviews__control_button"></div>
+        //             <div class="reviews__control_button"></div>
+        //             <div class="reviews__control_button"></div>
+        //             <div class="reviews__control_button"></div>
+        //             <div class="reviews__control_button"></div>
+        //             <div class="reviews__control_button"></div>
+        //             <div class="reviews__control_button"></div>
+        //         </div>
+        //     </div>`
+            
+
+        //     this.container.innerHTML = `<div class="swiper mySwiper">
+        //     <div class="swiper-wrapper">
+        //       <div class="swiper-slide">Slide 1</div>
+        //       <div class="swiper-slide">Slide 2</div>
+        //       <div class="swiper-slide">Slide 3</div>
+        //       <div class="swiper-slide">Slide 4</div>
+        //       <div class="swiper-slide">Slide 5</div>
+        //       <div class="swiper-slide">Slide 6</div>
+        //       <div class="swiper-slide">Slide 7</div>
+        //       <div class="swiper-slide">Slide 8</div>
+        //       <div class="swiper-slide">Slide 9</div>
+        //     </div>
+        //     <div class="swiper-pagination"></div>
+        //   </div>`;
+
     }
 
     render() {

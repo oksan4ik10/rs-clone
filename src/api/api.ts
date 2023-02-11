@@ -251,6 +251,13 @@ export class ReviewsAPI {
       return null;
     }
   }
+  static async getLastReviews(){
+    const response = await fetch(`${this.apiEndpoint}last`);
+
+    if (response.status === 200){
+      return await response.json();
+    }
+  }
 }
 
 
