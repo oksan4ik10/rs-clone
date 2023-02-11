@@ -58,7 +58,7 @@ class Header extends Component {
  
         this.logo.classList.add('logo', 'header__logo');
         this.logo.href = `#${PageIds.MainPage}`;
-        this.logo.textContent = 'LOGO';
+        //this.logo.textContent = 'LOGO';
 
         this.searchContainer.classList.add('header__search');
 

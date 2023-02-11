@@ -26,6 +26,13 @@
     position: relative;
 }
 
+.logo {
+    width: 209px;
+    height: 60px;
+    background: url("./images/rsb.png") 0 0 no-repeat;
+    filter: invert(81%) sepia(47%) saturate(354%) hue-rotate(160deg) brightness(65%) contrast(97%);
+}
+
 .header__search__input {
     @include border-and-backgroud;
 }
