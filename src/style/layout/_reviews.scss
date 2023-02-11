@@ -7,6 +7,7 @@
 .reviews__block {
     width: 100%;
     @include flex-space-between;
+    height: 400px;
 }
 
 .review__container {
@@ -20,23 +21,32 @@
 
 .review__block {
     width: 100%;
-    height: 100px;
-    padding-left: 20px;
-    padding-right: 20px;
 
     border: 1px dashed blue;
 }
 
 .review__book {
-    @include flex-space-between;
+    display: flex;
+    justify-content: space-evenly;
     height: 100%;
+    &__author{
+        font-style: italic;
+        font-size: 0.9em;
+    }
+    &__name{
+        font-size: 1.1em;
+        font-weight: 600;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 }
 
 .review__book__img {
     height: 80px;
     width: 60px;
-
-    border: 1px solid black;
+    border: 1px solid $color-opaque-light;
+    object-fit: cover;
 }
 
 .review__book__info {

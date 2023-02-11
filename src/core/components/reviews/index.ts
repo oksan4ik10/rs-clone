@@ -13,8 +13,6 @@ class Reviews extends Component {
 
     async renderReview(obj: IOneReview){
         const book = await BooksAPI.getBookById(obj.bookId);
-        console.log(book);
-        
         const element = document.createElement('swiper-slide');
         element.className = ('swiper-slide');
         element.innerHTML = `
@@ -26,7 +24,9 @@ class Reviews extends Component {
                             <div class="review__book__name">${book.title}</div> 
                         </div>
                     </div>
-                    <div class="review__text"></div>
+                    <div class="review__text">
+                    ${obj.text}
+                    </div>
                     <div class="review__info">   
                         <img class="review__info__foto" src=${obj.userImg}>
                         <div class="review__info__name">${obj.userName}</div>
@@ -38,7 +38,6 @@ class Reviews extends Component {
 
     async renderPageReviews() {
         const data:IOneReview[] = await ReviewsAPI.getLastReviews();
-        console.log(data);
         const wrapper = document.createElement('div');
         wrapper.className = 'wrapper';
         const title = document.createElement('h3');
