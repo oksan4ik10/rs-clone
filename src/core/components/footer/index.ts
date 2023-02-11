@@ -9,7 +9,7 @@ class Footer extends Component {
     renderFooter() {
         this.container.innerHTML = 
             `<div class="wrapper">
-                <a href=#${PageIds.MainPage} class="logo footer__logo">LOGO</a>
+                <a href=#${PageIds.MainPage} class="logo footer__logo"></a>
                 <div class="footer__developers">
                     <a href="https://github.com/olya-full" class="footer__git">Olya</a>
                     <a href="https://github.com/oksan4ik10" class="footer__git">Oksana</a>
