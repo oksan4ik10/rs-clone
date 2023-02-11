@@ -8,6 +8,7 @@ import PersonalArea from '../personal-area';
 import Sign from '../sign';
 
 import { PageIds } from '../../types';
+import RandomPage from '../random-book/random';
 
 class App {
     private static container: HTMLElement = document.body;
@@ -33,6 +34,8 @@ class App {
             page = new PersonalArea(idPage);
         } else if (idPage.includes('id=')) {
             page = new DescriptionPage(idPage.replace('id=', ''));
+        } else if (idPage === PageIds.Random) {
+            page = new RandomPage(idPage);
         } else if (idPage === PageIds.Sign) {
             page = new Sign(idPage);
         } else {
@@ -44,7 +47,6 @@ class App {
 
             pageHTML.id = App.defaultPageId;
             App.container.append(pageHTML);
-            //window.location.hash = idPage; // эта строка ломает отправку формы регистрации
         }
         App.container.append(footer.render());
 
@@ -70,7 +72,6 @@ class App {
         if(localStorage.getItem("token")) Header.renderPersonalCabinet(String(localStorage.getItem("token")));
         if (window.location.hash === '') {
             App.renderNewPage('main-page');
-            // window.location.hash = 'main-page';
         }
         else App.renderNewPage(window.location.hash.slice(1));
     
