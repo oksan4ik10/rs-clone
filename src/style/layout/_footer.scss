@@ -18,5 +18,15 @@
 
 .footer__container {
     @include flex-space-between;
-    width: 200px;
+}
+
+.footer__year {
+    margin-right: 30px;
+}
+
+.footer__rs {
+    width: 233px;
+    height: 60px;
+    background: url("./images/rss.png") 0 0 no-repeat;
+    filter: brightness(100%) saturate(100%) invert(95%) sepia(100%) saturate(14%) hue-rotate(213deg) brightness(104%) contrast(104%);
 }

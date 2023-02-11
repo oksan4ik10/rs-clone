@@ -3,6 +3,7 @@ export const enum PageIds {
     PersonalArea = 'personal-area',
     DescriptionPage = 'description-book',
     Sign = 'description-book',
+    Random = 'random',
 }
 
 export interface IOneBook {

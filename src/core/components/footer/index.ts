@@ -17,7 +17,7 @@ class Footer extends Component {
                 </div>
                 <div class="footer__container">
                     <div class="footer__year">©2023</div>
-                    <a href="https://rs.school/js/" class="footer__rs">RSschool</a>
+                    <a href="https://rs.school/js/" class="footer__rs"></a>
                 </div>
             </div>`
     }

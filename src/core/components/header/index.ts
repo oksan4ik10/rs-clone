@@ -233,6 +233,10 @@ class Header extends Component {
             }
         });
 
+        this.random.addEventListener('click', () => {
+            window.location.hash = 'random';
+        })
+
         this.output.addEventListener('click', this.outputPersonal.bind(this))
 
         this.personalLink.addEventListener('click', this.inputPersonal.bind(this))

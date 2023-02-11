@@ -2,7 +2,6 @@ import { BooksAPI, GradesAPI, ReviewsAPI, UsersAPI } from '../../api/api';
 import Header from '../../core/components/header';
 import { OneReview } from '../../core/components/one-review/review';
 import Page from '../../core/templates/page';
-import { IOptions } from '../../types';
 
 class DescriptionPage extends Page {
     addToReadButton: HTMLButtonElement;
