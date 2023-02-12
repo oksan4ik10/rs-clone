@@ -11,7 +11,6 @@
 .reviews__block {
     width: 100%;
     @include flex-space-between;
-    height: 400px;
 }
 
 .review__container {
@@ -141,13 +140,12 @@
         opacity: .9;
     }
 }
-
-
-.swiper{
-    width: 100%;
-    overflow: hidden;
-    display: flex;
+.swiper-pagination-bullet{
+    background-color:red;
 }
-.swiper>div{
-    flex: 1 0 33.33%;
+swiper-container div.swiper-pagination{
+    background:red;
+}
+.swiper-pagination-bullet-active {
+    background-color: #000 !important;
 }

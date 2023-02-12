@@ -4,6 +4,9 @@ import Component from '../../templates/components';
 import { ReviewsAPI } from '../../../api/api';
 import { BooksAPI } from '../../../api/api';
 import { IOneReview } from '../../../types';
+// import { register } from 'swiper/element/bundle';
+
+// register();
 
 class Reviews extends Component {
 
@@ -17,8 +20,8 @@ class Reviews extends Component {
 
     async renderReview(obj: IOneReview){
         const book = await BooksAPI.getBookById(obj.bookId);
-        const element = document.createElement('div');
-        element.className = ('swiper-slide');
+        const element = document.createElement('swiper-slide');
+        element.className = ('swiper-slide review__block');
         const reviewBlock = document.createElement('div');
         reviewBlock.className = 'review__block';
         element.setAttribute('id',obj.bookId);
@@ -29,7 +32,7 @@ class Reviews extends Component {
                             <div class="review__book__author">${book.author}</div>
                             <div class="review__book__name">${book.title}</div> 
                         </div>
-                    </div>
+                </div>
                     <div class="review__text">
                         <p>
                             ${obj.text}
@@ -58,23 +61,20 @@ class Reviews extends Component {
         title.textContent = 'ПОСЛЕДНИЕ РЕЦЕНЗИИ НА КНИГИ';
         wrapper.append(title);
 
-        
-        this.swiper.className = 'reviews__block swiper mySwiper';
-        data.forEach(async (element,index) => {
+       const swiper = document.createElement('swiper-container');
+       swiper.className = 'reviews__block swiper mySwiper';
+       swiper.setAttribute('slides-per-view','3');
+       swiper.setAttribute('pagination','true');
+       swiper.setAttribute('pagination-clickable','true');
+       swiper.setAttribute('autoplay-delay','1500');
+       swiper.setAttribute('style','--swiper-pagination-color: #bc8c5b80; --swiper-pagination-bullet-width: 12px; --swiper-pagination-bullet-height: 12px');  
+
+        data.forEach(async (element) => {
             const el = await this.renderReview(element);
-            this.swiper.append(el);
-            const elPagination = document.createElement('div');
-            if(index<8){
-                elPagination.className = 'reviews__control_button';
-                this.pagination.append(elPagination);
-                if(index === 0){
-                    elPagination.classList.add('active');
-                }
-            }
+            swiper.append(el);
         });
-        this.pagination.className = 'reviews__control';
-        wrapper.append(this.swiper);
-        wrapper.append(this.pagination);
+
+        wrapper.append(swiper);
         this.container.append(wrapper);
 
     //     this.container.innerHTML = `  <swiper-container class="mySwiper" pagination="true" pagination-clickable="true" space-between="30"
