@@ -130,6 +130,7 @@ class PersonalArea extends Page {
                     const button = document.createElement('div');
                     button.classList.add('personal__reviews__button', 'button');
                     button.textContent = 'Оставить отзыв';
+                    button.style.marginTop = '80px';
                     containerForReview.append(button);
 
                     button.addEventListener('click', () => {
@@ -156,11 +157,12 @@ class PersonalArea extends Page {
         reviewsContainer.append(containerForReview);
 
         buttonRemove.addEventListener('click', () => {
-            buttonRemove.textContent = 'Подтвердите удаление';
-            buttonRemove.addEventListener('click', () => {
+            if (buttonRemove.textContent === 'Удалить из прочитанного') {
+                buttonRemove.textContent = 'Подтвердите удаление';
+            } else if (buttonRemove.textContent === 'Подтвердите удаление') {
                 UsersAPI.removeBooksRead(data._id, this.authStatus as string);
                 container.remove();
-            })
+            }
             document.addEventListener('click', (e) => {
                 if(e.target !== buttonRemove) {
                     buttonRemove.textContent = 'Удалить из прочитанного';
