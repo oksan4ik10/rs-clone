@@ -77,12 +77,12 @@
     font-size: 20px;
 }
 
-
 .personal__read__book {
     width: 100%;
     @include flex-space-between;
     margin-bottom: 30px;
     color: $text-dark-color;
+    align-items: flex-start;
 }
 
 .personal__read__box {
@@ -121,6 +121,20 @@
     align-items: center;
 }
 
+.personal__descr {
+    width: 70%;
+    min-height: 360px;
+    padding: 20px;
+    @include flex-colomn;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.personal__read__buttons {
+    @include flex-space-between;
+    width: 350px;
+}
+
 .personal__reviews__container {
     width: 100%;
     @include flex-colomn;
@@ -133,9 +147,33 @@
     @include flex-center;
 }
 
+.personal__reviews__grade__stars {
+    display: inline-block;
+    width: 100px;
+    margin-right: 10px;
+}
+
+.personal__reviews__grade__stars span {
+    padding: 0;
+      font-size: 12px;
+      margin: 0;
+      line-height: 1;
+      color: lightgrey;
+      text-shadow: 1px 1px #bbb;
+}
+
+.personal__reviews__grade__stars > span:before {
+	content: '★';
+}
+
+.personal__reviews__grade__stars > span.golden {
+	color: goldenrod;
+	text-shadow: 1px 1px #c60;
+}
+
 .personal__reviews__review {
     width: 100%;
-    height: 300px;
+    max-height: 300px;
     margin-top: 10px;
     overflow: auto;
 }
@@ -143,7 +181,7 @@
 .personal__reviews__button {
     color: $text-dark-color;
     margin: auto;
-    margin-top: 40px;
+    margin-top: 30px;
     @include flex-center;
     font-size: 16px;
 }

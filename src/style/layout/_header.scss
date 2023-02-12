@@ -4,6 +4,7 @@
     background-color: $header-color;
     position: relative;
     z-index: 2;
+    flex: 0 0 auto;
 }
 
 .header .wrapper {
@@ -24,6 +25,13 @@
 
 .header__form {
     position: relative;
+}
+
+.logo {
+    width: 209px;
+    height: 60px;
+    background: url("./images/rsb.png") 0 0 no-repeat;
+    filter: brightness(100%) saturate(100%) invert(95%) sepia(100%) saturate(14%) hue-rotate(213deg) brightness(104%) contrast(104%);
 }
 
 .header__search__input {
@@ -101,8 +109,11 @@
     height: 30px;
     cursor: pointer;
     margin-left: 20px;
+    border-radius: 15px;
+    background: url('./images/rand.png') no-repeat;
+    background-position: center;
+    filter: brightness(0) saturate(100%) invert(100%) sepia(43%) saturate(0%) hue-rotate(140deg) brightness(113%) contrast(100%);
 
-    border: 1px solid $back-color;;
 }
 
 .header__search {
