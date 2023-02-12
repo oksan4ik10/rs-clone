@@ -136,7 +136,7 @@
     cursor: pointer;
     border: 1px solid $color-opaque-dark;
     transition: .3s;
-    &:hover{
+    &:hover, &.active{
         background-color:$color-opaque-dark;
         opacity: .9;
     }

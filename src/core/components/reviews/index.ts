@@ -67,6 +67,9 @@ class Reviews extends Component {
             if(index<8){
                 elPagination.className = 'reviews__control_button';
                 this.pagination.append(elPagination);
+                if(index === 0){
+                    elPagination.classList.add('active');
+                }
             }
         });
         this.pagination.className = 'reviews__control';
