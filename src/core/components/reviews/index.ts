@@ -7,16 +7,22 @@ import { IOneReview } from '../../../types';
 
 class Reviews extends Component {
 
+    pagination:HTMLElement;
+    swiper:HTMLElement;
     constructor(tagName: string, className: string) {
         super(tagName, className);
+        this.pagination = document.createElement('div');
+        this.swiper = document.createElement('div');
     }
 
     async renderReview(obj: IOneReview){
         const book = await BooksAPI.getBookById(obj.bookId);
-        const element = document.createElement('swiper-slide');
+        const element = document.createElement('div');
         element.className = ('swiper-slide');
-        element.innerHTML = `
-            <div class="review__block review__first">
+        const reviewBlock = document.createElement('div');
+        reviewBlock.className = 'review__block';
+        element.setAttribute('id',obj.bookId);
+        reviewBlock.innerHTML= `
                 <div class="review__book">
                     <img class="review__book__img" src=${book.img}>
                         <div class="review__book__info">
@@ -25,14 +31,21 @@ class Reviews extends Component {
                         </div>
                     </div>
                     <div class="review__text">
-                    ${obj.text}
+                        <p>
+                            ${obj.text}
+                        </p>
                     </div>
                     <div class="review__info">   
                         <img class="review__info__foto" src=${obj.userImg}>
                         <div class="review__info__name">${obj.userName}</div>
                     </div>
-                </div>
-            </div>`;
+                </div>`;
+            element.append(reviewBlock);
+            element.addEventListener('click', (e: Event) => {
+                const target = e.currentTarget as HTMLElement;
+                const id = target.getAttribute('id');
+                if(id) window.location.hash = `id=${id}`;
+            })
             return element;
     }
 
@@ -45,22 +58,20 @@ class Reviews extends Component {
         title.textContent = 'ПОСЛЕДНИЕ РЕЦЕНЗИИ НА КНИГИ';
         wrapper.append(title);
 
-        const swiper = document.createElement('swiper-container');
-        swiper.className = 'reviews__block swiper mySwiper';
-        swiper.setAttribute('pagination', 'true');
-        swiper.setAttribute('pagination-clickable', 'true');
-        swiper.setAttribute('space-between','30');
-        swiper.setAttribute('slides-per-view','3');
-
-        data.forEach(async element => {
+        
+        this.swiper.className = 'reviews__block swiper mySwiper';
+        data.forEach(async (element,index) => {
             const el = await this.renderReview(element);
-            swiper.append(el);
+            this.swiper.append(el);
+            const elPagination = document.createElement('div');
+            if(index<8){
+                elPagination.className = 'reviews__control_button';
+                this.pagination.append(elPagination);
+            }
         });
-
-
-
-
-        wrapper.append(swiper);
+        this.pagination.className = 'reviews__control';
+        wrapper.append(this.swiper);
+        wrapper.append(this.pagination);
         this.container.append(wrapper);
 
     //     this.container.innerHTML = `  <swiper-container class="mySwiper" pagination="true" pagination-clickable="true" space-between="30"
