@@ -1,7 +1,7 @@
 import Component from '../../templates/components';
 import Header from '../header';
 import { UsersAPI } from '../../../api/api';
-
+import App from '../../../pages/app';
 
 class Personal extends Component {
     form: HTMLFormElement;
@@ -116,7 +116,7 @@ class Personal extends Component {
         const token = localStorage.getItem('token');
         if(token) {
             await UsersAPI.userUpdate(obj, token);
-            window.location.hash = 'personal-area';
+            App.renderNewPage('personal-area');
             Header.renderPersonalCabinet(token);
         }
 
