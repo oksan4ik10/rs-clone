@@ -35,7 +35,7 @@ class PopularBooks extends Component {
         const wrapper = document.createElement('div');
         wrapper.className = 'wrapper';
         const title = document.createElement('h3');
-        title.className = 'reviews__title';
+        title.className = 'main__title popular__title';
         title.textContent = 'ПОПУЛЯРНЫЕ КНИГИ'; 
         wrapper.append(title);
 
