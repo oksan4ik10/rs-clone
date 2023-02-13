@@ -64,7 +64,7 @@ class Reviews extends Component {
        swiper.setAttribute('slides-per-view','3');
        swiper.setAttribute('pagination','true');
        swiper.setAttribute('pagination-clickable','true');
-       swiper.setAttribute('autoplay-delay','1500');
+       swiper.setAttribute('autoplay-delay','3000');
        swiper.setAttribute('style','--swiper-pagination-color: #bc8c5b80; --swiper-pagination-bullet-width: 12px; --swiper-pagination-bullet-height: 12px');  
 
         data.forEach(async (element) => {
