@@ -55,6 +55,10 @@ class PersonalArea extends Page {
         return await UsersAPI.infoUser(this.authStatus as string);
     }
 
+    editReview (text: string) {
+        
+    }
+
     showReadBook(data: IOneBook) {
         const container = document.createElement('div');
         container.classList.add('personal__read__book');
@@ -126,6 +130,34 @@ class PersonalArea extends Page {
             ReviewsAPI.getReviewsByUser(this.authStatus as string, data._id).then((res) => {
                 if (res) {
                     containerForReview.textContent = res.text;
+
+                    //добавить иконку редактирования;
+                    const editIcon = document.createElement('div');
+                    editIcon.classList.add('personal__reviews__edit');
+                    reviewsContainer.append(editIcon);
+
+                    editIcon.addEventListener('click', () => {
+                        const text = res.text;
+                        containerForReview.style.display = 'none';
+                        const form = document.createElement('form');
+                        const textArea = document.createElement('textarea');
+                        textArea.classList.add('personal__reviews__textarea')
+                        reviewsContainer.append(form);
+                        form.classList.add('personal__reviews__form');
+                        textArea.value = text;
+                        const button = document.createElement('button');
+                        button.classList.add('button', 'personal__reviews__button');
+                        button.textContent = 'Сохранить';
+                        form.append(textArea);
+                        form.append(button);
+
+                        button.addEventListener('click', () => {
+                            ReviewsAPI.postNewReview(textArea.value, data._id, this.authStatus as string);
+                            form.remove();
+                            containerForReview.textContent = textArea.value;
+                            containerForReview.style.display = 'block';
+                        })
+                    })
                 } else {
                     const button = document.createElement('div');
                     button.classList.add('personal__reviews__button', 'button');
@@ -281,7 +313,9 @@ class PersonalArea extends Page {
         nameBlock.classList.add('personal__user__block');
 
         const img = document.createElement('img');
-        img.src = './images/avatar.jpg';
+
+        // img.src = './images/avatar.jpg';
+
         img.classList.add('personal__user__img');
 
         const avatar = document.createElement('div');
@@ -292,6 +326,7 @@ class PersonalArea extends Page {
 
         this.getInfoUser().then((res) => {
             name.textContent = res.name;
+            img.src = res.img;
         })
         
         this.button.classList.add('personal__user__change', 'button');
