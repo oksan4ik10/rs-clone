@@ -1,7 +1,7 @@
 import { IOneBook, IOneReview, IUserNew, IUser, IGetGradeByUserResp, ICheckBooksLikeRead, IPostGrade, IUserUpdate} from "../types";
 
 
-const baseApiEndpoint = 'http://localhost:3000/api/';
+const baseApiEndpoint = 'https://rs-clone-iqcn.onrender.com/api/';
 const basePaths = {
   books: `${baseApiEndpoint}books/`,
   reviews: `${baseApiEndpoint}reviews/`,
@@ -23,7 +23,7 @@ export class BooksAPI {
   }
 
   static async getBestBooks() {
-    const response = await fetch(`${this.apiEndpoint}/best/list`);
+    const response = await fetch(`${this.apiEndpoint}best/list`);
     const result:[] = await response.json();
     return result;
   }
