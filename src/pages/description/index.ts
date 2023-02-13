@@ -10,6 +10,22 @@ class DescriptionPage extends Page {
     bookId: string;
     descrContentWrapper: HTMLElement;
 
+    static setLocalVisited = function(id:string){
+        const local = localStorage.getItem('books');
+        if(!local){
+            localStorage.setItem('books',JSON.stringify([id]));
+            return;
+        } else{
+            const books = JSON.parse(local);
+            books.unshift(id);        
+            if(books.length === 7) {
+                books.pop()
+            }
+            localStorage.setItem('books',JSON.stringify(Array.from(new Set(books))));
+        }
+        
+    }
+
     constructor(id: string) {
         super(id);
         this.addToReadButton = document.createElement('button');
@@ -19,6 +35,7 @@ class DescriptionPage extends Page {
         this.descrContentWrapper = document.createElement('div');
         this.descrContentWrapper.classList.add('desc__content__wrapper');
         this.bookId = window.location.hash.split('=')[1];
+        DescriptionPage.setLocalVisited(id);
     }
     
     isAuthorised() {
