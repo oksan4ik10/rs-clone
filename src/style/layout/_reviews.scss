@@ -1,12 +1,7 @@
-.reviews__title {
-    width: 100%;
-    @include flex-center;
-    margin-top: 80px;
-}
-
 .reviews__block {
     width: 100%;
     @include flex-space-between;
+    padding-bottom: 40px;
 }
 
 .review__container {
@@ -20,45 +15,89 @@
 
 .review__block {
     width: 100%;
-    height: 100px;
-    padding-left: 20px;
-    padding-right: 20px;
+    cursor: pointer;
+    &*{
+        cursor: pointer;
+    }
+    &:hover .review__text{
+        border-color: #E6E1DF;
+        &::after{
+            background: url(./images/review-arrow-hover.png);
+        }
+    }
 
-    border: 1px dashed blue;
 }
 
 .review__book {
-    @include flex-space-between;
+    display: flex;
+    justify-content: space-evenly;
     height: 100%;
+    &__author{
+        font-style: italic;
+        font-size: 0.9em;
+    }
+    &__name{
+        font-size: 1.1em;
+        font-weight: 600;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 }
 
 .review__book__img {
     height: 80px;
     width: 60px;
-
-    border: 1px solid black;
+    border: 1px solid $color-opaque-light;
+    object-fit: cover;
 }
 
 .review__book__info {
     width: 180px;
     height: 80px;
+    padding-top: 10px;
 }
 
 .review__text {
-    height: 200px;
-    width: 100%;
-    margin-top: 10px;
-    border: 1px solid black;
+    width: 80%;
+    border: 4px solid #D2CAC6;
+    font-size: 1.3rem;
+    margin: 10px auto 0px;
+    position: relative;
+    transition: .2s;
+    border-radius: 5px;
+    line-height: 110%;
+
+    p{
+        height: 200px;
+        padding: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: justify;
+    }
+
+    &::after{
+            display: block;
+            content: '';
+            transition: .2s;
+            height: 17px;
+            width: 30px;
+            position: absolute;
+            bottom: -17px;
+            left: 30px;
+            background: url(./images/review-arrow.png);
+    }
 }
 
 .review__info {
     display: flex;
     align-items: center;
-    width: 100%;
-    height: 50px;
-    margin-top: 20px;
-
-    border: 1px dashed green;
+    width: 70%;
+    padding: 10px;
+    margin: 0px auto;
+    &__name{
+        font-size: 1.1em;
+    }
 }
 
 .review__info__foto {
@@ -67,13 +106,13 @@
     border-radius: 50%;
     margin-right: 20px;
 
-    border: 1px solid black;
+    border: 1px solid $color-opaque-dark;
 }
 
 .reviews__control {
-    width: 200px;
-    height: 5px;
     @include flex-space-between;
+    gap: 5px;
+    width: 200px;
     margin-top: 40px;
     margin-bottom: 40px;
     margin-left: auto;
@@ -81,11 +120,23 @@
 }
 
 .reviews__control_button {
-    height: 10px;
-    width: 10px;
+    height: 15px;
+    width: 15px;
     border-radius: 50%;
     cursor: pointer;
-
-    border: 1px solid black;
+    border: 1px solid $color-opaque-dark;
+    transition: .3s;
+    &:hover, &.active{
+        background-color:$color-opaque-dark;
+        opacity: .9;
+    }
 }
-
+.swiper-pagination-bullet{
+    background-color:red;
+}
+swiper-container div.swiper-pagination{
+    background:red;
+}
+.swiper-pagination-bullet-active {
+    background-color: #000 !important;
+}

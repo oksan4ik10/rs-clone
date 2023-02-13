@@ -1,14 +1,12 @@
 .popular__container {
     width: 100%;
     @include flex-space-between;
-
 }
 
 .popular__colomn {
     @include flex-colomn;
     align-items: center;
     padding: 20px 60px;
-    margin-top: 20px;
     margin-bottom: 40px;
     cursor: pointer;
     transition: .2s;
