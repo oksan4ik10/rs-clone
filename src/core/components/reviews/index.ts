@@ -10,10 +10,12 @@ class Reviews extends Component {
 
     pagination:HTMLElement;
     swiper:HTMLElement;
+    start:boolean;
     constructor(tagName: string, className: string) {
         super(tagName, className);
         this.pagination = document.createElement('div');
-        this.swiper = document.createElement('div');
+        this.swiper = document.createElement('swiper-container');
+        this.start = false;
     }
 
     async renderReview(obj: IOneReview){
@@ -59,26 +61,43 @@ class Reviews extends Component {
         title.textContent = 'ПОСЛЕДНИЕ РЕЦЕНЗИИ НА КНИГИ';
         wrapper.append(title);
 
-       const swiper = document.createElement('swiper-container');
-       swiper.className = 'reviews__block swiper mySwiper';
-       swiper.setAttribute('slides-per-view','3');
-       swiper.setAttribute('pagination','true');
-       swiper.setAttribute('pagination-clickable','true');
-       swiper.setAttribute('autoplay-delay','4000');
-       swiper.setAttribute('style','--swiper-pagination-color: #bc8c5b80; --swiper-pagination-bullet-width: 12px; --swiper-pagination-bullet-height: 12px');  
+       
+       this.swiper.className = 'reviews__block swiper mySwiper';
 
         data.forEach(async (element) => {
             const el = await this.renderReview(element);
-            swiper.append(el);
+            this.swiper.append(el);
         });
 
-        wrapper.append(swiper);
+        wrapper.append(this.swiper);
         this.container.append(wrapper);
 
+    }
+    setResizeSlider(){
+        if(!this.start){
+            this.start = true;
+            return 
+        }
+        const windowInnerWidth = window.innerWidth;
+        this.swiper.setAttribute('style','--swiper-pagination-color: #bc8c5b80; --swiper-pagination-bullet-width: 12px; --swiper-pagination-bullet-height: 12px; --swiper-navigation-color: #bc8c5b80; --swiper-pagination-color: #bc8c5b80'); 
+
+        if(windowInnerWidth > 768 ){
+            this.swiper.setAttribute('slides-per-view','3');
+            this.swiper.setAttribute('pagination','true');
+            this.swiper.setAttribute('pagination-clickable','true');
+            this.swiper.setAttribute('autoplay-delay','4000');
+
+        }  else{
+            this.swiper.setAttribute('slides-per-view','1');
+            this.swiper.setAttribute('navigation','true');
+        }
+        if(windowInnerWidth > 768 && windowInnerWidth < 920) this.swiper.setAttribute('slides-per-view','2');
     }
 
     render() {
         this.renderPageReviews();
+        this.setResizeSlider();
+        window.addEventListener('resize',this.setResizeSlider.bind(this));
         return this.container;
     }
 }
