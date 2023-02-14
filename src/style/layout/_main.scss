@@ -3,8 +3,9 @@ html {
 }
 
 .wrapper {
-    width: 1200px;
+    max-width: 1200px;
     margin: 0 auto;
+
 }
 
 .main {
@@ -37,12 +38,29 @@ html {
 
 @media screen and (max-width: 1400px){
     .wrapper {
-        width: 1000px;
+        max-width: 1000px;
     }
 }
 
 @media screen and (max-width: 1200px){
     .wrapper {
-        width: 900px;
+        max-width: 900px;
+    }
+}
+@media screen and (max-width: 900px){
+    .wrapper {
+        max-width: 720px;
+    }
+}
+@media screen and (max-width: 768px){
+    .wrapper {
+        max-width: 540px;
+    }
+}
+@media screen and (max-width: 576px){
+    .wrapper {
+        width: 100%;
+        box-sizing: content-box;
+        padding: 0px 5px;
     }
 }
