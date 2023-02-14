@@ -31,3 +31,10 @@
 .input-invalid {
     border: 1px solid $error-color;
 }
+
+@media screen and (max-width: 576px) {
+    .input-registration,
+    .input-authorisation {
+        width: 100%;
+    }
+}
