@@ -55,6 +55,15 @@ html {
     .wrapper {
         max-width: 720px;
     }
+    .main{
+        &__title{
+            margin-top: 20px;
+            margin-bottom: 40px;
+            width: 100%;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+    }
 }
 @media screen and (max-width: 768px){
     .wrapper {
