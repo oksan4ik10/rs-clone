@@ -59,7 +59,7 @@
 }
 .personal__wrapper-file{
     @include flex-space-between;
-    gap:20px
+    gap:20px;
 }
 
 .personal__name{
@@ -83,7 +83,19 @@
 .personal__submit{
     padding: 20px;
 }
+
 .personal__submit:disabled{
     background-color:$border-input;
     cursor: not-allowed;
+}
+
+@media screen and (max-width: 576px) {
+	.personal__avatar{
+		width: 80px;
+		height: 80px;
+	}
+
+	.personal__name{
+		width: 85%;
+	}
 }

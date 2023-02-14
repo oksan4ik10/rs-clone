@@ -9,6 +9,7 @@ class PersonalArea extends Page {
     readContent: HTMLElement;
     willReadContent: HTMLElement;
     button: HTMLButtonElement;
+    openEditReview: boolean;
 
     static formActive = false;
 
@@ -18,6 +19,7 @@ class PersonalArea extends Page {
         this.button = document.createElement('button');
         this.readContent = document.createElement('div');
         this.willReadContent = document.createElement('div');
+        this.openEditReview = false;
     }
 
     openForm(form: string) {
@@ -53,10 +55,6 @@ class PersonalArea extends Page {
 
     async getInfoUser() {
         return await UsersAPI.infoUser(this.authStatus as string);
-    }
-
-    editReview (text: string) {
-        
     }
 
     showReadBook(data: IOneBook) {
@@ -136,27 +134,32 @@ class PersonalArea extends Page {
                     editIcon.classList.add('personal__reviews__edit');
                     reviewsContainer.append(editIcon);
 
-                    editIcon.addEventListener('click', () => {
-                        const text = res.text;
-                        containerForReview.style.display = 'none';
-                        const form = document.createElement('form');
-                        const textArea = document.createElement('textarea');
-                        textArea.classList.add('personal__reviews__textarea')
-                        reviewsContainer.append(form);
-                        form.classList.add('personal__reviews__form');
-                        textArea.value = text;
-                        const button = document.createElement('button');
-                        button.classList.add('button', 'personal__reviews__button');
-                        button.textContent = 'Сохранить';
-                        form.append(textArea);
-                        form.append(button);
 
-                        button.addEventListener('click', () => {
-                            ReviewsAPI.postNewReview(textArea.value, data._id, this.authStatus as string);
-                            form.remove();
-                            containerForReview.textContent = textArea.value;
-                            containerForReview.style.display = 'block';
-                        })
+                    editIcon.addEventListener('click', () => {
+                        if (this.openEditReview === false) {
+                            const text = res.text;
+                            containerForReview.style.display = 'none';
+                            const form = document.createElement('form');
+                            const textArea = document.createElement('textarea');
+                            textArea.classList.add('personal__reviews__textarea')
+                            reviewsContainer.append(form);
+                            form.classList.add('personal__reviews__form');
+                            textArea.value = text;
+                            const button = document.createElement('button');
+                            button.classList.add('button', 'personal__reviews__button');
+                            button.textContent = 'Сохранить';
+                            form.append(textArea);
+                            form.append(button);
+                            this.openEditReview = true;
+
+                            button.addEventListener('click', () => {
+                                ReviewsAPI.postNewReview(textArea.value, data._id, this.authStatus as string);
+                                form.remove();
+                                containerForReview.textContent = textArea.value;
+                                containerForReview.style.display = 'block';
+                                this.openEditReview = false;
+                            })
+                        }
                     })
                 } else {
                     const button = document.createElement('div');
@@ -194,6 +197,11 @@ class PersonalArea extends Page {
             } else if (buttonRemove.textContent === 'Подтвердите удаление') {
                 UsersAPI.removeBooksRead(data._id, this.authStatus as string);
                 container.remove();
+                if (this.readContent.children.length === 0) {
+                    const readTitle = document.createElement('div');
+                    readTitle.textContent = 'У вас пока нет прочитанных книг';
+                    this.readContent.append(readTitle);
+                }
             }
             document.addEventListener('click', (e) => {
                 if(e.target !== buttonRemove) {
@@ -284,17 +292,29 @@ class PersonalArea extends Page {
                             })
                         }
                     })
-                container.remove();
-                });
+                    container.remove();
+                    console.log(this.willReadContent.children.length)
+                    
+                    if (this.willReadContent.children.length === 0) {
+                        const readTitle = document.createElement('div');
+                        readTitle.textContent = 'У вас пока нет книг, которые вы хотите прочесть';
+                        this.willReadContent.append(readTitle);
+                    }
+                    });
             });
         })
-
 
         // нажатие на кнопку Удалить из списка
 
         buttonRemove.addEventListener('click', () => {
             UsersAPI.removeBooksWantRead(data._id, this.authStatus as string).then((res) => {
                 container.remove();
+                console.log('willReadContent.children.length', this.willReadContent.children.length)
+                if (this.willReadContent.children.length === 0) {
+                    const readTitle = document.createElement('div');
+                    readTitle.textContent = 'У вас пока нет книг, которые вы хотите прочесть';
+                    this.willReadContent.append(readTitle);
+                }
             })
         })
     }
@@ -313,9 +333,6 @@ class PersonalArea extends Page {
         nameBlock.classList.add('personal__user__block');
 
         const img = document.createElement('img');
-
-        // img.src = './images/avatar.jpg';
-
         img.classList.add('personal__user__img');
 
         const avatar = document.createElement('div');
@@ -373,7 +390,7 @@ class PersonalArea extends Page {
             }
         })
 
-        this.willReadContent.classList.add('personal__tab__content');
+        this.willReadContent.classList.add('personal__tab__content', 'personal__tab__content-want');
 
         //добавить проверку на наличие книг в списке желаемых к прочитаннию
 

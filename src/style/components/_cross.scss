@@ -12,3 +12,10 @@
 .cross:hover {
     opacity: 0.7;
 }
+
+@media screen and (max-width: 576px) {
+    .cross {
+        top: 7px;
+        right: 7px;
+    }
+}

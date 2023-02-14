@@ -68,3 +68,27 @@
     @include flex-center;
 }
 
+@media screen and (max-width: 576px){
+    .registration__form,
+    .authorisation__form,
+    .personal__form {
+        width: 95%;
+        padding: 25px 10px;
+    }
+
+    .registration__title,
+    .authorisation__title,
+    .personal__title {
+        font-size: 22px;
+    }
+
+    .authorisation__subtitle {
+        font-size: 20px;
+    }
+
+    .registration__error,
+    .authorisation__error {
+        width: 100%;
+    }
+}
+

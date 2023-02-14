@@ -57,7 +57,7 @@ class Personal extends Component {
             wrapperPersonalFile.append(this.avatar);
             wrapperPersonalFile.append(label);
 
-            this.name.className = 'personal__name';
+            this.name.className = 'personal__name input__personal';
             this.name.value = user.name;
 
             this.error.className = 'personal__error';            
