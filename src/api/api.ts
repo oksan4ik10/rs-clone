@@ -28,9 +28,9 @@ export class BooksAPI {
     return result;
   }
 
-  static async getRandomBooks(genre:string) {
+  static async getRandomBooks(genre: string) {
     const response = await fetch(`${this.apiEndpoint}random/${genre}`);
-    const result:IOneBook = await response.json();
+    const result: IOneBook = await response.json();
     return result;
   }
 
@@ -76,7 +76,6 @@ export class UsersAPI{
 
   }
 
-  //Проверка есть ли книга у пользователя в хочу прочитать или прочитанное
   static async checkBooksLikeRead(bookId: string, token: string) {
     const response: ICheckBooksLikeRead = await fetch(`${this.apiEndpoint}booksCheck/${bookId}`, {
       headers: {
@@ -186,7 +185,7 @@ export class UsersAPI{
       body: JSON.stringify(obj),
     });
     try{
-      const result = await response.json();      
+      const result = await response.json();
       return result;
     }catch{
       return;

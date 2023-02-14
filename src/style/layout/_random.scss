@@ -1,7 +1,25 @@
 .choices {
-  //display: inline-block;
   width: 250px;
   margin: 5px;
   font: inherit;
   font-size: inherit;
+}
+
+
+.random__page__button__wrapper {
+  min-height: 100px;
+  @include flex-center;
+}
+
+.random__page__lucky {
+  color: white;
+  background: $button-form-color;
+  height: 30px;
+  border: none;
+  margin: 5px;
+}
+
+.random__page__bookcover {
+  width: 100px;
+  height: 150px;
 }
