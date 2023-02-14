@@ -13,6 +13,13 @@ export default class RandomPage extends Page {
   socialMediaWrapper: HTMLDivElement;
   upperThreeWrapper: HTMLDivElement;
 
+  socialText: HTMLSpanElement;
+  facebookLink: HTMLAnchorElement;
+  twitterLink: HTMLAnchorElement;
+  vkLink: HTMLAnchorElement;
+  telegramLink: HTMLAnchorElement;
+  
+
   constructor(id: string) {
     super(id);
     this.pageDropdownWrapper = document.createElement('select');
@@ -26,6 +33,12 @@ export default class RandomPage extends Page {
     this.socialMediaWrapper.classList.add('random__page__social__wrapper');
     this.upperThreeWrapper = document.createElement('div');
     this.upperThreeWrapper.classList.add('random__page__three__wrapper');
+
+    this.socialText = document.createElement('span');
+    this.facebookLink = document.createElement('a');
+    this.twitterLink = document.createElement('a');
+    this.vkLink = document.createElement('a');
+    this.telegramLink = document.createElement('a');
   }
 
   authStatus = DescriptionPage.prototype.isAuthorised();
@@ -347,8 +360,13 @@ export default class RandomPage extends Page {
       this.allRating.textContent = book.raiting.toString();
       
       this.bookId = book._id;
-
+      this.facebookLink.href = `https://www.facebook.com/sharer/sharer.php?u=${window.location.origin}/#id=${this.bookId}`;
+      this.twitterLink.href = `https://twitter.com/share?url=${window.location.origin}/#id=${this.bookId}+&text=Замечательная книга!`;
+      this.vkLink.href = `https://vk.com/share.php?url=${window.location.origin}/#id=${this.bookId}`;
+      this.telegramLink.href = `https://t.me/share/url?url=${window.location.origin}/#id=${this.bookId}&text=Замечательная книга!`;
       this.upperThreeWrapper.style.backgroundImage = `url(${book.img})`;
+      this.socialText.textContent = ' Расскажите о книге своим друзьям! ';
+
       randomBookInfoWrapper.append(randomBookTitle, randomBookSubtitle, randomBookDescr);
       randomBookBigWrap.append(randomBookImg, randomBookInfoWrapper);
       randomBookWrapper.append(randomBookBigWrap, this.renderRatingArea(), this.renderAddReadButtons());
@@ -361,17 +379,50 @@ export default class RandomPage extends Page {
   }
 
   renderSocialMedia(){
-    this.socialMediaWrapper.textContent;
-
     const socialTitle = document.createElement('div');
     socialTitle.classList.add('random__page__social__title');
-    const socialText = document.createElement('span');
-    socialText.classList.add('random__page__social__text');
-    socialText.textContent = 'Не знаете, что почитать? Попробуйте случайную книгу!';
+    this.socialText.classList.add('random__page__social__text');
+    this.socialText.textContent = 'Не знаете, что почитать? Попробуйте случайную книгу!';
+
+    const socialLinksWrapper = document.createElement('div');
+    socialLinksWrapper.classList.add('random__page__social__links');
+    
+    this.facebookLink.target = '_blank';
+    //this.facebookLink.href = `https://www.facebook.com/sharer/sharer.php?u=${window.location.origin}/#random`;
+    this.facebookLink.href = `https://www.facebook.com/sharer/sharer.php?u=https://pbs.twimg.com/media/EEHcTUsUwAEt6w7.jpg`;
+    const facebookImg = document.createElement('img');
+    facebookImg.classList.add('random__facebook__img');
+    facebookImg.src = './images/facebook.png';
+    this.facebookLink.append(facebookImg);
+
+    this.twitterLink.target = '_blank';
+    //this.twitterLink.href = `https://twitter.com/share?url=${window.location.origin}/#random+&text=Найдите книгу себе по душе!`;
+    this.twitterLink.href = `https://twitter.com/share?url=https://pbs.twimg.com/media/EEHcTUsUwAEt6w7.jpg+&text=Найдите книгу по себе душе на этом прекрасном сайте!`;
+    const twitterImg = document.createElement('img');
+    twitterImg.classList.add('random__twitter__img');
+    twitterImg.src = './images/twitter.png';
+    this.twitterLink.append(twitterImg);
+
+    this.vkLink.target = '_blank';
+    //this.vkLink.href = `https://vk.com/share.php?url=${window.location.origin}/#random`;
+    this.vkLink.href = `https://vk.com/share.php?url=https://pbs.twimg.com/media/EEHcTUsUwAEt6w7.jpg`;
+    const vkImg = document.createElement('img');
+    vkImg.classList.add('random__vk__img');
+    vkImg.src = './images/vk.png';
+    this.vkLink.append(vkImg);
+
+    this.telegramLink.target = '_blank';
+    //this.telegramLink.href = `https://t.me/share/url?url=${window.location.origin}/#random&text=Найдите книгу по душе на этом прекрасном сайте!`;
+    this.telegramLink.href = `https://t.me/share/url?url=https://pbs.twimg.com/media/EEHcTUsUwAEt6w7.jpg&text=Найдите книгу себе по душе на этом прекрасном сайте!`;
+    const telegramImg = document.createElement('img');
+    telegramImg.classList.add('random__telegram__img');
+    telegramImg.src = './images/telegram.png';
+    this.telegramLink.append(telegramImg);
 
 
-    socialTitle.append(socialText);
-    this.socialMediaWrapper.append(socialTitle);
+    socialTitle.append(this.socialText);
+    socialLinksWrapper.append(this.facebookLink, this.twitterLink, this.vkLink, this.telegramLink);
+    this.socialMediaWrapper.append(socialTitle, socialLinksWrapper);
     return this.socialMediaWrapper;
   }
 
@@ -426,26 +477,6 @@ export default class RandomPage extends Page {
     randomPageWrapper.append(this.upperThreeWrapper, this.renderSocialMedia());
     return randomPageWrapper;
   }
-
-  createShareSocialMedia() {
-    
-    /*
-
-
-    // делимся в Твиттере
-    var url = "http://google.com";
-    var text = "Replace this with your text";
-    window.open('http://twitter.com/share?url='+encodeURIComponent(url)+'&text='+encodeURIComponent(text), '', 'left=0,top=0,width=550,height=450,personalbar=0,toolbar=0,scrollbars=0,resizable=0');
-
-
-    // делимся в Фейсбуке
-<a href="https://www.facebook.com/sharer/sharer.php?u=example.org" target="_blank">
-  Share on Facebook
-</a>
-
-    */
-  }
-
 
   render() {
     this.container.append(this.createRandomPage());
