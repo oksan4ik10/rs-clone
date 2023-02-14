@@ -1,6 +1,8 @@
 .popular__container {
     width: 100%;
-    @include flex-space-between;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap:70px;
 }
 
 .popular__colomn {
@@ -14,6 +16,12 @@
     &:hover {
         transform: scale(1.2);
     }
+}
+@media (max-width:1200px) {
+    .popular__colomn{
+        padding: 20px 10px;
+    }
+    
 }
 
 .popular__book {
@@ -47,10 +55,18 @@
 
 .popular__author {
     margin-top: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 180px;
 }
 
 .popular__name {
     margin-top: 5px;
     font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 180px;
 }
 
