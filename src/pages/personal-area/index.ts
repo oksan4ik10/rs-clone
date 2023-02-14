@@ -9,6 +9,7 @@ class PersonalArea extends Page {
     readContent: HTMLElement;
     willReadContent: HTMLElement;
     button: HTMLButtonElement;
+    openEditReview: boolean;
 
     static formActive = false;
 
@@ -18,6 +19,7 @@ class PersonalArea extends Page {
         this.button = document.createElement('button');
         this.readContent = document.createElement('div');
         this.willReadContent = document.createElement('div');
+        this.openEditReview = false;
     }
 
     openForm(form: string) {
@@ -55,9 +57,9 @@ class PersonalArea extends Page {
         return await UsersAPI.infoUser(this.authStatus as string);
     }
 
-    editReview (text: string) {
+    // editReview (text: string) {
         
-    }
+    // }
 
     showReadBook(data: IOneBook) {
         const container = document.createElement('div');
@@ -136,27 +138,32 @@ class PersonalArea extends Page {
                     editIcon.classList.add('personal__reviews__edit');
                     reviewsContainer.append(editIcon);
 
-                    editIcon.addEventListener('click', () => {
-                        const text = res.text;
-                        containerForReview.style.display = 'none';
-                        const form = document.createElement('form');
-                        const textArea = document.createElement('textarea');
-                        textArea.classList.add('personal__reviews__textarea')
-                        reviewsContainer.append(form);
-                        form.classList.add('personal__reviews__form');
-                        textArea.value = text;
-                        const button = document.createElement('button');
-                        button.classList.add('button', 'personal__reviews__button');
-                        button.textContent = 'Сохранить';
-                        form.append(textArea);
-                        form.append(button);
 
-                        button.addEventListener('click', () => {
-                            ReviewsAPI.postNewReview(textArea.value, data._id, this.authStatus as string);
-                            form.remove();
-                            containerForReview.textContent = textArea.value;
-                            containerForReview.style.display = 'block';
-                        })
+                    editIcon.addEventListener('click', () => {
+                        if (this.openEditReview === false) {
+                            const text = res.text;
+                            containerForReview.style.display = 'none';
+                            const form = document.createElement('form');
+                            const textArea = document.createElement('textarea');
+                            textArea.classList.add('personal__reviews__textarea')
+                            reviewsContainer.append(form);
+                            form.classList.add('personal__reviews__form');
+                            textArea.value = text;
+                            const button = document.createElement('button');
+                            button.classList.add('button', 'personal__reviews__button');
+                            button.textContent = 'Сохранить';
+                            form.append(textArea);
+                            form.append(button);
+                            this.openEditReview = true;
+
+                            button.addEventListener('click', () => {
+                                ReviewsAPI.postNewReview(textArea.value, data._id, this.authStatus as string);
+                                form.remove();
+                                containerForReview.textContent = textArea.value;
+                                containerForReview.style.display = 'block';
+                                this.openEditReview = false;
+                            })
+                        }
                     })
                 } else {
                     const button = document.createElement('div');
@@ -289,7 +296,6 @@ class PersonalArea extends Page {
             });
         })
 
-
         // нажатие на кнопку Удалить из списка
 
         buttonRemove.addEventListener('click', () => {
@@ -313,9 +319,6 @@ class PersonalArea extends Page {
         nameBlock.classList.add('personal__user__block');
 
         const img = document.createElement('img');
-
-        // img.src = './images/avatar.jpg';
-
         img.classList.add('personal__user__img');
 
         const avatar = document.createElement('div');
