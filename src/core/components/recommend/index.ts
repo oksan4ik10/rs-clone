@@ -15,7 +15,7 @@ class Recommendation extends Component {
 
 
     async renderRecommendation() {
-        const book = await BooksAPI.getRandomBooks('all');
+        const book = await BooksAPI.getRandomBooks();
         const wrapperContainer = document.createElement('div');
         wrapperContainer.className = 'wrapper';
         const wrapper = document.createElement('div');

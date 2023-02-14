@@ -1,4 +1,4 @@
-import { IOneBook, IOneReview, IUserNew, IUser, IGetGradeByUserResp, ICheckBooksLikeRead, IPostGrade, IUserUpdate} from "../types";
+import { IOneBook, IOneReview, IUserNew, IUser, IGetGradeByUserResp, ICheckBooksLikeRead, IPostGrade, IUserUpdate, IGenre} from "../types";
 
 
 const baseApiEndpoint = 'https://rs-clone-iqcn.onrender.com/api/';
@@ -28,8 +28,16 @@ export class BooksAPI {
     return result;
   }
 
-  static async getRandomBooks(genre: string) {
-    const response = await fetch(`${this.apiEndpoint}random/${genre}`);
+  static async getRandomBooks(genre?: string) {
+    const obj:IGenre= {};
+    if (genre) obj['genre'] = genre;
+    const response = await fetch(`${this.apiEndpoint}random/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: JSON.stringify(obj),
+    });
     const result: IOneBook = await response.json();
     return result;
   }
