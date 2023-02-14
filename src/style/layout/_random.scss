@@ -1,10 +1,13 @@
 .choices {
-  width: 250px;
+  width: 300px;
   margin: 5px;
   font: inherit;
   font-size: inherit;
 }
 
+.random__page__select{
+  visibility: hidden;
+}
 
 .random__page__button__wrapper {
   min-height: 100px;
@@ -16,10 +19,88 @@
   background: $button-form-color;
   height: 30px;
   border: none;
-  margin: 5px;
+  margin: 10px 1px;
+  width: 230px;
+  font-style: inherit;
+  font-size: inherit;
 }
 
 .random__page__bookcover {
   width: 100px;
   height: 150px;
+  cursor: pointer;
+}
+
+.random__page__social__wrapper {
+  padding: 25px 0;
+  text-align: center;
+  border-bottom: 1px solid #e5e1e4;
+  border-top: 1px solid #e5e1e4;
+  height: 100px;
+  margin: 50px 5px;
+}
+
+.random__page__social__title {
+  margin-top: -35px;
+}
+
+.random__page__social__text {
+  font-style: italic;
+  background-color: white;
+  font-size: inherit;
+}
+
+.random__page__book__title {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.random__page__book__subtitle {
+  font-weight: 600;
+  color: gray;
+  margin-bottom: 10px;
+}
+
+.random__page__title {
+  margin-top: 50px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.random__page__title,
+.random__page__subtitle {
+  color: white;
+  font-weight: 400;
+}
+
+.random__page__subtitle__wrapper {
+  @include flex-space-between;
+  margin-top: 30px;
+}
+
+.random__page__three__wrapper {
+  background-size: cover;
+  background-position: bottom;
+  background-image: url('./images/randbooks.jpg');
+}
+
+.randompage__blur {
+  padding: 5px 5%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(5px);
+}
+
+.random__page__book__wrapper {
+  margin: 10px 10%;
+}
+
+.random__page__buttons__outer {
+  margin-top: 20px;
+}
+
+.random__page__bigbook {
+  display: flex;
+  gap: 20px;
+  margin-top: 30px;
 }

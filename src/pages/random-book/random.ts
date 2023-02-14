@@ -10,6 +10,8 @@ export default class RandomPage extends Page {
   allRating: HTMLDivElement;
   addToReadButton: HTMLButtonElement;
   wantToReadButton: HTMLButtonElement;
+  socialMediaWrapper: HTMLDivElement;
+  upperThreeWrapper: HTMLDivElement;
 
   constructor(id: string) {
     super(id);
@@ -20,6 +22,10 @@ export default class RandomPage extends Page {
     this.allRating.classList.add('description__allrating');
     this.addToReadButton = document.createElement('button');
     this.wantToReadButton = document.createElement('button');
+    this.socialMediaWrapper = document.createElement('div');
+    this.socialMediaWrapper.classList.add('random__page__social__wrapper');
+    this.upperThreeWrapper = document.createElement('div');
+    this.upperThreeWrapper.classList.add('random__page__three__wrapper');
   }
 
   authStatus = DescriptionPage.prototype.isAuthorised();
@@ -118,7 +124,6 @@ export default class RandomPage extends Page {
       }
     })
 
-    console.log(genres);
     return genres;
   }
 
@@ -138,7 +143,7 @@ export default class RandomPage extends Page {
         label: genres[i],
       })
     }
-    console.log(dropdownObjectsArray);
+
     return dropdownObjectsArray;
   }
 
@@ -152,9 +157,32 @@ export default class RandomPage extends Page {
         allowHTML: false,
         shouldSort: false,
         itemSelectText: 'Выбрать',
+        noResultsText: 'Нет совпадений',
       });
     })
   }
+
+  getCurrentGenre(){
+    if(this.pageDropdownWrapper.children[0] instanceof HTMLOptionElement){
+      const genreOption = this.pageDropdownWrapper.children[0].value;
+
+      return genreOption;
+    }
+    return "";
+  }
+
+  async getRatingByAuthorizedUser() {
+    if (typeof this.authStatus === 'string'){
+        const res = await UsersAPI.infoUser(this.authStatus);
+        return await GradesAPI.getGradeByUser(res._id, this.bookId).then(grade => {
+            if (grade) {
+                return grade;
+            } 
+            return null;
+        })
+    }
+    return null;
+}
 
   renderRatingArea() {
     const greatRatingWrapper = document.createElement('div');
@@ -202,7 +230,7 @@ export default class RandomPage extends Page {
         }
     })
 
-    DescriptionPage.prototype.getRatingByAuthorizedUser().then(rating => {
+    this.getRatingByAuthorizedUser().then(rating => {
         const ratingByUser = rating;
 
         // рисуем звёздочки
@@ -293,8 +321,9 @@ export default class RandomPage extends Page {
     return randomButtonsOuter;
   }
 
-  renderRandomBook(genre: string) {
+  renderRandomBook(genre?: string) {
     const randomBookBigWrap = document.createElement('div');
+    randomBookBigWrap.classList.add('random__page__bigbook');
 
     const randomBookWrapper = document.createElement('div');
     randomBookWrapper.classList.add('random__page__book__wrapper');
@@ -302,9 +331,9 @@ export default class RandomPage extends Page {
     const randomBookInfoWrapper = document.createElement('div');
     randomBookInfoWrapper.classList.add('random__page__bookwrap');
     const randomBookTitle = document.createElement('div');
-    randomBookTitle.classList.add('random__page__title');
+    randomBookTitle.classList.add('random__page__book__title');
     const randomBookSubtitle = document.createElement('div');
-    randomBookSubtitle.classList.add('random__page__subtitle');
+    randomBookSubtitle.classList.add('random__page__book__subtitle');
     const randomBookDescr = document.createElement('div');
     randomBookDescr.classList.add('random__page__descr');
 
@@ -318,19 +347,40 @@ export default class RandomPage extends Page {
       this.allRating.textContent = book.raiting.toString();
       
       this.bookId = book._id;
+
+      this.upperThreeWrapper.style.backgroundImage = `url(${book.img})`;
       randomBookInfoWrapper.append(randomBookTitle, randomBookSubtitle, randomBookDescr);
       randomBookBigWrap.append(randomBookImg, randomBookInfoWrapper);
       randomBookWrapper.append(randomBookBigWrap, this.renderRatingArea(), this.renderAddReadButtons());
+
+      randomBookImg.addEventListener('click', () => {
+        window.location.hash = `id=${this.bookId}`;
+      })
     })
     return randomBookWrapper;
+  }
+
+  renderSocialMedia(){
+    this.socialMediaWrapper.textContent;
+
+    const socialTitle = document.createElement('div');
+    socialTitle.classList.add('random__page__social__title');
+    const socialText = document.createElement('span');
+    socialText.classList.add('random__page__social__text');
+    socialText.textContent = 'Не знаете, что почитать? Попробуйте случайную книгу!';
+
+
+    socialTitle.append(socialText);
+    this.socialMediaWrapper.append(socialTitle);
+    return this.socialMediaWrapper;
   }
 
   createRandomPage() {
     const randomPageWrapper = document.createElement('div');
     randomPageWrapper.classList.add('randompage__wrapper');
 
-    const upperThreeWrapper = document.createElement('div');
-    upperThreeWrapper.classList.add('random__page__three__wrapper');
+    const randomPageThreeBlur = document.createElement('div');
+    randomPageThreeBlur.classList.add('randompage__blur');
 
     const pageTitle = document.createElement('div');
     pageTitle.classList.add('random__page__title');
@@ -348,17 +398,32 @@ export default class RandomPage extends Page {
     luckyButton.classList.add('random__page__lucky', 'button');
     luckyButton.textContent = 'Мне повезёт!';
 
-    this.createChoicesDropdown();
+    luckyButton.addEventListener('click', () => {
+      luckyButton.disabled = true;
+      const currentGenre = this.getCurrentGenre();
 
-    luckyButton.addEventListener('click', (event) => {
-      //const genreValue
+      if (this.socialMediaWrapper.previousElementSibling?.classList.contains('random__page__book__wrapper')){
+        this.socialMediaWrapper.previousElementSibling.remove();
+      }
+
+      if (currentGenre.length > 0){
+        this.socialMediaWrapper.before(this.renderRandomBook(currentGenre));
+      } else {
+        this.socialMediaWrapper.before(this.renderRandomBook());
+      }
+
+      setTimeout(() => {
+        luckyButton.disabled = false;
+      }, 1500);
     })
+
+    this.createChoicesDropdown();
 
     luckyButtonWrapper.append(luckyButton);
     pageSubTitleWrapper.append(pageSubtitle, this.pageDropdownWrapper);
-    upperThreeWrapper.append(pageTitle, pageSubTitleWrapper, luckyButtonWrapper);
-    //в строку ниже вставлять книгу
-    randomPageWrapper.append(upperThreeWrapper, this.renderRandomBook('all'));
+    randomPageThreeBlur.append(pageTitle, pageSubTitleWrapper, luckyButtonWrapper);
+    this.upperThreeWrapper.append(randomPageThreeBlur);
+    randomPageWrapper.append(this.upperThreeWrapper, this.renderSocialMedia());
     return randomPageWrapper;
   }
 
