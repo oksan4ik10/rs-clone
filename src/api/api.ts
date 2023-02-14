@@ -135,7 +135,7 @@ export class UsersAPI{
       bookId: bookId
     }
 
-    const response = await fetch(`${this.apiEndpoint}/booksLike`, {
+    const response = await fetch(`${this.apiEndpoint}booksLike`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json', 

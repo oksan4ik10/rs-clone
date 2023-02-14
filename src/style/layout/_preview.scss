@@ -11,9 +11,9 @@
     @include flex-center;
     margin-top: 130px;
     margin-bottom: 0;
-    font-size: 5rem;
+    font-size: 3.5rem;
     color: $back-color;
-    font-weight: 900;
+    font-weight: 600;
 }
 
 .search__results__main__wrapper {
@@ -53,6 +53,7 @@
 }
 
 .preview__about__img {
+    margin-right: 10px;
     width: 60px;
     height: 60px;
     background: url('./images/main-icons.png') 0 0 no-repeat;
@@ -73,7 +74,7 @@
 .preview__about__text {
     width: 70%;
     color: $back-color;
-    font-size: 1.3rem;
+    font-size: 1rem;
 }
 
 .preview__more {
