@@ -85,3 +85,7 @@ export interface IUserUpdate{
     name: string,
     img: string
 }
+
+export interface IGenre{
+    genre?:string;
+}
