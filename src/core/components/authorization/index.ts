@@ -1,6 +1,8 @@
 import Component from '../../templates/components';
 import Header from '../../components/header';
 import { UsersAPI } from '../../../api/api';
+import RandomPage from '../../../pages/random-book/random';
+import DescriptionPage from '../../../pages/description';
 
 
 class Authorization extends Component {
@@ -100,10 +102,16 @@ class Authorization extends Component {
             Header.renderPersonalCabinet(res.token);
 
             // перезагрузка страницы при логине, когда юзер на странице описания книги
-            if (window.location.hash.slice(1).includes('id=')){
+            if (window.location.hash.slice(1, 5).includes('id=')){
                 const currentBookId = window.location.hash.split('=')[1]
                 window.location.hash = '';
                 window.location.hash = `id=${currentBookId}`;
+            }
+
+            if (window.location.hash.includes('random')){
+                console.log('includes random')
+                window.location.hash = '';
+                window.location.hash = 'random';
             }
         
         })

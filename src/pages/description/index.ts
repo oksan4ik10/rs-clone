@@ -3,7 +3,7 @@ import Header from '../../core/components/header';
 import { OneReview } from '../../core/components/one-review/review';
 import Page from '../../core/templates/page';
 
-class DescriptionPage extends Page {
+export class DescriptionPage extends Page {
     addToReadButton: HTMLButtonElement;
     wantToReadButton: HTMLButtonElement;
     main: HTMLElement;
@@ -226,7 +226,6 @@ class DescriptionPage extends Page {
 
                 const hasReview = await ReviewsAPI.hasUserReview(this.bookId, this.authStatus);
                 if (hasReview) {
-                    console.log(hasReview);
                     this.reCreateReviews();
                 }
             }
@@ -299,7 +298,6 @@ class DescriptionPage extends Page {
 
                         const hasReview = await ReviewsAPI.hasUserReview(this.bookId, this.authStatus);
                         if (hasReview) {
-                            console.log(hasReview);
                             this.reCreateReviews();
                         }
                     }
