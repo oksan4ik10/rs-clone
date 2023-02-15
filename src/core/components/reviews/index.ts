@@ -8,14 +8,10 @@ import { IOneReview } from '../../../types';
 
 class Reviews extends Component {
 
-    pagination:HTMLElement;
     swiper:HTMLElement;
-    start:boolean;
     constructor(tagName: string, className: string) {
         super(tagName, className);
-        this.pagination = document.createElement('div');
         this.swiper = document.createElement('swiper-container');
-        this.start = false;
     }
 
     async renderReview(obj: IOneReview){
@@ -74,12 +70,8 @@ class Reviews extends Component {
 
     }
     setResizeSlider(){
-        if(!this.start){
-            this.start = true;
-            return 
-        }
         const windowInnerWidth = window.innerWidth;
-        this.swiper.setAttribute('style','--swiper-pagination-color: #bc8c5b80; --swiper-pagination-bullet-width: 12px; --swiper-pagination-bullet-height: 12px; --swiper-navigation-color: #bc8c5b80; --swiper-pagination-color: #bc8c5b80'); 
+        this.swiper.setAttribute('style','--swiper-pagination-color: #bc8c5b80; --swiper-pagination-bullet-width: 12px; --swiper-pagination-bullet-height: 12px; --swiper-navigation-color: #bc8c5b80;'); 
 
         if(windowInnerWidth > 768 ){
             this.swiper.setAttribute('slides-per-view','3');
