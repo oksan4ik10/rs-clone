@@ -7,16 +7,16 @@
 }
 
 .viewed__container {
-    display: flex;
-    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(100px,200px));
+    grid-column-gap: 10px;
 }
 
 .viewed__colomn {
     @include flex-colomn;
-    margin-right: 25px;
     align-items: center;
     cursor: pointer;
-    width: 200px;
+   
     justify-content: space-between;
     transition: .3s;
     &:hover{
@@ -50,4 +50,18 @@
 }
 .viewed__text{
     font-size: 1.2em;
+}
+
+@media screen and (max-width: 768px){
+    .viewed__container {
+        width: 100%;
+        grid-template-columns: repeat(3, minmax(100px,200px));
+        grid-gap: 10px;
+    }
+}
+
+@media screen and (max-width: 576px){
+    .viewed__container {
+        grid-template-columns: repeat(2, minmax(100px,200px));
+    }
 }
