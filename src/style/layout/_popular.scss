@@ -96,6 +96,9 @@
         width: 80%;
         padding: 20px;
         margin-bottom: 0px;
+        &:hover {
+            transform: scale(1);
+        }
     }
     .popular__book{
         img{
