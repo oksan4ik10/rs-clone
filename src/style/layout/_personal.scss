@@ -44,10 +44,6 @@
     height: 100%;
 }
 
-.personal__content .wrapper {
-    // margin-bottom: 40px;
-}
-
 .personal__tab {
     overflow: hidden;
     margin-top: 40px;
@@ -56,7 +52,7 @@
 
 .personal__tab__button {
     height: 55px;
-    width: 270px;
+    width: 310px;
     border: none;
     outline: none;
     cursor: pointer;
@@ -84,7 +80,7 @@
 
 .personal__tab__content {
     display: none;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .personal__read__book {
@@ -116,6 +112,10 @@
     cursor: pointer;
 }
 
+.personal__read__info__author {
+    text-align: center;
+}
+
 .personal__read__info__name {
     font-weight: bold;
     text-align: center;
@@ -145,7 +145,7 @@
 
 .personal__read__buttons {
     @include flex-space-between;
-    width: 350px;
+    width: 370px;
 }
 
 .personal__reviews__container {
@@ -156,7 +156,7 @@
 }
 
 .personal__reviews__grade {
-    width: 200px;
+    min-width: 200px;
     height: 30px;
     @include flex-center;
     margin-bottom: 10px;
@@ -170,11 +170,11 @@
 
 .personal__reviews__grade__stars span {
     padding: 0;
-      font-size: 12px;
-      margin: 0;
-      line-height: 1;
-      color: lightgrey;
-      text-shadow: 1px 1px #bbb;
+    font-size: 12px;
+    margin: 0;
+    line-height: 1;
+    color: lightgrey;
+    text-shadow: 1px 1px #bbb;
 }
 
 .personal__reviews__grade__stars > span:before {
@@ -188,7 +188,7 @@
 
 .personal__reviews__review {
     width: 100%;
-    max-height: 300px;
+    max-height: 290px;
     margin-top: 10px;
     margin-right: 30px;
     overflow: auto;
@@ -258,4 +258,132 @@
 
 .personal__reviews__form {
     width: 100%;
+}
+
+@media screen and (max-width: 1400px) {
+    .personal__tab__button {
+        height: 50px;
+        width: 275px;
+        font-size: 18px;
+    }
+
+    .personal__read__info {
+        width: 200px;
+        padding: 10px;
+    }
+    
+    .personal__read__info__img {
+        width: 130px;
+        height: 200px;
+    }
+    
+    .personal__read__info__author {
+        font-size: 16px;
+    }
+    
+    .personal__read__info__name {
+        font-size: 16px;
+    }
+
+    .personal__descr {
+        min-height: 330px;
+        padding: 15px;
+    }
+
+    .personal__reviews__review {
+        max-height: 265px;
+    }
+
+    .personal__read__buttons {
+        width: 330px;
+    }
+
+    .personal__reviews__button {
+        font-size: 14px;
+        height: 40px;
+    }
+
+    .personal__user__change {
+        height: 45px;
+    }
+
+    .personal__reviews__textarea {
+        height: 200px;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .personal__reviews__review {
+        margin-right: 0px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .personal__tab__button {
+        height: 40px;
+        width: 235px;
+    }
+
+    .personal__read__info {
+        width: 200px;
+        padding: 10px;
+    }
+
+    .personal__tab__wrapper {
+        padding: 20px;
+    }
+
+    .personal__read__info {
+        width: 180px;
+    }
+    
+    .personal__read__info__img {
+        width: 100px;
+        height: 150px;
+    }
+    
+    .personal__read__info__author {
+        font-size: 14px;
+    }
+    
+    .personal__read__info__name {
+        font-size: 14px;
+    }
+
+    .personal__descr {
+        min-height: 280px;
+        padding: 15px;
+    }
+
+    .personal__reviews__review {
+        max-height: 250px;
+        font-size: 16px;
+        width: 90%;
+    }
+
+    .personal__reviews__title {
+        font-size: 16px;
+        margin-bottom: 0px;
+    }
+
+    .personal__reviews__grade {
+        margin-bottom: 5px;
+    }
+
+    .personal__reviews__textarea {
+        width: 90%;
+        height: 220px;
+        margin-left: 20px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .personal__user__name {
+        font-size: 20px;
+    }
+
+    .personal__read__book {
+        @include flex-colomn;
+        align-items: center;
+    }
 }
