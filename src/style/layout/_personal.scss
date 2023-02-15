@@ -378,6 +378,10 @@
 }
 
 @media screen and (max-width: 768px) {
+    .personal__user {
+        height: 100px;
+    }
+
     .personal__user__name {
         font-size: 20px;
     }
@@ -386,4 +390,37 @@
         @include flex-colomn;
         align-items: center;
     }
+
+    .personal__user__avatar {
+        margin-right: 20px;
+    }
+
+    .personal__tab__button {
+        width: 270px;
+    }
+
+    .personal__reviews__button {
+        margin-top: 20px;
+        margin-bottom: 5px;
+    }
+
+    .personal__reviews {
+        width: 85%;
+    }
+
+    .personal__descr {
+        width: 85%;
+        min-height: 220px;
+        overflow: auto;
+        padding: 10px;
+        align-items: center;
+    }
+
+    .personal__descr::-webkit-scrollbar {
+        width: 0;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    
 }

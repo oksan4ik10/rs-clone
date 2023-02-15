@@ -6,6 +6,7 @@ import { IOneBook } from '../../types';
 
 class PersonalArea extends Page {
     main: HTMLElement;
+    wrapper: HTMLElement;
     readContent: HTMLElement;
     willReadContent: HTMLElement;
     button: HTMLButtonElement;
@@ -19,6 +20,7 @@ class PersonalArea extends Page {
         this.button = document.createElement('button');
         this.readContent = document.createElement('div');
         this.willReadContent = document.createElement('div');
+        this.wrapper = document.createElement('div');
         this.openEditReview = false;
     }
 
@@ -162,11 +164,17 @@ class PersonalArea extends Page {
                         }
                     })
                 } else {
-                    const button = document.createElement('div');
-                    button.classList.add('personal__reviews__button', 'button');
+                    const button = document.createElement('button');
+                    button.classList.add('button', 'personal__reviews__button');
                     button.textContent = 'Оставить отзыв';
                     button.style.marginTop = '80px';
                     containerForReview.append(button);
+
+                    if (this.wrapper.offsetWidth < 561) {
+                        title.style.display = 'none';
+                        containerForGrade.style.display = 'none';
+                        button.style.marginTop = '0px';
+                    }
 
                     button.addEventListener('click', () => {
                         const id = data._id;
@@ -326,8 +334,8 @@ class PersonalArea extends Page {
 
         const infoUserContainer = document.createElement('div');
         infoUserContainer.classList.add('personal__user');
-        const wrapper = document.createElement('div');
-        wrapper.classList.add('wrapper');
+        // const wrapper = document.createElement('div');
+        this.wrapper.classList.add('wrapper');
 
         const nameBlock = document.createElement('div');
         nameBlock.classList.add('personal__user__block');
@@ -429,12 +437,12 @@ class PersonalArea extends Page {
 
         section.append(this.main);
         this.main.append(infoUserContainer);
-        infoUserContainer.append(wrapper);
-        wrapper.append(nameBlock);
+        infoUserContainer.append(this.wrapper);
+        this.wrapper.append(nameBlock);
         nameBlock.append(avatar);
         avatar.append(img);
         nameBlock.append(name);
-        wrapper.append(this.button);
+        this.wrapper.append(this.button);
         this.main.append(content);
         content.append(wrapper2);
         wrapper2.append(tab);
