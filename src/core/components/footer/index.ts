@@ -9,7 +9,7 @@ class Footer extends Component {
     renderFooter() {
         this.container.innerHTML = 
             `<div class="wrapper">
-                <a href=#${PageIds.MainPage} class="logo footer__logo"></a>
+                <a href=#${PageIds.MainPage} class="footer__logo"><img class="logo" src='./images/rsb.png'></a>
                 <div class="footer__developers">
                     <a href="https://github.com/olya-full" class="footer__git">Olya</a>
                     <a href="https://github.com/oksan4ik10" class="footer__git">Oksana</a>
@@ -17,7 +17,7 @@ class Footer extends Component {
                 </div>
                 <div class="footer__container">
                     <div class="footer__year">©2023</div>
-                    <a href="https://rs.school/js/" class="footer__rs"></a>
+                    <a href="https://rs.school/js/"><img class="footer__rs" src='./images/rss.png'></a>
                 </div>
             </div>`
     }

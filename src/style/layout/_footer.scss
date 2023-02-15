@@ -3,11 +3,14 @@
     height: 75px;
     background-color: $header-color;
     flex: 0 0 auto;
+    color: white;
+    font-weight: 600;
 }
 
 .footer .wrapper {
     @include flex-space-between;
     height: 100%;
+    box-sizing: border-box;
 }
 
 .footer__developers {
@@ -21,12 +24,54 @@
 }
 
 .footer__year {
-    margin-right: 30px;
+    margin: 0 15px;
 }
 
 .footer__rs {
     width: 233px;
-    height: 60px;
-    background: url("./images/rss.png") 0 0 no-repeat;
+    height: 50px;
     filter: brightness(100%) saturate(100%) invert(95%) sepia(100%) saturate(14%) hue-rotate(213deg) brightness(104%) contrast(104%);
+}
+
+@media (max-width: 1000px){
+
+    .footer__rs {
+        width: 136px;
+        height: 30px;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .footer__rs {
+        width: 90px;
+        height: 20px;
+    }
+
+    .footer {
+        font-size: 0.7rem;
+    }
+
+    .footer__developers {
+        width: 200px;
+        margin: 0 20px;
+    }
+
+}
+
+@media (max-width: 450px) {
+    .footer__developers {
+        flex-direction: column-reverse;
+        margin: 20px;
+        height: 70%;
+    }
+}
+
+@media (max-width: 300px) {
+
+    .footer__year {
+        display: none;
+    }
+    
 }

@@ -18,7 +18,7 @@ class Header extends Component {
             blockPersonal.style.display = "flex";
             const res = await UsersAPI.infoUser(token);
             iconImg.src = res.img;
-            nameUser.textContent = res.name;            
+            nameUser.textContent = res.name;
         }
     }
 
@@ -54,11 +54,14 @@ class Header extends Component {
 
     renderPageHeader() {
         const wrapper = document.createElement('div');
-        wrapper.classList.add('wrapper');        
+        wrapper.classList.add('wrapper');
  
-        this.logo.classList.add('logo', 'header__logo');
+        this.logo.classList.add('header__logo');
         this.logo.href = `#${PageIds.MainPage}`;
-        //this.logo.textContent = 'LOGO';
+        const logoImg = document.createElement('img');
+        logoImg.classList.add('logo');
+        logoImg.src = './images/rsb.png';
+        this.logo.append(logoImg);
 
         this.searchContainer.classList.add('header__search');
 
