@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: 3fr 1fr;
   gap: 5%;
-  padding: 70px 20% 40px 20%;
+  padding: 70px 18% 40px 18%;
 }
 
 .desc__content__wrapper {
@@ -273,6 +273,7 @@
 
 .description__image {
   width: 100%;
+  box-shadow: 0 3px 10px black;
 }
 
 .descr__reviewsarea__wrapper {

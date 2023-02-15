@@ -55,12 +55,10 @@ export default class RandomPage extends Page {
 
   async toggleToWantBook() {
      if (this.wantToReadButton.textContent === 'Удалить из планов') {
-          //удалить книгу из планов
           this.wantToReadButton.textContent = 'Хочу прочитать';
           this.addToReadButton.style.display = 'inline-block';
           return await UsersAPI.removeBooksWantRead(this.bookId, this.authStatus as string);
       } else {
-        //добавить книгу в планы
         this.wantToReadButton.textContent = 'Удалить из планов';
         this.addToReadButton.style.display = 'none';
         return await UsersAPI.addBooksWantRead(this.bookId, this.authStatus as string);
@@ -69,13 +67,11 @@ export default class RandomPage extends Page {
 
   async toggleToReadBook() {
       if (this.addToReadButton.textContent === 'Удалить из прочитанного') {
-          //удалить книгу из прочитанного
           this.wantToReadButton.style.display = 'inline-block';
           this.addToReadButton.textContent = 'Добавить в прочитанное';
           
           return await UsersAPI.removeBooksRead(this.bookId, this.authStatus as string);;
       } else {
-          //добавить книгу в прочитанное
           this.wantToReadButton.style.display = 'none';
           this.addToReadButton.textContent = 'Удалить из прочитанного';
           return await UsersAPI.addBooksRead(this.bookId, this.authStatus as string);
@@ -388,32 +384,28 @@ export default class RandomPage extends Page {
     socialLinksWrapper.classList.add('random__page__social__links');
     
     this.facebookLink.target = '_blank';
-    //this.facebookLink.href = `https://www.facebook.com/sharer/sharer.php?u=${window.location.origin}/#random`;
-    this.facebookLink.href = `https://www.facebook.com/sharer/sharer.php?u=https://pbs.twimg.com/media/EEHcTUsUwAEt6w7.jpg`;
+    this.facebookLink.href = `https://www.facebook.com/sharer/sharer.php?u=${window.location.origin}/#random`;
     const facebookImg = document.createElement('img');
     facebookImg.classList.add('random__facebook__img');
     facebookImg.src = './images/facebook.png';
     this.facebookLink.append(facebookImg);
 
     this.twitterLink.target = '_blank';
-    //this.twitterLink.href = `https://twitter.com/share?url=${window.location.origin}/#random+&text=Найдите книгу себе по душе!`;
-    this.twitterLink.href = `https://twitter.com/share?url=https://pbs.twimg.com/media/EEHcTUsUwAEt6w7.jpg+&text=Найдите книгу по себе душе на этом прекрасном сайте!`;
+    this.twitterLink.href = `https://twitter.com/share?url=${window.location.origin}/#random+&text=Найдите книгу себе по душе!`;
     const twitterImg = document.createElement('img');
     twitterImg.classList.add('random__twitter__img');
     twitterImg.src = './images/twitter.png';
     this.twitterLink.append(twitterImg);
 
     this.vkLink.target = '_blank';
-    //this.vkLink.href = `https://vk.com/share.php?url=${window.location.origin}/#random`;
-    this.vkLink.href = `https://vk.com/share.php?url=https://pbs.twimg.com/media/EEHcTUsUwAEt6w7.jpg`;
+    this.vkLink.href = `https://vk.com/share.php?url=${window.location.origin}/#random`;
     const vkImg = document.createElement('img');
     vkImg.classList.add('random__vk__img');
     vkImg.src = './images/vk.png';
     this.vkLink.append(vkImg);
 
     this.telegramLink.target = '_blank';
-    //this.telegramLink.href = `https://t.me/share/url?url=${window.location.origin}/#random&text=Найдите книгу по душе на этом прекрасном сайте!`;
-    this.telegramLink.href = `https://t.me/share/url?url=https://pbs.twimg.com/media/EEHcTUsUwAEt6w7.jpg&text=Найдите книгу себе по душе на этом прекрасном сайте!`;
+    this.telegramLink.href = `https://t.me/share/url?url=${window.location.origin}/#random&text=Найдите книгу по душе на этом прекрасном сайте!`;
     const telegramImg = document.createElement('img');
     telegramImg.classList.add('random__telegram__img');
     telegramImg.src = './images/telegram.png';

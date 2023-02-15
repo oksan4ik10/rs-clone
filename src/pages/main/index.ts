@@ -159,6 +159,12 @@ class MainPage extends Page {
                 }
             }
         })
+
+        this.form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            window.location.hash = 'random';
+        }, true)
+
         return this.container;
     }
 }

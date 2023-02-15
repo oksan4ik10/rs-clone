@@ -10,13 +10,21 @@
 .header .wrapper {
     @include flex-space-between;
     height: 100%;
+    box-sizing: border-box;
 }
 
 .header__cabinet {
     @include flex-space-between;
     height: 100%;
-    width: 230px;
+    gap: 10px;
     color: $back-color;
+    font-weight: 600;
+}
+
+.header__cabinet__registration,
+.header__personal__btn-output {
+    font-weight: 600;
+    font-size: inherit;
 }
 
 .header__cabinet__enter {
@@ -28,10 +36,14 @@
 }
 
 .logo {
+    transition: 0.2s;
     width: 209px;
-    height: 60px;
-    background: url("./images/rsb.png") 0 0 no-repeat;
+    height: 50px;
     filter: brightness(100%) saturate(100%) invert(95%) sepia(100%) saturate(14%) hue-rotate(213deg) brightness(104%) contrast(104%);
+}
+
+.logo:hover {
+    filter: brightness(0) saturate(100%) invert(50%) sepia(16%) saturate(1828%) hue-rotate(160deg) brightness(82%) contrast(84%);
 }
 
 .header__search__input {
@@ -39,7 +51,7 @@
 }
 
 .header__search__input:focus {
-    outline: solid 1px $border-focus-color;
+    outline: solid 2px $button-form-color;
 }
 
 .search__results__header__wrapper {
@@ -97,7 +109,7 @@
     top: 15px;
     right: 5px;
     background: url("./images/search.png") 0 0 no-repeat;
-    filter: brightness(0) saturate(100%) invert(81%) sepia(47%) saturate(314%) hue-rotate(2deg) brightness(90%) contrast(87%);
+    filter: brightness(0) saturate(100%) invert(86%) sepia(5%) saturate(3%) hue-rotate(324deg) brightness(94%) contrast(86%);
 }
 
 .header__personal__name-user {
@@ -112,13 +124,34 @@
     border-radius: 15px;
     background: url('./images/rand.png') no-repeat;
     background-position: center;
+    transition: .2s;
     filter: brightness(0) saturate(100%) invert(100%) sepia(43%) saturate(0%) hue-rotate(140deg) brightness(113%) contrast(100%);
 
+}
+
+.header__random:hover {
+    filter: brightness(0) saturate(100%) invert(50%) sepia(16%) saturate(1828%) hue-rotate(160deg) brightness(82%) contrast(84%);
 }
 
 .header__search {
     @include flex-space-between;
 }
+
+.header__cabinet__registration,
+.header__cabinet__enter,
+.header__personal__btn-output {
+    transition: 0.2s;
+}
+
+.header__cabinet__registration:hover,
+.header__personal__btn-output:hover {
+    background-color: $button-form-color;
+}
+
+.header__cabinet__enter:hover {
+    color: $button-form-color;
+}
+
 .header__personal{
     @include flex-space-between;
     gap: 30px;
@@ -139,10 +172,10 @@
         transition: .2s;
         cursor: pointer;
         &:hover>div>img{
-            border: 2px solid $back-dark-color; 
+            border: 2px solid $button-form-color; 
         } 
         &:hover span{
-            color: $back-dark-color;
+            color: $button-form-color;
         }
     }
     &__name-user{
@@ -159,4 +192,126 @@
 @keyframes fadein {
     from { opacity: 0; }
     to   { opacity: 1; }
-  }
+}
+
+@media (max-width: 1000px){
+
+    .logo {
+        width: 120px;
+        height: 30px;
+    }
+
+    .input {
+       width: 200px;
+       overflow: hidden;
+    }
+
+    .header__search__active {
+        display: none;
+    }
+
+    .header__personal__btn-output {
+        width: 70px;
+        height: 30px;
+    }
+
+    .header__cabinet__registration {
+        width: 115px;
+        height: 30px;
+    }
+
+    .header__personal__btn-output,
+    .header__personal__name-user,
+    .header__cabinet__registration,
+    .header__cabinet__enter {
+        font-size: 0.8rem;
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .search__results__header,
+    .header__cabinet,
+    .header__search__input {
+        font-size: 0.7rem;
+    }
+
+    .header__cabinet__registration,
+    .header__cabinet__enter,
+    .header__personal__btn-output {
+        font-size: 0.9rem;
+    }
+
+    .header__personal__icon img {
+        height: 35px;
+        width: 35px;
+    }
+
+    .header__random {
+        margin-left: 10px;
+    }
+
+    .header__personal__link {
+        flex-direction: column;
+    }
+
+    .header__personal__name-user {
+        font-size: 0.7rem;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .header__cabinet__registration {
+        display: none;
+    }
+
+    .logo {
+        width: 80px;
+        height: 20px;
+    }
+    
+    .header {
+        height: 65px;
+    }
+
+    .header__search__input,
+    .header__random {
+        display: none;
+    }
+
+    .header__personal__link {
+        flex-direction: unset;
+    }
+
+    .header__personal__name-user {
+        font-size: inherit;
+    }
+
+}
+
+@media (max-width: 360px) {
+
+    .header__personal__name-user,
+    .search__results__header,
+    .header__cabinet,
+    .header__cabinet__registration,
+    .header__cabinet__enter,
+    .header__search__input,
+    .header__personal__btn-output {
+        font-size: 0.6rem;
+    }
+
+}
+
+
+@media (max-width: 300px) {
+
+    .header__personal__name-user {
+        display: none;
+    }
+
+}
+

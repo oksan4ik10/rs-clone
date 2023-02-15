@@ -51,6 +51,14 @@
     }
 }
 
+.recomend__button {
+    transition: 0.2s;
+}
+
+.recomend__button:hover {
+    background-color: $button-form-color;
+}
+
 @media screen and (max-width: 768px){
     .recommend__discr {
         display: none;
