@@ -7,11 +7,17 @@ import { IOneReview } from '../../../types';
 
 
 class Reviews extends Component {
+    static count = 0;
 
     swiper:HTMLElement;
+    start:boolean
     constructor(tagName: string, className: string) {
         super(tagName, className);
+        Reviews.count++;
         this.swiper = document.createElement('swiper-container');
+        this.swiper.classList.add(`tt${Reviews.count}`);
+        this.start = true;
+        this.swiper.setAttribute('style','--swiper-pagination-color: #bc8c5b80; --swiper-pagination-bullet-width: 12px; --swiper-pagination-bullet-height: 12px; --swiper-navigation-color: #bc8c5b80;'); 
     }
 
     async renderReview(obj: IOneReview){
@@ -71,19 +77,29 @@ class Reviews extends Component {
     }
     setResizeSlider(){
         const windowInnerWidth = window.innerWidth;
-        this.swiper.setAttribute('style','--swiper-pagination-color: #bc8c5b80; --swiper-pagination-bullet-width: 12px; --swiper-pagination-bullet-height: 12px; --swiper-navigation-color: #bc8c5b80;'); 
 
-        if(windowInnerWidth > 768 ){
+        if((windowInnerWidth > 1040)&&(this.swiper.getAttribute('slides-per-view') === '3'))  return;
+        if((windowInnerWidth > 768 && windowInnerWidth <= 1040 )&&(this.swiper.getAttribute('slides-per-view') === '2'))  return;
+        if((windowInnerWidth <= 768 )&&(this.swiper.getAttribute('slides-per-view') === '1'))  return;
+  
+
+        if((windowInnerWidth > 1040) && this.swiper.matches('.swiper-initialized') ){
             this.swiper.setAttribute('slides-per-view','3');
+        }  else if (windowInnerWidth > 768 && this.swiper.matches('.swiper-initialized') ) {
+            this.swiper.setAttribute('slides-per-view','2');
+            
+        } else if (this.swiper.matches('.swiper-initialized') ){
+            this.swiper.setAttribute('slides-per-view','1');
+        }
+    
+        if(this.start && windowInnerWidth > 768){
             this.swiper.setAttribute('pagination','true');
             this.swiper.setAttribute('pagination-clickable','true');
             this.swiper.setAttribute('autoplay-delay','4000');
-
-        }  else{
-            this.swiper.setAttribute('slides-per-view','1');
+        } else if(this.start){
             this.swiper.setAttribute('navigation','true');
         }
-        if(windowInnerWidth > 768 && windowInnerWidth < 920) this.swiper.setAttribute('slides-per-view','2');
+        this.start = false;
     }
 
     render() {
