@@ -3,6 +3,7 @@ import Personal from '../../core/components/personal-form';
 import Header from '../../core/components/header';
 import { UsersAPI, BooksAPI, GradesAPI, ReviewsAPI } from '../../api/api';
 import { IOneBook } from '../../types';
+import App from "../app";
 
 class PersonalArea extends Page {
     main: HTMLElement;
@@ -127,7 +128,8 @@ class PersonalArea extends Page {
                     gradeStars.style.display = 'none';
                 }
             })
-            ReviewsAPI.getReviewsByUser(this.authStatus as string, data._id).then((res) => {
+            ReviewsAPI.getReviewsByUser(this.authStatus as string, data._id)
+            .then((res) => {
                 if (res) {
                     containerForReview.textContent = res.text;
 
@@ -181,6 +183,9 @@ class PersonalArea extends Page {
                         window.location.hash = `id=${id}`;
                     })
                 }
+            })
+            .then(()=>{
+                App.closeLoader();
             })
         })
 

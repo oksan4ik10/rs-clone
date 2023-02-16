@@ -2,6 +2,7 @@ import Page from "../../core/templates/page";
 import { BooksAPI, GradesAPI, ReviewsAPI, UsersAPI } from "../../api/api";
 import DescriptionPage from "../description";
 import Header from "../../core/components/header";
+import App from "../app";
 
 
 export default class RandomPage extends Page {
@@ -70,7 +71,7 @@ export default class RandomPage extends Page {
           this.wantToReadButton.style.display = 'inline-block';
           this.addToReadButton.textContent = 'Добавить в прочитанное';
           
-          return await UsersAPI.removeBooksRead(this.bookId, this.authStatus as string);;
+          return await UsersAPI.removeBooksRead(this.bookId, this.authStatus as string);
       } else {
           this.wantToReadButton.style.display = 'none';
           this.addToReadButton.textContent = 'Удалить из прочитанного';
@@ -132,7 +133,7 @@ export default class RandomPage extends Page {
         }
       }
     })
-
+    .then(()=> App.closeLoader())
     return genres;
   }
 

@@ -15,6 +15,13 @@ class App {
     private static defaultPageId = 'current-page';
     private header: Header;
     private footer: Footer;
+    static closeLoader(){
+        const loader = document.querySelector('.loader__wrapper');
+        if(loader){
+            loader.remove();
+            document.body.classList.remove('active');
+        }
+    }
     static loaderRender(){
         const elem = document.createElement('div');
         elem.className = 'loader__wrapper';
@@ -37,7 +44,6 @@ class App {
 
     static renderNewPage(idPage: string) {
         const footer = new Footer('footer', 'footer'); 
-        let time = 1000;
         if (idPage === '') idPage = 'main-page';
         const currentPageHTML = document.querySelector(`#${App.defaultPageId}`);
         const footerOld = document.querySelector('footer');
@@ -52,7 +58,6 @@ class App {
             page = new MainPage(idPage);
         } else if (idPage === PageIds.PersonalArea) {
             page = new PersonalArea(idPage);
-            time = 7000;
         } else if (idPage.includes('id=')) {
             page = new DescriptionPage(idPage.replace('id=', ''));
         } else if (idPage === PageIds.Random) {
@@ -65,17 +70,20 @@ class App {
         }
 
         if (page) {
-            const pageHTML = page.render();
             const loader = App.loaderRender();
+            App.container.append(loader);
+            document.body.classList.add('active');
+            const pageHTML = page.render();
+            
 
             pageHTML.id = App.defaultPageId;
+
             App.container.append(pageHTML);
-            App.container.append(loader);
-            App.container.classList.add('active');
-            setTimeout(()=>{
-                loader.remove();
-                App.container.classList.remove('active');
-            }, time);
+
+            // setTimeout(()=>{
+            //     loader.remove();
+            //     App.container.classList.remove('active');
+            // }, time);
            
         }
         App.container.append(footer.render());
