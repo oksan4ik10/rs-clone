@@ -15,9 +15,29 @@ class App {
     private static defaultPageId = 'current-page';
     private header: Header;
     private footer: Footer;
+    static loaderRender(){
+        const elem = document.createElement('div');
+        elem.className = 'loader__wrapper';
+        elem.innerHTML = `<div class='loader loader1'>
+        <div>
+          <div>
+            <div>
+              <div>
+                <div>
+                  <div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      `
+        return elem;
+    }
 
     static renderNewPage(idPage: string) {
         const footer = new Footer('footer', 'footer'); 
+        let time = 1000;
         if (idPage === '') idPage = 'main-page';
         const currentPageHTML = document.querySelector(`#${App.defaultPageId}`);
         const footerOld = document.querySelector('footer');
@@ -32,21 +52,31 @@ class App {
             page = new MainPage(idPage);
         } else if (idPage === PageIds.PersonalArea) {
             page = new PersonalArea(idPage);
+            time = 7000;
         } else if (idPage.includes('id=')) {
             page = new DescriptionPage(idPage.replace('id=', ''));
         } else if (idPage === PageIds.Random) {
             page = new RandomPage(idPage);
         } else if (idPage === PageIds.Sign) {
             page = new Sign(idPage);
+     
         } else {
             page = new ErrorPage(idPage, ErrorTypes.Error_404);
         }
 
         if (page) {
             const pageHTML = page.render();
+            const loader = App.loaderRender();
 
             pageHTML.id = App.defaultPageId;
             App.container.append(pageHTML);
+            App.container.append(loader);
+            App.container.classList.add('active');
+            setTimeout(()=>{
+                loader.remove();
+                App.container.classList.remove('active');
+            }, time);
+           
         }
         App.container.append(footer.render());
 
