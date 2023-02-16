@@ -347,7 +347,8 @@ export default class RandomPage extends Page {
     const randomBookDescr = document.createElement('div');
     randomBookDescr.classList.add('random__page__descr');
 
-    BooksAPI.getRandomBooks(genre).then(book => {
+    BooksAPI.getRandomBooks(genre)
+    .then(book => {
       const randomBookImg = document.createElement('img');
       randomBookImg.classList.add('random__page__bookcover');
       randomBookImg.src = book.img;
@@ -372,6 +373,8 @@ export default class RandomPage extends Page {
         window.location.hash = `id=${this.bookId}`;
       })
     })
+    .then(() => App.closeLoader())
+
     return randomBookWrapper;
   }
 
@@ -443,6 +446,7 @@ export default class RandomPage extends Page {
     luckyButton.textContent = 'Мне повезёт!';
 
     luckyButton.addEventListener('click', () => {
+      document.body.append(App.loaderRender());
       luckyButton.disabled = true;
       const currentGenre = this.getCurrentGenre();
 
