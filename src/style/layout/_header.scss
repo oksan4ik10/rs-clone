@@ -234,7 +234,7 @@
     .search__results__header,
     .header__cabinet,
     .header__search__input {
-        font-size: 0.7rem;
+        font-size: 0.8rem;
     }
 
     .header__cabinet__registration,
@@ -294,24 +294,18 @@
 
 @media (max-width: 360px) {
 
-    .header__personal__name-user,
     .search__results__header,
     .header__cabinet,
     .header__cabinet__registration,
     .header__cabinet__enter,
     .header__search__input,
     .header__personal__btn-output {
-        font-size: 0.6rem;
+        font-size: 0.8rem;
     }
-
-}
-
-
-@media (max-width: 300px) {
 
     .header__personal__name-user {
         display: none;
     }
-
 }
+
 

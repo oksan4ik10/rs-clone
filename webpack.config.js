@@ -55,7 +55,7 @@ const baseConfig = {
         extensions: ['.js', '.ts'],
     },
     output: {
-        filename: 'index.[contenthash].js',
+        filename: 'index.js',
         path: path.resolve(__dirname, 'dist'),
     },
     plugins: [
@@ -68,7 +68,7 @@ const baseConfig = {
             patterns: [{ from: './src/images', to: './images' }],
         }),
         new MiniCssExtractPlugin({
-			filename: 'index.[contenthash].css',
+			filename: 'index.css',
 		}),
     ],
 };
