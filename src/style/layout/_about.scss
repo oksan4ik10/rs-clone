@@ -1,0 +1,52 @@
+.about__person__info {
+  font-size: 0.7rem;
+}
+
+.about__person__image {
+  width: 100px;
+  height: auto;
+}
+
+.about__person__motto {
+  font-style: italic;
+}
+
+.aboutpage__anim__wrap {
+  position: relative;
+  width: 900px;
+  height: 400px;
+  margin: 30px auto;
+}
+
+.person__wrapper {
+  position: absolute;
+}
+
+.aboutpage__person1__wrapper {
+  bottom: 0;
+  left: 0;
+}
+
+.aboutpage__person2__wrapper {
+  bottom: 0;
+  left: 350px;
+}
+
+.aboutpage__person3__wrapper {
+  bottom: 0;
+  left: 700px;
+}
+
+.about__person__innerwrap {
+  width: 200px;
+}
+
+.about__person__innerwrap {
+  position: relative;
+}
+
+.about__person__name {
+  position: absolute;
+  left: 70px;
+}
+
