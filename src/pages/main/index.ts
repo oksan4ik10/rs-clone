@@ -29,7 +29,7 @@ class MainPage extends Page {
         
         const title = document.createElement('h3');
         title.classList.add('preview__title');
-        title.textContent = 'Найди свою книгу';
+        title.textContent = 'НАЙДИ СВОЮ КНИГУ';
 
         this.form.classList.add('preview__form');
 
@@ -83,7 +83,7 @@ class MainPage extends Page {
         img4.classList.add('preview__about__img', 'preview_img4');
         const text4 = document.createElement('div');
         text4.classList.add('preview__about__text');
-        text4.textContent = 'Следите за тем, что читают друзья';
+        text4.textContent = 'Делитесь книгами с друзьями';
         div4.appendChild(img4);
         div4.appendChild(text4);
 
