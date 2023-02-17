@@ -5,10 +5,10 @@ import Header from '../../core/components/header/index';
 import ErrorPage, { ErrorTypes } from '../error/index';
 import Footer from '../../core/components/footer';
 import PersonalArea from '../personal-area';
-import Sign from '../sign';
 
 import { PageIds } from '../../types';
 import RandomPage from '../random-book/random';
+import AboutPage from '../about/about';
 
 class App {
     private static container: HTMLElement = document.body;
@@ -36,8 +36,8 @@ class App {
             page = new DescriptionPage(idPage.replace('id=', ''));
         } else if (idPage === PageIds.Random) {
             page = new RandomPage(idPage);
-        } else if (idPage === PageIds.Sign) {
-            page = new Sign(idPage);
+        } else if (idPage === PageIds.About) {
+            page = new AboutPage(idPage);
         } else {
             page = new ErrorPage(idPage, ErrorTypes.Error_404);
         }
