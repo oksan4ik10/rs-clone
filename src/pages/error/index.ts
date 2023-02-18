@@ -1,5 +1,5 @@
 import Page from '../../core/templates/page';
-
+import App from '../app';
 export const enum ErrorTypes {
     Error_404 = 404,
 }
@@ -73,6 +73,7 @@ class ErrorPage extends Page {
         linksList.append(li1);
         linksList.append(li2);
         linksList.append(li3);
+        App.closeLoader()
         return section;
     }
 

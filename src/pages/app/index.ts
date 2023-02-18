@@ -54,9 +54,13 @@ class App {
 
         }
         let page: Page | null = null;
+        const token = idPage.split('=');
         if (idPage === PageIds.MainPage) {
-            page = new MainPage(idPage);
-        } else if (idPage === PageIds.PersonalArea) {
+            page = new MainPage(idPage, '');
+        } else if(token[0] === 'token'){
+            page = new MainPage(PageIds.MainPage, token[1]);
+        }
+        else if (idPage === PageIds.PersonalArea) {
             page = new PersonalArea(idPage);
         } else if (idPage.includes('id=')) {
             page = new DescriptionPage(idPage.replace('id=', ''));
@@ -70,8 +74,8 @@ class App {
         }
 
         if (page) {
-            const loader = App.loaderRender();
-            App.container.append(loader);
+            // const loader = App.loaderRender();
+            // App.container.append(loader);
             document.body.classList.add('active');
             const pageHTML = page.render();
             
@@ -79,11 +83,6 @@ class App {
             pageHTML.id = App.defaultPageId;
 
             App.container.append(pageHTML);
-
-            // setTimeout(()=>{
-            //     loader.remove();
-            //     App.container.classList.remove('active');
-            // }, time);
            
         }
         App.container.append(footer.render());
