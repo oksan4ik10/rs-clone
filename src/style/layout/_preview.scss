@@ -14,9 +14,9 @@
     @include flex-center;
     margin-top: 130px;
     margin-bottom: 0;
-    font-size: 3.5rem;
+    font-size: 3rem;
     color: $back-color;
-    font-weight: 600;
+    font-weight: 800;
 }
 
 .search__results__main__wrapper {
@@ -58,7 +58,7 @@
 }
 
 .preview__about__img {
-    margin-right: 10px;
+    margin-right: 5px;
     width: 70px;
     height: 60px;
     background: url('./images/main-icons.png') 0 0 no-repeat;
@@ -114,7 +114,7 @@
     }
 
     .preview__about__text {
-        font-size: 0.8rem;
+        font-size: 0.9rem;
     }
 
 }
@@ -141,7 +141,7 @@
 
     .search__results__header,
     .header__cabinet {
-        font-size: 0.8rem;
+        font-size: 0.9rem;
     }
 
     .results__header__title {
@@ -165,12 +165,12 @@
     }
 
     .preview__title {
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
 
     .preview__about__text,
     .preview__search__input {
-        font-size: 0.5rem;
+        font-size: 0.8rem;
     }
 
     .preview__search,
@@ -219,6 +219,10 @@
         margin-top: 100px;
     }
 
+    .preview__about__text {
+        font-weight: 200;
+    }
+
     .preview__more,
     .preview__about {
         margin-top: 20px;
@@ -228,22 +232,17 @@
 
 @media (max-width: 360px) {
 
-    .preview__title {
-        font-size: 1.5rem;
-    }
-
-    .preview__about__text,
-    .preview__search__input {
-        font-size: 0.5rem;
-    }
-
     .preview__search,
     .preview__more {
-        font-size: 0.7rem;
+        font-size: 0.8rem;
     }
 
     .footer__year {
         margin-right: 10px;
+    }
+
+    .preview__about__text {
+        font-size: 0.6rem;
     }
 
 }

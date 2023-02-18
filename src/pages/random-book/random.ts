@@ -336,7 +336,7 @@ export default class RandomPage extends Page {
     randomBookBigWrap.classList.add('random__page__bigbook');
 
     const randomBookWrapper = document.createElement('div');
-    randomBookWrapper.classList.add('random__page__book__wrapper');
+    randomBookWrapper.classList.add('wrapper', 'random__page__book__wrapper');
 
     const randomBookInfoWrapper = document.createElement('div');
     randomBookInfoWrapper.classList.add('random__page__bookwrap');
@@ -425,7 +425,8 @@ export default class RandomPage extends Page {
   createRandomPage() {
     const randomPageWrapper = document.createElement('div');
     randomPageWrapper.classList.add('randompage__wrapper');
-
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('wrapper');
     const randomPageThreeBlur = document.createElement('div');
     randomPageThreeBlur.classList.add('randompage__blur');
 
@@ -469,7 +470,8 @@ export default class RandomPage extends Page {
 
     luckyButtonWrapper.append(luckyButton);
     pageSubTitleWrapper.append(pageSubtitle, this.pageDropdownWrapper);
-    randomPageThreeBlur.append(pageTitle, pageSubTitleWrapper, luckyButtonWrapper);
+    wrapper.append(pageTitle, pageSubTitleWrapper, luckyButtonWrapper);
+    randomPageThreeBlur.append(wrapper);
     this.upperThreeWrapper.append(randomPageThreeBlur);
     randomPageWrapper.append(this.upperThreeWrapper, this.renderSocialMedia());
     return randomPageWrapper;
