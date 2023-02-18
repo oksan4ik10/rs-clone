@@ -96,6 +96,7 @@ class MainPage extends Page {
         buttonMore.classList.add('button');
         buttonMore.classList.add('preview__more');
         buttonMore.textContent = 'Хотите узнать больше?';
+        buttonMore.addEventListener('click', () => window.location.hash = 'about');
 
         this.main.appendChild(preview);
         preview.appendChild(wrapper);

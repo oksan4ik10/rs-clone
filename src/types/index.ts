@@ -2,8 +2,8 @@ export const enum PageIds {
     MainPage = 'main-page',
     PersonalArea = 'personal-area',
     DescriptionPage = 'description-book',
-    Sign = 'description-book',
     Random = 'random',
+    About = 'about',
 }
 
 export interface IOneBook {

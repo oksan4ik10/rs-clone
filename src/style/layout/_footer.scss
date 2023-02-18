@@ -28,9 +28,18 @@
 }
 
 .footer__rs {
+    transition: 0.2s;
     width: 233px;
     height: 50px;
     filter: brightness(100%) saturate(100%) invert(95%) sepia(100%) saturate(14%) hue-rotate(213deg) brightness(104%) contrast(104%);
+}
+
+.footer__rs:hover {
+    filter: brightness(0) saturate(100%) invert(50%) sepia(16%) saturate(1828%) hue-rotate(160deg) brightness(82%) contrast(84%);
+}
+
+.footer__git:hover {
+    color: $button-form-color;
 }
 
 @media (max-width: 1000px){
