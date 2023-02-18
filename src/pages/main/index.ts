@@ -5,17 +5,22 @@ import Recommendation from "../../core/components/recommend";
 import ViewBooks from "../../core/components/viewed";
 import { BooksAPI } from "../../api/api";
 import { HeaderSearch } from "../../core/components/header/header-search";
+import ResetPassword from "../../core/components/reset-password";
+import Header from "../../core/components/header";
+
 
 class MainPage extends Page {
     main: HTMLElement;
     input: HTMLInputElement;
     form: HTMLFormElement;
+    token: string;
 
-    constructor(id: string) {
+    constructor(id: string, token:string) {
         super(id);
         this.main = document.createElement('main');
         this.input = document.createElement('input');
         this.form = document.createElement('form');
+        this.token = token;
     }
 
     createMainPage() {
@@ -117,6 +122,26 @@ class MainPage extends Page {
 
         const viewed = new ViewBooks('section', 'viewed');
         this.main.appendChild(viewed.render());
+
+        if(this.token){
+            const darkBackground = document.createElement('div');
+            const registration = new ResetPassword('section', 'reset', this.token);
+            const body = document.querySelector('.body') as HTMLBodyElement;
+
+            body.appendChild(registration.render());
+            body.appendChild(darkBackground);
+    
+            setTimeout(function(){
+                darkBackground.classList.add('dark-background');
+                darkBackground.classList.add('dark-background_opacity');
+            }, 100);
+
+            darkBackground.addEventListener('click', () => {
+                Header.prototype.closeForm('reset');
+                Header.formActive = false;
+            })    
+    
+        }
 
         // this.main.appendChild(this.darkBackground);
         // this.darkBackground.classList.add('dark-background');

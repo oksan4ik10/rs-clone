@@ -15,6 +15,32 @@ class App {
     private static defaultPageId = 'current-page';
     private header: Header;
     private footer: Footer;
+    static closeLoader(){
+        const loader = document.querySelector('.loader__wrapper');
+        if(loader){
+            loader.remove();
+            document.body.classList.remove('active');
+        }
+    }
+    static loaderRender(){
+        const elem = document.createElement('div');
+        elem.className = 'loader__wrapper';
+        elem.innerHTML = `<div class='loader loader1'>
+        <div>
+          <div>
+            <div>
+              <div>
+                <div>
+                  <div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      `
+        return elem;
+    }
 
     static renderNewPage(idPage: string) {
         const footer = new Footer('footer', 'footer'); 
@@ -28,9 +54,13 @@ class App {
 
         }
         let page: Page | null = null;
+        const token = idPage.split('=');
         if (idPage === PageIds.MainPage) {
-            page = new MainPage(idPage);
-        } else if (idPage === PageIds.PersonalArea) {
+            page = new MainPage(idPage, '');
+        } else if(token[0] === 'token'){
+            page = new MainPage(PageIds.MainPage, token[1]);
+        }
+        else if (idPage === PageIds.PersonalArea) {
             page = new PersonalArea(idPage);
         } else if (idPage.includes('id=')) {
             page = new DescriptionPage(idPage.replace('id=', ''));
@@ -43,10 +73,16 @@ class App {
         }
 
         if (page) {
+            const loader = App.loaderRender();
+            App.container.append(loader);
+            document.body.classList.add('active');
             const pageHTML = page.render();
+            
 
             pageHTML.id = App.defaultPageId;
+
             App.container.append(pageHTML);
+           
         }
         App.container.append(footer.render());
 

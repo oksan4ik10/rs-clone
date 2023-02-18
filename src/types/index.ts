@@ -89,3 +89,8 @@ export interface IUserUpdate{
 export interface IGenre{
     genre?:string;
 }
+
+export interface IUserResetPassword{
+    resetLink:string, 
+    newPass: string 
+}
