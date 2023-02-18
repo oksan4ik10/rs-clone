@@ -2,6 +2,7 @@ import { BooksAPI, GradesAPI, ReviewsAPI, UsersAPI } from '../../api/api';
 import Header from '../../core/components/header';
 import { OneReview } from '../../core/components/one-review/review';
 import Page from '../../core/templates/page';
+import App from '../app';
 
 export class DescriptionPage extends Page {
     addToReadButton: HTMLButtonElement;
@@ -231,7 +232,8 @@ export class DescriptionPage extends Page {
             }
         })
 
-        this.getRatingByAuthorizedUser().then(rating => {
+        this.getRatingByAuthorizedUser()
+        .then(rating => {
             const ratingByUser = rating;
 
             // рисуем звёздочки
@@ -271,6 +273,7 @@ export class DescriptionPage extends Page {
             ratingContainer.append(myRating, myratingNumbers);
 
         })
+        .then(()=> App.closeLoader())
 
         ratingContainer.addEventListener('click', async (event) => {
             if (event.target instanceof HTMLLabelElement && event.target.classList.contains('descr_star')) {

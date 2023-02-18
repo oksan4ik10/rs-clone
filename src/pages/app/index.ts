@@ -15,6 +15,32 @@ class App {
     private static defaultPageId = 'current-page';
     private header: Header;
     private footer: Footer;
+    static closeLoader(){
+        const loader = document.querySelector('.loader__wrapper');
+        if(loader){
+            loader.remove();
+            document.body.classList.remove('active');
+        }
+    }
+    static loaderRender(){
+        const elem = document.createElement('div');
+        elem.className = 'loader__wrapper';
+        elem.innerHTML = `<div class='loader loader1'>
+        <div>
+          <div>
+            <div>
+              <div>
+                <div>
+                  <div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      `
+        return elem;
+    }
 
     static renderNewPage(idPage: string) {
         const footer = new Footer('footer', 'footer'); 
@@ -38,15 +64,27 @@ class App {
             page = new RandomPage(idPage);
         } else if (idPage === PageIds.Sign) {
             page = new Sign(idPage);
+     
         } else {
             page = new ErrorPage(idPage, ErrorTypes.Error_404);
         }
 
         if (page) {
+            const loader = App.loaderRender();
+            App.container.append(loader);
+            document.body.classList.add('active');
             const pageHTML = page.render();
+            
 
             pageHTML.id = App.defaultPageId;
+
             App.container.append(pageHTML);
+
+            // setTimeout(()=>{
+            //     loader.remove();
+            //     App.container.classList.remove('active');
+            // }, time);
+           
         }
         App.container.append(footer.render());
 

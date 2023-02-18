@@ -4,6 +4,7 @@ import Component from '../../templates/components';
 import { ReviewsAPI } from '../../../api/api';
 import { BooksAPI } from '../../../api/api';
 import { IOneReview } from '../../../types';
+import App from '../../../pages/app';
 
 
 class Reviews extends Component {
@@ -66,10 +67,11 @@ class Reviews extends Component {
        
        this.swiper.className = 'reviews__block swiper mySwiper';
 
-        data.forEach(async (element) => {
+        await data.forEach(async (element) => {
             const el = await this.renderReview(element);
             this.swiper.append(el);
         });
+        App.closeLoader();
 
         wrapper.append(this.swiper);
         this.container.append(wrapper);
