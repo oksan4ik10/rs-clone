@@ -212,6 +212,10 @@
     width: 85%;
   }
 
+  .about__wannajoin__wrapper {
+    flex-direction: column;
+    gap: 15px;
+  }
 
   .about__features__wrapper {
     margin: 30px 0;
