@@ -74,8 +74,8 @@ class App {
         }
 
         if (page) {
-            // const loader = App.loaderRender();
-            // App.container.append(loader);
+            const loader = App.loaderRender();
+            App.container.append(loader);
             document.body.classList.add('active');
             const pageHTML = page.render();
             

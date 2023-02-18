@@ -1,6 +1,5 @@
 import Component from '../../templates/components';
 import Header from '../../components/header';
-import Authorization from '../authorization';
 import { UsersAPI } from '../../../api/api';
 
 
@@ -99,24 +98,7 @@ class ResetPassword extends Component {
                 Header.formActive = false; 
             }, 1000) 
             
-            const darkBackground = document.createElement('div');
-            const authorisation = new Authorization('section', 'authorisation');
-            const body = document.querySelector('.body') as HTMLBodyElement;
-    
-            body.appendChild(authorisation.render());
-            body.appendChild(darkBackground);
-    
-            setTimeout(function(){
-                darkBackground.classList.add('dark-background');
-                darkBackground.classList.add('dark-background_opacity');
-            }, 100);
-    
-            Header.formActive = true;
-    
-            darkBackground.addEventListener('click', () => {
-                Header.prototype.closeForm('authorisation');
-                Header.formActive = false;
-            })                    
+           Header.prototype.openAuth('authorisation');
         
         })
         
