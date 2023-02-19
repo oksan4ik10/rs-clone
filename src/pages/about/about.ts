@@ -2,6 +2,7 @@ import Page from "../../core/templates/page";
 import anime from 'animejs/lib/anime.es.js';
 import DescriptionPage from "../description";
 import Header from "../../core/components/header";
+import App from "../app";
 
 export default class AboutPage extends Page {
   person1Wrapper: HTMLDivElement;
@@ -248,9 +249,11 @@ export default class AboutPage extends Page {
       section.append(developersTitle, this.createPhotosArea(), featuresTitle, this.createFeaturesArea(), this.createWannaJoinArea());
       return section;
     }
-
+    
     render() {
         this.container.append(this.creatHeaderArea(), this.createAboutPage());
+
+        App.closeLoader();
 
         if (screen.width > 1000) {
           setTimeout(this.animatePhotos.bind(this), 2000);
