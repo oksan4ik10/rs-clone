@@ -2,6 +2,7 @@ import Component from '../../templates/components';
 import { PageIds } from '../../../types';
 import Registration from '../registration';
 import Authorization from '../authorization';
+import Restore from '../restore';
 import { HeaderSearch } from './header-search';
 import { BooksAPI } from '../../../api/api';
 import { UsersAPI } from '../../../api/api';
@@ -150,6 +151,28 @@ class Header extends Component {
             darkBackground.classList.add('dark-background');
             darkBackground.classList.add('dark-background_opacity');
         }, 100);
+
+        Header.formActive = true;
+
+        darkBackground.addEventListener('click', () => {
+            this.closeForm(form);
+            Header.formActive = false;
+        })
+    }
+
+    openRestore(form: string) {
+        // const darkBackground = document.createElement('div');
+        const darkBackground = document.querySelector('.dark-background') as HTMLElement;
+        const restore = new Restore('section', form);
+        const body = document.querySelector('.body') as HTMLBodyElement;
+
+        body.appendChild(restore.render());
+        // body.appendChild(darkBackground);
+
+        // setTimeout(function(){
+        //     darkBackground.classList.add('dark-background');
+        //     darkBackground.classList.add('dark-background_opacity');
+        // }, 100);
 
         Header.formActive = true;
 

@@ -94,3 +94,7 @@ export interface IUserResetPassword{
     resetLink:string, 
     newPass: string 
 }
+
+export interface IEmail {
+    email: string;
+}
