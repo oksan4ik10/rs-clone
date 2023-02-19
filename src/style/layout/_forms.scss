@@ -43,8 +43,9 @@
 .registration__error,
 .authorisation__error {
     width: 400px;
-    height: 40px;
+    min-height: 40px;
     color: $error-color;
+    text-align: center;
 }
 
 .registration__submit,
@@ -69,6 +70,7 @@
     width: 100%;
     height: 100%;
     @include flex-center;
+    text-align: center;
 }
 
 @media screen and (max-width: 576px){

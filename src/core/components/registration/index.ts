@@ -102,7 +102,7 @@ class Registration extends Component {
                     this.nameCheck = false;
                     this.name.classList.add('input-invalid');
                     this.name.classList.remove('input-valid');
-                    this.errorName.textContent = `Убедитесь, что значение состоит из латинских и русских букв, цифр, символoв тире, подчеркивания и точки`;
+                    this.errorName.textContent = `Убедитесь, что значение состоит из букв, цифр, символoв тире, подчеркивания и точки`;
                 } else if (this.name.value.length < 3) {    
                     this.nameCheck = false;
                     this.name.classList.add('input-invalid');

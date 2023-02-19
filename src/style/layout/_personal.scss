@@ -204,14 +204,15 @@
     @include flex-center;
     font-size: 16px;
     color: white;
-    background: $button-cabinet;
+    background: $button-cabinet-hover;
     height: 50px;
     font-size: 16px;
     border: 1px solid #a8a8a8;
 }
 
 .personal__reviews__button:hover {
-    background: $button-cabinet-hover;
+    background: $button-form-color;
+    border: 1px solid $button-form-color;
 }
 
 .personal__user__change {
@@ -246,6 +247,7 @@
     outline: none;
     border: 1px solid $border-container;
     padding: 10px;
+    box-sizing: border-box;
 }
 
 .personal__reviews__textarea:focus {
@@ -371,9 +373,7 @@
     }
 
     .personal__reviews__textarea {
-        width: 90%;
         height: 220px;
-        margin-left: 20px;
     }
 }
 
@@ -405,7 +405,7 @@
     }
 
     .personal__reviews {
-        width: 85%;
+        width: 100%;
     }
 
     .personal__descr {
