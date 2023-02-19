@@ -18,7 +18,7 @@ export class DescriptionPage extends Page {
             return;
         } else{
             const books = JSON.parse(local);
-            books.unshift(id);        
+            books.unshift(id);
             if(books.length === 7) {
                 books.pop()
             }
@@ -273,7 +273,6 @@ export class DescriptionPage extends Page {
             ratingContainer.append(myRating, myratingNumbers);
 
         })
-        .then(()=> App.closeLoader())
 
         ratingContainer.addEventListener('click', async (event) => {
             if (event.target instanceof HTMLLabelElement && event.target.classList.contains('descr_star')) {
@@ -336,7 +335,8 @@ export class DescriptionPage extends Page {
             descrDescr.textContent = bookInfo.desc;
             allRating.textContent = bookInfo.raiting.toString();
             descrImg.src = bookInfo.img;
-        });
+        })
+        .then(()=> App.closeLoader());
 
         descrImgWrapper.append(descrImgOuter);
 
@@ -444,6 +444,7 @@ export class DescriptionPage extends Page {
 
     render() {
         this.container.append(this.createPage());
+
         return this.container;
     }
 }
