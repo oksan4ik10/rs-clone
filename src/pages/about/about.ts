@@ -2,6 +2,7 @@ import Page from "../../core/templates/page";
 import anime from 'animejs/lib/anime.es.js';
 import DescriptionPage from "../description";
 import Header from "../../core/components/header";
+import App from "../app";
 
 export default class AboutPage extends Page {
   person1Wrapper: HTMLDivElement;
@@ -177,7 +178,7 @@ export default class AboutPage extends Page {
         'Представьте себя строгим литературным критиком — поставьте прочитанной книге оценку и напишите хвалебную или, наоборот, разгромную рецензию. Сравните ваше мнение о книге и мнения других читателей, ознакомившись с другими рецензиями.',
         'Если вы нашли более точную формулировку или ваше мнение поменялось, вы всегда можете изменить свою рецензию в личном кабинете. Или, если вы передумали делиться своим мнением, просто удалите свою рецензию.',
         'На главной странице сайта вы найдёте наиболее популярные книги, последние пользовательские рецензии и многое другое. Все ваши просмотренные книги так же будут сохранены, и вы всегда сможете к ним вернуться.', 
-        'Находите ваши любимые книги на нашем сайте, а если вы чувствуете азарт, воспользуйтесь поиском случайной книги. После прочтения обязательно поделитесь ссылкой на книгу с друзьями, ведь вместе читать веселее!', 
+        'Находите ваши любимые книги на нашем сайте, а если вы чувствуете азарт, воспользуйтесь поиском случайной книги. После прочтения обязательно поделитесь ссылкой на сайт с друзьями, ведь вместе читать веселее!', 
       ];
 
       for (let i = 0; i < featuresTitles.length; i++) {
@@ -248,9 +249,11 @@ export default class AboutPage extends Page {
       section.append(developersTitle, this.createPhotosArea(), featuresTitle, this.createFeaturesArea(), this.createWannaJoinArea());
       return section;
     }
-
+    
     render() {
         this.container.append(this.creatHeaderArea(), this.createAboutPage());
+
+        App.closeLoader();
 
         if (screen.width > 1000) {
           setTimeout(this.animatePhotos.bind(this), 2000);
