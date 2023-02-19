@@ -95,7 +95,7 @@ class Header extends Component {
         iconImg.setAttribute('alt','logo');
         this.icon.append(iconImg);
         this.nameUser.classList.add('header__personal__name-user');
-        this.nameUser.textContent = 'Test';
+
         this.personalLink.append(this.icon);
         this.personalLink.append(this.nameUser);
 

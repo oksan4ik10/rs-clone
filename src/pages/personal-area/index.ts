@@ -108,7 +108,8 @@ class PersonalArea extends Page {
         const containerForReview = document.createElement('div');
         containerForReview.classList.add('personal__reviews__review');
 
-        this.getInfoUser().then((res) => {
+        this.getInfoUser()
+        .then((res) => {
             GradesAPI.getGradeByUser(res._id, data._id).then((result) => {
                 //есть ли оценка?
                 if (result) {
@@ -128,6 +129,7 @@ class PersonalArea extends Page {
                     gradeStars.style.display = 'none';
                 }
             })
+
             ReviewsAPI.getReviewsByUser(this.authStatus as string, data._id)
             .then((res) => {
                 if (res) {
@@ -184,9 +186,7 @@ class PersonalArea extends Page {
                     })
                 }
             })
-            .then(()=>{
-                App.closeLoader();
-            })
+
         })
 
 
@@ -388,7 +388,8 @@ class PersonalArea extends Page {
 
 
         //добавить проверку на наличие книг в списке прочитанных 
-        this.getInfoUser().then((res) => {
+        this.getInfoUser()
+        .then((res) => {
             if (res.books.length === 0) {
                 const readTitle = document.createElement('div');
                 readTitle.textContent = 'У вас пока нет прочитанных книг';
@@ -401,6 +402,9 @@ class PersonalArea extends Page {
                     })
                 }
             }
+        })
+        .then(()=>{
+            App.closeLoader();
         })
 
         this.willReadContent.classList.add('personal__tab__content', 'personal__tab__content-want');
