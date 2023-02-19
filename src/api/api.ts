@@ -1,4 +1,4 @@
-import { IOneBook, IOneReview, IUserNew, IUser, IGetGradeByUserResp, ICheckBooksLikeRead, IPostGrade, IUserUpdate, IGenre, IUserResetPassword} from "../types";
+import { IOneBook, IOneReview, IUserNew, IUser, IGetGradeByUserResp, ICheckBooksLikeRead, IPostGrade, IUserUpdate, IGenre, IUserResetPassword, IEmail} from "../types";
 
 
 const baseApiEndpoint = 'https://rs-clone-iqcn.onrender.com/api/';
@@ -81,7 +81,18 @@ export class UsersAPI{
   
       const result = await response.json();
       return result;
+  }
 
+  static async resetPassword(obj: IEmail) {
+    const response = await fetch(`${baseApiEndpoint}/forget-password`, {
+      method: "PUT",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(obj),
+    });
+    const result = await response.json();
+    return result;
   }
 
   static async checkBooksLikeRead(bookId: string, token: string) {

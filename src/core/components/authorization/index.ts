@@ -11,6 +11,7 @@ class Authorization extends Component {
     password: HTMLInputElement;
     error: HTMLElement;
     submit: HTMLButtonElement;
+    restorePassword: HTMLElement;
     button: HTMLElement;
     cross: HTMLElement;
 
@@ -23,6 +24,7 @@ class Authorization extends Component {
         this.submit = document.createElement('button');
         this.cross = document.createElement('div');
         this.button = document.createElement('div');
+        this.restorePassword = document.createElement('div');
     }
 
     renderRegistration() {
@@ -50,6 +52,9 @@ class Authorization extends Component {
         this.submit.type = 'submit';
         this.submit.textContent = 'Войти';
 
+        this.restorePassword.classList.add('authorisation__restore');
+        this.restorePassword.textContent = 'Забыли пароль?';
+
         const title2 = document.createElement('div');
 
         title2.textContent = 'Еще не зарегистрированы?';
@@ -64,7 +69,8 @@ class Authorization extends Component {
         this.form.appendChild(this.email);
         this.form.appendChild(this.password);
         this.form.appendChild(this.error);
-        this.form.appendChild(this.submit);
+        this.form.append(this.submit);
+        this.form.append(this.restorePassword);
         this.form.appendChild(title2);
         this.form.appendChild(this.button);
     }
@@ -81,6 +87,13 @@ class Authorization extends Component {
             Header.prototype.closeForm('authorisation');
             Header.formActive = false;
             Header.prototype.openRegistr('registration');
+        })
+
+        this.restorePassword.addEventListener('click', () => {
+            // Header.prototype.closeForm('authorisation');
+            // Header.formActive = false;
+            this.container.remove();
+            Header.prototype.openRestore('restore');
         })
 
         this.form.addEventListener('submit', async (event) => {
