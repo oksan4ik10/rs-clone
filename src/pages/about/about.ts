@@ -28,7 +28,7 @@ export default class AboutPage extends Page {
        const person1Anime = anime({
         targets: [this.person1Wrapper],
         keyframes: [
-          {translateY: 0, translateX: 350, height: '240px', width: '380px', endDelay: 6000},
+          {translateY: 0, translateX: 350, height: '250px', width: '380px', endDelay: 6000},
           {translateX: 0, translateY: 0, height: '110px', width: '180px', endDelay: 14000},
         ],
         duration: 1000,
@@ -39,7 +39,7 @@ export default class AboutPage extends Page {
       const person2Anime = anime({
         targets: [this.person2Wrapper],
         keyframes: [
-          {translateY: -130, translateX: 350, height: '240px', width: '380px', delay: 7000, endDelay: 6000},
+          {translateY: -130, translateX: 350, height: '250px', width: '380px', delay: 7000, endDelay: 6000},
           {translateX: 0, translateY: 0, height: '110px', width: '180px', endDelay: 7000},
         ],
         duration: 1000,
@@ -50,7 +50,7 @@ export default class AboutPage extends Page {
       const person3Anime = anime({
         targets: [this.person3Wrapper],
         keyframes: [
-          {translateY: -260, translateX: 350, height: '240px', width: '380px', delay: 14000, endDelay: 6000},
+          {translateY: -260, translateX: 350, height: '250px', width: '380px', delay: 14000, endDelay: 6000},
           {translateX: 0, translateY: 0, height: '110px', width: '180px', endDelay: 0},
         ],
         duration: 1000,
@@ -71,7 +71,7 @@ export default class AboutPage extends Page {
       person1Name.textContent = 'Оксана';
       const person1Image = document.createElement('img');
       person1Image.classList.add('about__person__image');
-      person1Image.src = './images/girl.png';
+      person1Image.src = './images/oksana.jpg';
       const person1Motto = document.createElement('div');
       person1Motto.classList.add('about__person__motto');
       person1Motto.textContent = 'Прирождённый секьюр-профи - храню токен в localStorage ;)';
@@ -89,7 +89,7 @@ export default class AboutPage extends Page {
       person2Name.textContent = 'Настя';
       const person2Image = document.createElement('img');
       person2Image.classList.add('about__person__image');
-      person2Image.src = './images/girl.png';
+      person2Image.src = './images/nastya.jpg';
       const person2Motto = document.createElement('div');
       person2Motto.classList.add('about__person__motto');
       person2Motto.textContent = 'Могу рассказать, как войти в айти и не выйти из рассудка o_O';
@@ -107,7 +107,7 @@ export default class AboutPage extends Page {
       person3Name.textContent = 'Оля';
       const person3Image = document.createElement('img');
       person3Image.classList.add('about__person__image');
-      person3Image.src = './images/girl.png';
+      person3Image.src = './images/olya.jpg';
       const person3Motto = document.createElement('div');
       person3Motto.classList.add('about__person__motto');
       person3Motto.textContent = 'Вам кажется, что в вашем коде нет ошибок? Тогда я иду к вам :D';
@@ -172,12 +172,12 @@ export default class AboutPage extends Page {
 
       const featuresDescriptions: Array<string> = [
         'Удобный интерфейс сайта поможет вам добавить на виртуальные полки как прочитанные книги, так и те, которые еще ждут своего часа.',
-        'В нашем созданном полностью с нуля бэкенду реализован обширный арсенал HTTP-запросов (REST API), роутинги, работа с изображениями, подключена база данных (MongoDB) и многое другое.', 
+        'В нашем созданном полностью с нуля бэкенде реализован обширный арсенал HTTP-запросов (REST API), роутинги, работа с изображениями, подключена база данных (MongoDB) и многое другое.', 
         'Чтобы воспользоваться всеми возможностями нашего приложения, пройдите регистрацию в наших удобных pop-up окнах. Меняйте свои аватар и имя пользователя, и не бойтесь забыть пароль: вы всегда можете его восстановить!', 
         'В нашем приложении использованы популярные внешние библиотеки - Swiper.JS, Choices.JS и Anime.JS - с помощью которых реализованы визуальные элементы для наиболее приятного пользовательского опыта.',
         'Представьте себя строгим литературным критиком — поставьте прочитанной книге оценку и напишите хвалебную или, наоборот, разгромную рецензию. Сравните ваше мнение о книге и мнения других читателей, ознакомившись с другими рецензиями.',
         'Если вы нашли более точную формулировку или ваше мнение поменялось, вы всегда можете изменить свою рецензию в личном кабинете. Или, если вы передумали делиться своим мнением, просто удалите свою рецензию.',
-        'На главной странице сайта вы найдёте наиболее популярные книги, последние пользовательские рецензии и многое другое. Все ваши просмотренные книги так же будут сохранены, и вы всегда сможете к ним вернуться.', 
+        'На главной странице сайта вы найдёте наиболее популярные книги, последние пользовательские рецензии и многое другое. Все ваши просмотренные книги также будут сохранены, и вы всегда сможете к ним вернуться.', 
         'Находите ваши любимые книги на нашем сайте, а если вы чувствуете азарт, воспользуйтесь поиском случайной книги. После прочтения обязательно поделитесь ссылкой на сайт с друзьями, ведь вместе читать веселее!', 
       ];
 
