@@ -5,6 +5,7 @@
 .about__person__image {
   width: 30%;
   height: auto;
+  border-radius: 50px;
 }
 
 .about__person__motto {
@@ -67,7 +68,7 @@
 
 .about__person__name {
   position: absolute;
-  left: 70px;
+  left: 80px;
   border-bottom: 2px solid goldenrod;
   font-weight: 600;
   font-style: italic;
