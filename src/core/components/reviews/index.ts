@@ -78,7 +78,7 @@ class Reviews extends Component {
 
     }
     setResizeSlider(){
-        const windowInnerWidth = window.innerWidth;
+        const windowInnerWidth = document.documentElement.clientWidth;
 
         if((windowInnerWidth > 1040)&&(this.swiper.getAttribute('slides-per-view') === '3'))  return;
         if((windowInnerWidth > 768 && windowInnerWidth <= 1040 )&&(this.swiper.getAttribute('slides-per-view') === '2'))  return;
