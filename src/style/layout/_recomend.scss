@@ -27,13 +27,15 @@
 
 .recommend__name {
     margin-bottom: 5px;
-    font-size: 2em;
+    // font-size: 2em;
+    font-size: 32px;
 }
 
 .recommend__author {
     margin-bottom: 20px;
     font-style: italic;
-    font-size: 1.3em;
+    // font-size: 1.3em;
+    font-size: 21px;
 }
 
 .recommend__discr {
@@ -83,6 +85,7 @@
         margin-right: 0;
     }
     .recommend__name{
-        font-size: 1.5em;
+        // font-size: 1.5em;
+        font-size: 24px;
     }
 }
