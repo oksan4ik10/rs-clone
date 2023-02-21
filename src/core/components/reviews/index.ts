@@ -66,6 +66,8 @@ class Reviews extends Component {
 
        
        this.swiper.className = 'reviews__block swiper mySwiper';
+       console.log(data);
+       
 
         await data.forEach(async (element) => {
             const el = await this.renderReview(element);
@@ -79,18 +81,14 @@ class Reviews extends Component {
     }
     setResizeSlider(){
         const windowInnerWidth = document.documentElement.clientWidth;
-
-        if((windowInnerWidth > 1040)&&(this.swiper.getAttribute('slides-per-view') === '3'))  return;
-        if((windowInnerWidth > 768 && windowInnerWidth <= 1040 )&&(this.swiper.getAttribute('slides-per-view') === '2'))  return;
-        if((windowInnerWidth <= 768 )&&(this.swiper.getAttribute('slides-per-view') === '1'))  return;
   
 
-        if((windowInnerWidth > 1040) && this.swiper.matches('.swiper-initialized') ){
+        if((windowInnerWidth > 1040) && (this.swiper.matches('.swiper-initialized')|| this.start) ){
             this.swiper.setAttribute('slides-per-view','3');
-        }  else if (windowInnerWidth > 768 && this.swiper.matches('.swiper-initialized') ) {
+        }  else if (windowInnerWidth > 768 && (this.swiper.matches('.swiper-initialized') || this.start) ) {
             this.swiper.setAttribute('slides-per-view','2');
             
-        } else if (this.swiper.matches('.swiper-initialized') ){
+        } else if (this.swiper.matches('.swiper-initialized') || this.start ){
             this.swiper.setAttribute('slides-per-view','1');
         }
     
