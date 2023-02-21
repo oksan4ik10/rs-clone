@@ -50,8 +50,9 @@
     white-space: nowrap;
 }
 .viewed__text{
-    // font-size: 1.2em;
     font-size: 19px;
+    grid-column: 1/7;
+    text-align: center;
 }
 
 @media screen and (max-width: 768px){
@@ -66,4 +67,5 @@
     .viewed__container {
         grid-template-columns: repeat(2, minmax(100px,200px));
     }
+
 }

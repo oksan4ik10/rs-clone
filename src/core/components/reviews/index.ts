@@ -66,13 +66,20 @@ class Reviews extends Component {
 
        
        this.swiper.className = 'reviews__block swiper mySwiper';
-       console.log(data);
+
+       const promiseData:Promise<HTMLElement>[] = [];
        
 
-        await data.forEach(async (element) => {
-            const el = await this.renderReview(element);
-            this.swiper.append(el);
+        data.forEach((element) => {
+            promiseData.push(this.renderReview(element))
         });
+
+        const s = await Promise.all(promiseData);
+        s.forEach((item)=>{
+            this.swiper.append(item);
+        })
+        
+        
         App.closeLoader();
 
         wrapper.append(this.swiper);
