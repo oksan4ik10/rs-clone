@@ -59,7 +59,7 @@ class ErrorPage extends Page {
         })
 
         li3.addEventListener('click', () => {
-            // window.location.hash = 'random';
+            window.location.hash = 'about';
         })
         
         section.append(wrapper);
