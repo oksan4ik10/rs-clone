@@ -14,7 +14,8 @@
     @include flex-center;
     margin-top: 130px;
     margin-bottom: 0;
-    font-size: 3rem;
+    // font-size: 3rem;
+    font-size: 48px;
     color: $back-color;
     font-weight: 800;
 }
@@ -32,6 +33,7 @@
     border: solid 1px $border-color;
     width: 75%;
     transition: 0.2s;
+    font-size: 16px;
 }
 
 .preview__search__input:focus {
@@ -79,7 +81,8 @@
 .preview__about__text {
     width: 70%;
     color: $back-color;
-    font-size: 1rem;
+    // font-size: 1rem;
+    font-size: 16px;
 }
 
 .preview__more {
@@ -94,6 +97,7 @@
 .preview__about,
 .preview__more {
     font-weight: 600;
+    font-size: 16px;
 }
 
 
@@ -114,7 +118,8 @@
     }
 
     .preview__about__text {
-        font-size: 0.9rem;
+        // font-size: 0.9rem;
+        font-size: 14px;
     }
 
 }
@@ -141,7 +146,8 @@
 
     .search__results__header,
     .header__cabinet {
-        font-size: 0.9rem;
+        // font-size: 0.9rem;
+        font-size: 14px;
     }
 
     .results__header__title {
@@ -165,17 +171,20 @@
     }
 
     .preview__title {
-        font-size: 1.5rem;
+        // font-size: 1.5rem;
+        font-size: 24px;
     }
 
     .preview__about__text,
     .preview__search__input {
-        font-size: 0.8rem;
+        // font-size: 0.8rem;
+        font-size: 13px;
     }
 
     .preview__search,
     .preview__more {
-        font-size: 0.9rem;
+        // font-size: 0.9rem;
+        font-size: 14px;
     }
 
     .preview__about__column {
@@ -234,7 +243,8 @@
 
     .preview__search,
     .preview__more {
-        font-size: 0.8rem;
+        // font-size: 0.8rem;
+        font-size: 13px;
     }
 
     .footer__year {
@@ -242,7 +252,8 @@
     }
 
     .preview__about__text {
-        font-size: 0.6rem;
+        // font-size: 0.6rem;
+        font-size: 10px;
     }
 
 }
