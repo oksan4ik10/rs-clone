@@ -10,7 +10,7 @@
 .footer .wrapper {
     @include flex-space-between;
     height: 100%;
-    box-sizing: border-box;
+    // box-sizing: border-box;
 }
 
 .footer__developers {

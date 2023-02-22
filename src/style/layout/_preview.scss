@@ -6,7 +6,7 @@
     height: 550px;
 }
 .preview .wrapper {
-    box-sizing: border-box;
+    // box-sizing: border-box;
 }
 
 .preview__title {
@@ -50,6 +50,7 @@
 .preview__about {
     width: 100%;
     @include flex-space-between;
+    align-items: flex-start;
     margin-top: 40px;
 }
 
@@ -61,9 +62,11 @@
 
 .preview__about__img {
     margin-right: 5px;
-    width: 70px;
+    width: 60px;
     height: 60px;
-    background: url('./images/main-icons.png') 0 0 no-repeat;
+    background-image: url('./images/main-icons.png');
+    background-position: 0 0;
+    background-repeat: no-repeat;
 }
 
 .preview_img2 {
@@ -81,7 +84,6 @@
 .preview__about__text {
     width: 70%;
     color: $back-color;
-    // font-size: 1rem;
     font-size: 16px;
 }
 
@@ -118,7 +120,6 @@
     }
 
     .preview__about__text {
-        // font-size: 0.9rem;
         font-size: 14px;
     }
 
@@ -133,7 +134,7 @@
     .preview__more {
         height: 30px;
         width: 200px;
-        
+        font-size: 14px;
     }
 
     .preview__search {
@@ -146,7 +147,6 @@
 
     .search__results__header,
     .header__cabinet {
-        // font-size: 0.9rem;
         font-size: 14px;
     }
 
@@ -156,6 +156,7 @@
 
     .preview__search__input {
         width: 50%;
+        font-size: 14px;
     }
 
 }
@@ -171,20 +172,12 @@
     }
 
     .preview__title {
-        // font-size: 1.5rem;
         font-size: 24px;
     }
 
     .preview__about__text,
     .preview__search__input {
-        // font-size: 0.8rem;
         font-size: 13px;
-    }
-
-    .preview__search,
-    .preview__more {
-        // font-size: 0.9rem;
-        font-size: 14px;
     }
 
     .preview__about__column {
@@ -212,11 +205,13 @@
     .preview__form {
         margin-top: 20px;
         flex-direction: column;
-        align-items: unset;
+        align-items: center;
+        width: 100%;
     }
 
     .preview__search__input {
         width: 100%;
+        box-sizing: border-box;
     }
 
     .preview__search {
@@ -236,6 +231,14 @@
     .preview__about {
         margin-top: 20px;
     }
+
+    // .preview__about__column {
+    //     width: 20%;
+    //     @include flex-space-between;
+    //     user-select: none;
+    
+    //     border: 1px dashed white;
+    // }
 
 }
 

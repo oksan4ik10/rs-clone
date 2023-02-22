@@ -3,7 +3,6 @@ import Header from '../../components/header';
 import { UsersAPI } from '../../../api/api';
 
 
-
 class ResetPassword extends Component {
     form: HTMLFormElement;
     password: HTMLInputElement;

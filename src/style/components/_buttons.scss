@@ -5,6 +5,7 @@
     cursor: pointer;
     @include border-backgroud-opaque;
     color: $back-color;
+    box-sizing: border-box;
 }
 
 @media screen and (max-width: 1400px) {
