@@ -1,6 +1,7 @@
 .registration__form,
 .authorisation__form,
-.personal__form, .reset__form,
+.personal__form,
+.reset__form,
 .restore__form {
     width: 520px;
     height: 530px;
@@ -103,7 +104,8 @@
     .registration__form,
     .authorisation__form,
     .personal__form,
-    .restore__form {
+    .restore__form,
+    .reset__form {
         width: 95%;
         padding: 25px 10px;
     }

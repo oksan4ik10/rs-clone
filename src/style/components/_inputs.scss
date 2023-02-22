@@ -1,12 +1,10 @@
 .input {
     width: 350px;
-    //height: 40px;
     cursor: pointer;
     padding: 10px;
     margin-bottom: 5px;
     margin-top: 5px;
     outline: none;
-    // border: none;
 }
 
 .input-registration,
@@ -32,9 +30,16 @@
     border: 1px solid $error-color;
 }
 
+@media screen and (max-width: 1000px) {
+    input.input-registration,
+    input.input-authorisation {
+        width: 400px;
+    }
+}
+
 @media screen and (max-width: 576px) {
-    .input-registration,
-    .input-authorisation {
+    input.input-registration,
+    input.input-authorisation {
         width: 100%;
     }
 }

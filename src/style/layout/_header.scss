@@ -10,7 +10,7 @@
 .header .wrapper {
     @include flex-space-between;
     height: 100%;
-    box-sizing: border-box;
+    // box-sizing: border-box;
 }
 
 .header__cabinet {
@@ -195,7 +195,7 @@
     to   { opacity: 1; }
 }
 
-@media (max-width: 1000px){
+@media (max-width: 1200px){
 
     .logo {
         width: 120px;
@@ -225,8 +225,11 @@
     .header__personal__name-user,
     .header__cabinet__registration,
     .header__cabinet__enter {
-        // font-size: 0.8rem;
         font-size: 13px;
+    }
+
+    .header__search__input {
+        font-size: 14px;
     }
 
 }
@@ -236,7 +239,6 @@
     .search__results__header,
     .header__cabinet,
     .header__search__input {
-        // font-size: 0.8rem;
         font-size: 13px;
     }
 
