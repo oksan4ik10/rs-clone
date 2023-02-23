@@ -42,7 +42,6 @@
 .viewed__name {
     width: 100%;
     text-align: center;
-    // font-size: 1.1em;
     font-size: 18px;
     font-weight: 600;
     overflow: hidden;
@@ -66,6 +65,21 @@
 @media screen and (max-width: 576px){
     .viewed__container {
         grid-template-columns: repeat(2, minmax(100px,200px));
+    }
+
+    .viewed__title {
+        margin-top: 20px;
+    }
+
+    .viewed__author {
+        font-size: 14px;
+    }
+
+    .viewed__name {
+        font-size: 16px;
+    }
+    .viewed__text{
+        font-size: 16px;
     }
 
 }

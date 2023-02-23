@@ -2,7 +2,9 @@
   display: grid;
   grid-template-columns: 3fr 1fr;
   gap: 5%;
-  padding: 70px 18% 40px 18%;
+  padding-top: 70px;
+  padding-bottom: 40px;
+  // padding: 70px 18% 40px 18%;
 }
 
 .desc__content__wrapper {
@@ -11,14 +13,12 @@
 
 .decription__name{
   margin-bottom: 20px;
-  // font-size: 2rem;
   font-size: 32px;
   font-weight: 900;
   border-bottom: 5px solid $color-opaque-dark;
 }
 
 .description__author {
-  // font-size: 1.2rem;
   font-size: 19px;
 }
 
@@ -35,7 +35,6 @@
 	float: right;
 	padding: 0;
 	cursor: pointer;
-	// font-size: 1.5rem;
   font-size: 24px;
 	color: lightgrey;
 	text-shadow: 1px 1px #bbb;
@@ -80,7 +79,6 @@
 
 .description__allrating {
   font-weight: 900;
-  // font-size: 1.5rem;
   font-size: 24px;
 }
 
@@ -92,7 +90,6 @@
 }
 
 .description__descr__title {
-  // font-size: 1.5rem;
   font-size: 24px;
   font-weight: 600;
   border-bottom: 2px solid $color-opaque-dark;
@@ -214,7 +211,6 @@
 
 .desc__review__header,
 .desc__review__bodyhead {
-  // font-size: 0.8rem;
   font-size: 13px;
   margin-bottom: 10px;
   display: grid;
@@ -333,7 +329,9 @@
 @media (max-width: 768px) {
 
   .description__page__wrapper {
-    padding: 20px 10% 100px 10%;
+    // padding: 20px 10% 100px 10%;
+    padding-top: 20px;
+    padding-bottom: 100px;
   }
 
   .description__page__wrapper {
@@ -353,7 +351,9 @@
 @media screen and (max-width: 576px) {
 
   .description__page__wrapper {
-    padding: 20px 5% 10px 5%;
+    // padding: 20px 5% 10px 5%;
+    padding-top: 20px;
+    padding-bottom: 10px;
   }
 
   .desc_button__submit,

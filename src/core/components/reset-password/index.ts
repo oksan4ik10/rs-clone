@@ -34,7 +34,7 @@ class ResetPassword extends Component {
 
         this.cross.classList.add('authorisation__cross', 'cross');
 
-        this.password.classList.add('authorisation__password', 'input', 'authorisation-registration', 'input-authorisation');
+        this.password.classList.add('input', 'input-authorisation');
         this.password.placeholder = 'Новый пароль';
         this.password.type = 'password';
         this.password.setAttribute('required', 'true');

@@ -385,7 +385,7 @@ export default class RandomPage extends Page {
     this.socialText.textContent = 'Не знаете, что почитать? Попробуйте случайную книгу!';
 
     const socialLinksWrapper = document.createElement('div');
-    socialLinksWrapper.classList.add('random__page__social__links');
+    socialLinksWrapper.classList.add('random__page__social__links', 'wrapper');
     
     this.facebookLink.target = '_blank';
     this.facebookLink.href = `https://www.facebook.com/sharer/sharer.php?u=${window.location.origin}/#random`;
