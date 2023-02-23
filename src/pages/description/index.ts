@@ -32,7 +32,7 @@ export class DescriptionPage extends Page {
         this.addToReadButton = document.createElement('button');
         this.wantToReadButton = document.createElement('button');
         this.main = document.createElement('main');
-        this.main.classList.add('description__page__wrapper');
+        this.main.classList.add('description__page__wrapper', 'wrapper');
         this.descrContentWrapper = document.createElement('div');
         this.descrContentWrapper.classList.add('desc__content__wrapper');
         this.bookId = window.location.hash.split('=')[1];

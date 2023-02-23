@@ -5,7 +5,7 @@
   font-size: inherit;
 }
 
-.randompage__blur .wrapper {
+.randompage__blur {
   box-sizing: border-box;
 }
 
@@ -56,7 +56,6 @@
 }
 
 .random__page__book__title {
-  // font-size: 1.2rem;
   font-size: 19px;
   font-weight: 600;
 }
@@ -69,7 +68,6 @@
 
 .random__page__title {
   margin-top: 50px;
-  // font-size: 1.7rem;
   font-size: 27px;
   font-weight: 900;
   margin-bottom: 10px;
@@ -84,6 +82,7 @@
 .random__page__subtitle__wrapper {
   @include flex-space-between;
   margin-top: 30px;
+  box-sizing: border-box;
 }
 
 .random__page__three__wrapper {
@@ -93,7 +92,8 @@
 }
 
 .randompage__blur {
-  padding: 5px 5%;
+  padding-top: 5px;
+  padding-bottom: 5px;
   background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(5px);
 }
@@ -139,6 +139,11 @@
     gap: 20px;
   }
 
+  .random__page__title,
+  .random__page__subtitle {
+    text-align: center;
+  }
+
 }
 
 @media (max-width: 768px){
@@ -155,7 +160,7 @@
   
 }
 
-@media (max-width: 540px){
+@media (max-width: 576px){
 
   .random__page__bigbook {
     flex-direction: column;
