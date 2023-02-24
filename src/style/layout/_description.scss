@@ -368,6 +368,14 @@
     font-size: 14px;
   }
 
+  .desc__review__header {
+    grid-template-columns: 1fr;
+  }
+
+  .desc__review__ratingwrap {
+    justify-self: unset;
+  }
+
 }
 
 
