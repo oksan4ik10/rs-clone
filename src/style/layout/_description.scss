@@ -27,6 +27,11 @@
   height: 26px;
 }
 
+.descr_star {
+  height: 23px;
+  margin-top: -5px;
+}
+
 .description__myrating:not(:checked) > input {
 	display: none;
 }
