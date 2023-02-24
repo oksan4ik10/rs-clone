@@ -122,7 +122,6 @@ class Authorization extends Component {
             }
 
             if (window.location.hash.includes('random')){
-                console.log('includes random')
                 window.location.hash = '';
                 window.location.hash = 'random';
             }

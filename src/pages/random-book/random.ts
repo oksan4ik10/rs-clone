@@ -9,6 +9,7 @@ export default class RandomPage extends Page {
   pageDropdownWrapper: HTMLSelectElement;
   bookId: string;
   allRating: HTMLDivElement;
+  randomButtonsOuter: HTMLDivElement;
   addToReadButton: HTMLButtonElement;
   wantToReadButton: HTMLButtonElement;
   socialMediaWrapper: HTMLDivElement;
@@ -28,6 +29,8 @@ export default class RandomPage extends Page {
     this.bookId = '';
     this.allRating = document.createElement('div');
     this.allRating.classList.add('description__allrating');
+    this.randomButtonsOuter = document.createElement('div');
+
     this.addToReadButton = document.createElement('button');
     this.wantToReadButton = document.createElement('button');
     this.socialMediaWrapper = document.createElement('div');
@@ -121,6 +124,13 @@ export default class RandomPage extends Page {
     } else {
         this.wantToReadButton.style.display = 'inline-block';
         this.addToReadButton.style.display = 'inline-block';
+        this.randomButtonsOuter.addEventListener('click', (event) => {
+            event.preventDefault();
+            if (event.target instanceof HTMLElement && event.target.classList.contains('button')) {
+                event.preventDefault();
+                this.showAuthPopUp();
+            }
+        })
     }
   }
 
@@ -316,8 +326,7 @@ export default class RandomPage extends Page {
   }
 
   renderAddReadButtons(){
-    const randomButtonsOuter = document.createElement('div');
-    randomButtonsOuter.classList.add('random__page__buttons__outer');
+    this.randomButtonsOuter.classList.add('random__page__buttons__outer');
     this.addToReadButton.classList.add('button', 'random__page__lucky');
     this.addToReadButton.textContent = 'Добавить в прочитанное';
     this.wantToReadButton.classList.add('button', 'random__page__lucky');
@@ -327,8 +336,8 @@ export default class RandomPage extends Page {
 
     this.checkButtonsAdd();
 
-    randomButtonsOuter.append(this.addToReadButton, this.wantToReadButton);
-    return randomButtonsOuter;
+    this.randomButtonsOuter.append(this.addToReadButton, this.wantToReadButton);
+    return this.randomButtonsOuter;
   }
 
   renderRandomBook(genre?: string) {
