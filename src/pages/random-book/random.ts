@@ -124,13 +124,6 @@ export default class RandomPage extends Page {
     } else {
         this.wantToReadButton.style.display = 'inline-block';
         this.addToReadButton.style.display = 'inline-block';
-        this.randomButtonsOuter.addEventListener('click', (event) => {
-            event.preventDefault();
-            if (event.target instanceof HTMLElement && event.target.classList.contains('button')) {
-                event.preventDefault();
-                this.showAuthPopUp();
-            }
-        })
     }
   }
 
@@ -488,6 +481,17 @@ export default class RandomPage extends Page {
 
   render() {
     this.container.append(this.createRandomPage());
+
+    if (!this.authStatus){
+      this.randomButtonsOuter.addEventListener('click', (event) => {
+        event.preventDefault();
+        if (event.target instanceof HTMLElement && event.target.classList.contains('button')) {
+            event.preventDefault();
+            this.showAuthPopUp();
+        }
+      })
+    }
+
     return this.container;
 }
 

@@ -306,7 +306,6 @@ class PersonalArea extends Page {
                         }
                     })
                     container.remove();
-                    console.log(this.willReadContent.children.length)
                     
                     if (this.willReadContent.children.length === 0) {
                         const readTitle = document.createElement('div');
@@ -322,7 +321,6 @@ class PersonalArea extends Page {
         buttonRemove.addEventListener('click', () => {
             UsersAPI.removeBooksWantRead(data._id, this.authStatus as string).then((res) => {
                 container.remove();
-                console.log('willReadContent.children.length', this.willReadContent.children.length)
                 if (this.willReadContent.children.length === 0) {
                     const readTitle = document.createElement('div');
                     readTitle.textContent = 'У вас пока нет книг, которые вы хотите прочесть';
