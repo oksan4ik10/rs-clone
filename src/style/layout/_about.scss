@@ -1,0 +1,230 @@
+.about__person__info {
+  font-size: 11px;
+}
+
+.about__person__image {
+  width: 30%;
+  height: auto;
+  border-radius: 50px;
+}
+
+.about__person__motto {
+  font-style: italic;
+}
+
+.aboutpage__anim__wrap {
+  position: relative;
+  width: 800px;
+  height: 400px;
+  margin: 20px auto 5px;
+}
+
+.person__wrapper {
+  box-shadow: 0 3px 10px goldenrod;
+  padding: 5px;
+  position: absolute;
+  width: 180px;
+  height: 110px;
+  overflow: hidden;
+  font-weight: 500;
+}
+
+.about__person__motto,
+.about__person__info {
+  margin-top: 5px;
+}
+
+.person__wrapper:after {
+  content: '';
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  height: 15%;
+  bottom: 0px;
+  background: linear-gradient(180deg, rgba(139,167,32,0) 0%, rgba(255,255,255,1) 100%);
+  pointer-events: none;
+}
+
+.aboutpage__person1__wrapper {
+  top: 0;
+  left: 0;
+}
+
+.aboutpage__person2__wrapper {
+  top: 130px;
+  left: 0;
+}
+
+.aboutpage__person3__wrapper {
+  top: 260px;
+  left: 0;
+}
+
+.about__person__innerwrap {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.about__person__name {
+  position: absolute;
+  left: 80px;
+  border-bottom: 2px solid goldenrod;
+  font-weight: 600;
+  font-style: italic;
+  padding: 0 10px;
+}
+
+.about__header__outer {
+  height: 200px;
+  background-size: cover;
+  background-position: bottom;
+  background-image: url("./images/randbooks.jpg");
+}
+
+.about__header__middle {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(5px);
+  height: 100%;
+}
+
+.about__redirect__wrapper {
+  padding-top: 30px;
+  color: white;
+  font-weight: 500;
+  text-align: center;
+}
+
+.about__redirect__link {
+  color: goldenrod;
+  cursor: pointer;
+  border-bottom: 2px solid goldenrod;
+  transition: 0.2s;
+}
+
+.about__redirect__link:hover {
+  color: $button-form-color;
+  border-bottom: 2px solid $button-form-color;
+}
+
+.about__pagetitle {
+  color: white; 
+  font-size: 27px;
+  font-weight: 600;
+  padding-top: 80px;
+}
+
+.about__section__title {
+  font-size: 19px;
+  font-weight: 600;
+  padding-top: 30px;
+  border-bottom: 2px solid goldenrod;
+}
+
+.about__icon {
+  width: 80px;
+  height: auto;
+}
+
+.about__features__wrapper {
+  margin: 30px 5px;
+  padding: 30px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  border-bottom: 2px solid goldenrod;
+}
+
+.about__feature__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.about__feature__title {
+  font-weight: 600;
+  text-align: center;
+  margin: 10px 0;
+}
+
+.about__feature__desc {
+  color: #5c5b5b;
+}
+
+.about__wannajoin__wrapper {
+  margin: 40px 0;
+  @include flex-space-between;
+}
+
+.about__wannajoin__button {
+  color: white;
+  background: $button-form-color;
+  width: 200px;
+  height: 50px;
+  font-size: 16px;
+  border: none;
+}
+
+.about__wannajoin__button:hover {
+  background: $button-form-hover;
+}
+
+@media (max-width: 1000px) {
+  
+  .aboutpage__anim__wrap {
+    position: unset;
+    @include flex-space-between;
+    align-items: baseline;
+    width: unset;
+    height: unset;
+  }
+
+  .person__wrapper {
+    position: unset;
+    width: 30%;
+    height: unset;
+  }
+
+  .person__wrapper:after {
+    display: none;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .about__features__wrapper {
+    margin: 40px 5px;
+    padding: 20px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+@media (max-width: 576px) {
+
+  .aboutpage__anim__wrap {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .person__wrapper {
+    width: 85%;
+  }
+
+  .about__wannajoin__wrapper {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .about__features__wrapper {
+    box-sizing: border-box;
+    margin: 30px 0;
+    padding: 0 10px;
+    grid-template-columns: 1fr;
+    width: 100%;
+
+  }
+
+}

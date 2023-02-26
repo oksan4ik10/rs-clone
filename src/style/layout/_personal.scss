@@ -1,0 +1,465 @@
+.personal {
+    height: 100%;
+    background: $background-color;
+}
+
+.personal__page__wrapper {
+    padding-bottom: 30px;
+}
+
+.personal__user {
+    width: 100%;
+    height: 120px;
+    background-color: #343b4c;
+    color: $text-dark-color;
+}
+
+.personal__user .wrapper {
+    height: 100%;
+    @include flex-space-between;
+}
+
+.personal__user__block {
+    display: flex;
+}
+
+.personal__user__name {
+    color: white;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+}
+
+.personal__user__avatar {
+    margin-right: 40px;
+}
+
+.personal__user__img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+.personal__content {
+    height: 100%;
+}
+
+.personal__tab {
+    overflow: hidden;
+    margin-top: 40px;
+    display: flex;
+}
+
+.personal__tab__button {
+    height: 55px;
+    width: 310px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 18px;
+    @include flex-center;
+    background: $background-color;
+    border-top: 4px solid $background-color;
+}
+
+.personal__tab__button:hover {
+    background: $background2-color;
+}
+
+.personal__button-active {
+    background: $background2-color;
+    border-top: 4px solid $button-cabinet-hover;
+}
+
+.personal__tab__wrapper {
+    min-height: 300px;
+    padding: 30px;
+    background: $background2-color;
+}
+
+.personal__tab__content {
+    display: none;
+    font-size: 17px;
+}
+
+.personal__read__book {
+    width: 100%;
+    @include flex-space-between;
+    margin-bottom: 30px;
+    color: $text-dark-color;
+    align-items: flex-start;
+}
+
+.personal__read__box {
+    @include flex-colomn;
+    align-items: center;
+}
+
+.personal__read__info {
+    width: 240px;
+    padding: 20px;
+    @include flex-colomn;
+    align-items: center;
+    border: 1px solid $border-container;
+}
+
+.personal__read__info__img {
+    width: 150px;
+    height: 230px;
+    background-size: cover;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+.personal__read__info__author {
+    text-align: center;
+}
+
+.personal__read__info__name {
+    font-weight: bold;
+    text-align: center;
+}
+
+.personal__reviews__title {
+    font-size: 18px;
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.personal__reviews {
+    width: 70%;
+    @include flex-colomn;
+    align-items: center;
+}
+
+.personal__descr {
+    width: 70%;
+    min-height: 360px;
+    padding: 20px;
+    @include flex-colomn;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.personal__read__buttons {
+    @include flex-space-between;
+    width: 370px;
+}
+
+.personal__reviews__container {
+    width: 100%;
+    @include flex-colomn;
+    align-items: center;
+    position: relative;
+}
+
+.personal__reviews__grade {
+    min-width: 200px;
+    height: 30px;
+    @include flex-center;
+    margin-bottom: 10px;
+}
+
+.personal__reviews__grade__stars {
+    display: inline-block;
+    width: 100px;
+    margin-right: 10px;
+}
+
+.personal__reviews__grade__stars span {
+    padding: 0;
+    font-size: 12px;
+    margin: 0;
+    line-height: 1;
+    color: lightgrey;
+    text-shadow: 1px 1px #bbb;
+}
+
+.personal__reviews__grade__stars > span:before {
+	content: '★';
+}
+
+.personal__reviews__grade__stars > span.golden {
+	color: goldenrod;
+	text-shadow: 1px 1px #c60;
+}
+
+.personal__reviews__review {
+    width: 100%;
+    max-height: 290px;
+    margin-top: 10px;
+    overflow: auto;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.personal__reviews__review::-webkit-scrollbar {
+    width: 0;
+}
+
+.personal__reviews__button {
+    margin: auto;
+    margin-top: 30px;
+    @include flex-center;
+    font-size: 16px;
+    color: white;
+    background: $button-cabinet-hover;
+    height: 50px;
+    border: 1px solid #a8a8a8;
+}
+
+.personal__reviews__button:hover {
+    background: $button-form-color;
+    border: 1px solid $button-form-color;
+}
+
+.personal__user__change {
+    height: 50px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    font-size: 16px;
+}
+
+.personal__user__change:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.personal__reviews__edit {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+    background-image: url('./images/edit2.png');
+    opacity: 0.3;
+    background-size: contain;
+}
+
+.personal__reviews__edit:hover {
+    opacity: 0.7;
+}
+
+.personal__reviews__textarea {
+    width: 100%;
+    height: 250px;
+    outline: none;
+    border: 1px solid $border-container;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 17px;
+}
+
+.personal__reviews__textarea:focus {
+    border: 1px solid $border-input;
+}
+
+.personal__reviews__textarea::-webkit-scrollbar {
+    width: 0;
+}
+
+.personal__reviews__form {
+    width: 100%;
+    @include flex-colomn;
+    align-content: center;
+}
+
+@media screen and (max-width: 1400px) {
+    .personal__tab__button {
+        height: 50px;
+        width: 275px;
+    }
+
+    .personal__read__info {
+        width: 200px;
+        padding: 10px;
+    }
+    
+    .personal__read__info__img {
+        width: 130px;
+        height: 200px;
+    }
+    
+    .personal__read__info__author {
+        font-size: 16px;
+    }
+    
+    .personal__read__info__name {
+        font-size: 16px;
+    }
+
+    .personal__descr {
+        min-height: 330px;
+        padding: 15px;
+    }
+
+    .personal__reviews__review {
+        max-height: 265px;
+    }
+
+    .personal__read__buttons {
+        width: 330px;
+    }
+
+    .personal__reviews__button {
+        font-size: 14px;
+        height: 40px;
+    }
+
+    .personal__user__change {
+        height: 45px;
+    }
+
+    .personal__reviews__textarea {
+        height: 210px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .personal__tab__button {
+        height: 40px;
+        width: 235px;
+    }
+
+    .personal__read__info {
+        width: 200px;
+        padding: 10px;
+    }
+
+    .personal__tab__wrapper {
+        padding: 20px;
+    }
+
+    .personal__read__info {
+        width: 180px;
+    }
+    
+    .personal__read__info__img {
+        width: 100px;
+        height: 150px;
+    }
+    
+    .personal__read__info__author {
+        font-size: 14px;
+    }
+    
+    .personal__read__info__name {
+        font-size: 14px;
+    }
+
+    .personal__descr {
+        min-height: 280px;
+        padding: 15px;
+    }
+
+    .personal__reviews__review {
+        max-height: 240px;
+        font-size: 16px;
+        width: 90%;
+    }
+
+    .personal__reviews__form {
+        width: 90%;
+    }
+
+    .personal__reviews__title {
+        font-size: 16px;
+        margin-bottom: 0px;
+    }
+
+    .personal__reviews__grade {
+        margin-bottom: 5px;
+    }
+
+    .personal__reviews__textarea {
+        height: 180px;
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .personal__user {
+        height: 100px;
+    }
+
+    .personal__user__name {
+        font-size: 20px;
+    }
+
+    .personal__read__book {
+        @include flex-colomn;
+        align-items: center;
+    }
+
+    .personal__user__avatar {
+        margin-right: 20px;
+    }
+
+    .personal__tab__button {
+        width: 270px;
+    }
+
+    .personal__reviews__button {
+        margin-top: 20px;
+        margin-bottom: 5px;
+    }
+
+    .personal__reviews {
+        width: 100%;
+    }
+
+    .personal__descr {
+        width: 85%;
+        min-height: 220px;
+        overflow: auto;
+        padding: 10px;
+        align-items: center;
+    }
+
+    .personal__descr::-webkit-scrollbar {
+        width: 0;
+    }
+
+    .personal__reviews__textarea {
+        margin-left: 0px;
+        margin: 0 auto;
+    }
+
+    .personal__reviews__review {
+        margin-top: 0px;
+        padding: 0px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .personal__user__img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .personal__user__name {
+        font-size: 16px;
+    }
+
+    .personal__user__change {
+        width: 110px;
+        height: 40px;
+        font-size: 13px;
+        padding: 0;
+    }
+
+    .personal__tab__button {
+        font-size: 16px;
+        padding-left: 5px;
+    }
+
+    .personal__read__buttons {
+        width: 270px;
+    }
+
+    .personal__descr {
+        width: 90%;
+    }
+}

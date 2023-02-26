@@ -1,0 +1,85 @@
+
+
+.viewed__title {
+    margin-top: 80px;
+    width: 100%;
+    @include flex-center;
+}
+
+.viewed__container {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(100px,200px));
+    grid-column-gap: 10px;
+}
+
+.viewed__colomn {
+    @include flex-colomn;
+    align-items: center;
+    cursor: pointer;
+   
+    justify-content: space-between;
+    transition: .3s;
+    &:hover{
+        opacity: .8;
+        transition: .3s;
+    }
+}
+
+.viewed__book {
+
+    img{
+        height: 170px;
+    }
+}
+
+.viewed__author {
+    margin-bottom: 5px;
+    width: 100%;
+    text-align: center;
+    font-style: italic;
+}
+
+.viewed__name {
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.viewed__text{
+    font-size: 19px;
+    grid-column: 1/7;
+    text-align: center;
+}
+
+@media screen and (max-width: 768px){
+    .viewed__container {
+        width: 100%;
+        grid-template-columns: repeat(3, minmax(100px,200px));
+        grid-gap: 10px;
+    }
+}
+
+@media screen and (max-width: 576px){
+    .viewed__container {
+        grid-template-columns: repeat(2, minmax(100px,200px));
+    }
+
+    .viewed__title {
+        margin-top: 20px;
+    }
+
+    .viewed__author {
+        font-size: 14px;
+    }
+
+    .viewed__name {
+        font-size: 16px;
+    }
+    .viewed__text{
+        font-size: 16px;
+    }
+
+}

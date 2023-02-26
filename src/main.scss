@@ -1,0 +1,28 @@
+@import 'style/absracts/mixins';
+@import 'style/absracts/variables';
+@import 'style/absracts/functions';
+
+@import 'style/base/reset';
+@import 'style/base/typography';
+
+@import 'style/components/buttons';
+@import 'style/components/dark-background';
+@import 'style/components/inputs';
+@import 'style/components/cross';
+
+@import 'style/layout/footer';
+@import 'style/layout/header';
+@import 'style/layout/main';
+@import 'style/layout/preview';
+@import 'style/layout/reviews';
+@import 'style/layout/popular';
+@import 'style/layout/recomend';
+@import 'style/layout/viewed';
+@import 'style/layout/forms';
+@import 'style/layout/description';
+@import 'style/layout/personal';
+@import 'style/layout/personal-form';
+@import 'style/layout/random';
+@import 'style/layout/about';
+@import 'style/layout/loader';
+@import 'style/layout/error';

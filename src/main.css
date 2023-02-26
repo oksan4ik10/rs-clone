@@ -1,0 +1,39 @@
+html,
+body,
+header,
+main,
+footer {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+html {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+a,
+a:visited {
+  color: unset;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.footer {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px dashed green;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}/*# sourceMappingURL=main.css.map */

@@ -1,0 +1,393 @@
+.description__page__wrapper {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 5%;
+  padding-top: 70px;
+  padding-bottom: 40px;
+  // padding: 70px 18% 40px 18%;
+}
+
+.desc__content__wrapper {
+  padding: 5px;
+}
+
+.decription__name{
+  margin-bottom: 20px;
+  font-size: 32px;
+  font-weight: 900;
+  border-bottom: 5px solid $color-opaque-dark;
+}
+
+.description__author {
+  font-size: 19px;
+}
+
+.description__myrating {
+	overflow: hidden;
+  height: 26px;
+}
+
+.descr_star {
+  height: 23px;
+  margin-top: -5px;
+}
+
+.description__myrating:not(:checked) > input {
+	display: none;
+}
+
+.description__myrating:not(:checked) > label {
+	float: right;
+	padding: 0;
+	cursor: pointer;
+  font-size: 24px;
+	color: lightgrey;
+	text-shadow: 1px 1px #bbb;
+}
+
+.description__myrating:not(:checked) > label:before {
+	content: '★';
+
+}
+
+.myrating__numbers {
+  @include flex-space-between;
+}
+
+.myrating__numbers > i {
+  font-size: 13px;
+  color: #a2a2a2;
+  font-style: normal;
+  text-align: center;
+  display: inline-block;
+  width: 20px;
+  user-select: none;
+}
+
+.description__myrating > input:checked ~ label {
+	color: gold;
+	text-shadow: 1px 1px #c60;
+}
+
+.description__myrating:not(:checked) > label:hover,
+.description__myrating:not(:checked) > label:hover ~ label {
+	color: gold;
+}
+
+.description__myrating > input:checked + label:hover,
+.description__myrating > input:checked + label:hover ~ label,
+.description__myrating > input:checked ~ label:hover,
+.description__myrating > input:checked ~ label:hover ~ label,
+.description__myrating > label:hover ~ input:checked ~ label {
+	color: gold;
+	text-shadow: 1px 1px goldenrod;
+}
+
+.description__myrating > label:active {
+	position: relative;
+}
+
+.description__allrating {
+  font-weight: 900;
+  font-size: 24px;
+}
+
+.description__author,
+.description__year,
+.description__genre,
+.description__descr__title {
+  margin-bottom: 10px;
+}
+
+.description__descr__title {
+  font-size: 24px;
+  font-weight: 600;
+  border-bottom: 2px solid $color-opaque-dark;
+  padding-top: 10px;
+}
+
+.description__descr__content {
+  margin-top: 20px;
+}
+
+.decription__rating__wrapper {
+  margin-top: 30px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.decription__subrating__wrapper {
+  margin-top: 10px;
+  color: $border-input-focus;
+}
+
+.description__mysubrating {
+  display: inline-block;
+  text-align: center;
+  padding-top: 4px;
+  background-color: gold;
+  text-shadow: 1px 1px #c60;
+  color: black;
+  font-weight: 700;
+  width: 30px;
+  height: 25px;
+  border-radius: 10px;
+  margin: 0 10px;
+}
+
+.desc__review__img {
+  margin-right: 20px;
+}
+
+.description__allrating__text {
+  margin-left: 15px;
+}
+
+.decr__form {
+  margin-bottom: 20px;
+}
+
+.decr__textarea {
+  padding: 5px;
+  height: 120px;
+  width: 100%;
+  resize: none;
+  @include border-and-backgroud;
+  font-family: inherit;
+  cursor: auto;
+  transition: 0.2s;
+  box-sizing: border-box;
+}
+
+.decr__textarea:focus {
+  border: solid 2px $border-focus-color;
+  outline: solid 1px $button-form-color;
+  height: 120px;
+}
+
+.description__delete__myrating {
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 1px dotted $button-form-color;
+  font-style: italic;
+  margin-left: 10px;
+  transition: 0.2s;
+}
+
+.description__delete__myrating:hover {
+  color: $button-form-color;
+}
+
+.decr__textarea::-webkit-scrollbar {
+  width: 0.6em;
+  background-color: $back-color;
+  cursor: pointer;
+}
+
+.decr__textarea::-webkit-scrollbar-thumb {
+  background-color: $color-opaque-dark;
+  outline: 1px solid $border-focus-color;
+}
+
+.desc_button__submit {
+  background-color: $header-color;
+  height: 40px;
+  color: white;
+  -webkit-animation: fadein 0.5s;
+  -moz-animation: fadein 0.5s;
+   -ms-animation: fadein 0.5s;
+    -o-animation: fadein 0.5s;
+       animation: fadein 0.5s;
+}
+
+.desc_button__submit,
+.description__addtoread,
+.description__wanttoread {
+  transition: 0.2s;
+  font-size: 16px;
+}
+
+.desc_button__submit:hover,
+.description__addtoread:hover,
+.description__wanttoread:hover {
+  background-color: $button-form-color;
+}
+
+.desc__review__body {
+  background-color: $background-color;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.desc__review__header,
+.desc__review__bodyhead {
+  font-size: 13px;
+  margin-bottom: 10px;
+  display: grid;
+  gap: 5px;
+}
+
+.desc__review__header {
+  grid-template-columns: 0.6fr 4fr 5fr;
+}
+
+.desc__review__bodyhead {
+  grid-template-columns: 1fr 8fr;
+}
+
+.desc__review__bodyhead {
+  padding-bottom: 10px;
+  border-bottom: 2px solid $color-opaque-dark;
+}
+
+.desc__review__namedatewrap {
+  margin-right: 10px;
+}
+
+.desc__review__bodytext {
+  margin-top: 10px;
+}
+
+.desc__review__name {
+  font-weight: 600;
+}
+
+.desc__review__date {
+  color: $border-input-focus;
+}
+
+.desc__review__ratingwrap {
+  justify-self: flex-end;
+}
+
+.desc__review__ratingtext {
+  margin-right: 10px;
+}
+
+.desc__review__ratingstars {
+  display: inline-block;
+  width: 100px;
+  margin-right: 10px;
+}
+
+.desc__review__ratingstars span {
+  padding: 0;
+	font-size: 12px;
+	margin: 0;
+	line-height: 1;
+	color: lightgrey;
+	text-shadow: 1px 1px #bbb;
+}
+
+.desc__review__ratingstars > span:before {
+	content: '★';
+}
+
+.desc__review__ratingstars > span.golden {
+	color: goldenrod;
+	text-shadow: 1px 1px #c60;
+}
+
+.desc__review__bookimg {
+  max-width: 60px;
+}
+
+.desc__img__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: $border-focus-color;
+  padding: 20px 5px 10px 5px;
+}
+
+.description__addtoread,
+.description__wanttoread {
+  background-color: $header-color;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.description__image {
+  width: 100%;
+  box-shadow: 0 3px 10px black;
+}
+
+.descr__reviewsarea__wrapper {
+  margin-top: 30px;
+}
+
+.desc__review__img{
+  width: 30px;
+  height: 30px;
+}
+
+@media screen and (max-width: 1200px) {
+
+  .decription__rating__wrapper {
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: start;
+  }
+
+  .description__allrating__text {
+    margin-left: 0;
+    margin-top: 20px;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .description__page__wrapper {
+    // padding: 20px 10% 100px 10%;
+    padding-top: 20px;
+    padding-bottom: 100px;
+  }
+
+  .description__page__wrapper {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .desc_button__submit,
+  .description__addtoread,
+  .description__wanttoread {
+    width: 200px;
+  }
+  
+}
+
+
+@media screen and (max-width: 576px) {
+
+  .description__page__wrapper {
+    padding-top: 20px;
+    padding-bottom: 10px;
+  }
+
+  .desc_button__submit,
+  .description__addtoread,
+  .description__wanttoread {
+    font-size: 14px;
+  }
+
+  .desc__review__header {
+    grid-template-columns: 1fr;
+  }
+
+  .desc__review__ratingwrap {
+    justify-self: unset;
+  }
+
+  .desc__review__ratingnumber {
+    margin-left: 20px;
+  }
+
+}
+
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}

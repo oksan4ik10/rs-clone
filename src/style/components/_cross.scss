@@ -1,0 +1,21 @@
+.cross {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    opacity: 0.3;
+	cursor: pointer;
+    background-image: url('./images/cross.svg');
+}
+
+.cross:hover {
+    opacity: 0.7;
+}
+
+@media screen and (max-width: 576px) {
+    .cross {
+        top: 7px;
+        right: 7px;
+    }
+}

@@ -1,0 +1,319 @@
+.header {
+    width: 100%;
+    height: 85px;
+    background-color: $header-color;
+    position: relative;
+    z-index: 2;
+    flex: 0 0 auto;
+}
+
+.header .wrapper {
+    @include flex-space-between;
+    height: 100%;
+    // box-sizing: border-box;
+}
+
+.header__cabinet {
+    @include flex-space-between;
+    height: 100%;
+    gap: 10px;
+    color: $back-color;
+    font-weight: 600;
+}
+
+.header__cabinet__registration,
+.header__personal__btn-output {
+    font-weight: 600;
+    font-size: inherit;
+}
+
+.header__cabinet__enter {
+    cursor: pointer;
+}
+
+.header__form {
+    position: relative;
+}
+
+.logo {
+    transition: 0.2s;
+    width: 209px;
+    height: 50px;
+    filter: brightness(100%) saturate(100%) invert(95%) sepia(100%) saturate(14%) hue-rotate(213deg) brightness(104%) contrast(104%);
+}
+
+.logo:hover {
+    filter: brightness(0) saturate(100%) invert(50%) sepia(16%) saturate(1828%) hue-rotate(160deg) brightness(82%) contrast(84%);
+}
+
+.header__search__input {
+    @include border-and-backgroud;
+    font-size: 16px;
+}
+
+.header__search__input:focus {
+    outline: solid 2px $button-form-color;
+}
+
+.search__results__header__wrapper {
+    position: absolute;
+    top: 65px;
+    @include border-and-backgroud;
+    width: 50%;
+    padding: 5px 30px;
+}
+
+.results__header__top {
+    @include flex-space-between;
+}
+
+.results__header__bottom {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+    border-top: solid 2px $border-color;;
+}
+
+.results__header__bookwrapper{
+    height: 80px;
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.results__header__bookwrapper:hover {
+    background-color: $back-color-hover;
+}
+
+.results__header__bookcover {
+    overflow: hidden;
+    width: 80px;
+}
+
+.results__header__bookinfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.results__header__title{
+    padding-top: 5px;
+    font-weight: 900;
+    margin-bottom: 10px;
+}
+
+.header__search__active {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    position: absolute;
+    top: 15px;
+    right: 5px;
+    background: url("./images/search.png") 0 0 no-repeat;
+    filter: brightness(0) saturate(100%) invert(86%) sepia(5%) saturate(3%) hue-rotate(324deg) brightness(94%) contrast(86%);
+}
+
+.header__personal__name-user {
+    cursor: pointer;
+}
+
+.header__random {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    margin-left: 20px;
+    border-radius: 15px;
+    background: url('./images/rand.png') no-repeat;
+    background-position: center;
+    transition: .2s;
+    filter: brightness(0) saturate(100%) invert(100%) sepia(43%) saturate(0%) hue-rotate(140deg) brightness(113%) contrast(100%);
+
+}
+
+.header__random:hover {
+    filter: brightness(0) saturate(100%) invert(50%) sepia(16%) saturate(1828%) hue-rotate(160deg) brightness(82%) contrast(84%);
+}
+
+.header__search {
+    @include flex-space-between;
+}
+
+.header__cabinet__registration,
+.header__cabinet__enter,
+.header__personal__btn-output {
+    transition: 0.2s;
+}
+
+.header__cabinet__registration:hover,
+.header__personal__btn-output:hover {
+    background-color: $button-form-color;
+}
+
+.header__cabinet__enter:hover {
+    color: $button-form-color;
+}
+
+.header__personal{
+    @include flex-space-between;
+    gap: 30px;
+    display: none;
+    &__icon{
+        img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid $back-color;
+            transition: .2s;
+        }
+    }
+    &__link{
+        @include flex-space-between;
+        gap: 10px;
+        transition: .2s;
+        cursor: pointer;
+        &:hover>div>img{
+            border: 2px solid $button-form-color; 
+        } 
+        &:hover span{
+            color: $button-form-color;
+        }
+    }
+    &__name-user{
+        color: $back-color;
+        font-weight: 600;
+        transition: .2s;
+    }
+    &__btn-output{
+        width: 100px;
+    }
+
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@media (max-width: 1200px){
+
+    .logo {
+        width: 120px;
+        height: 30px;
+    }
+
+    .input {
+       width: 200px;
+       overflow: hidden;
+    }
+
+    .header__search__active {
+        display: none;
+    }
+
+    .header__personal__btn-output {
+        width: 70px;
+        height: 30px;
+    }
+
+    .header__cabinet__registration {
+        width: 115px;
+        height: 30px;
+    }
+
+    .header__personal__btn-output,
+    .header__personal__name-user,
+    .header__cabinet__registration,
+    .header__cabinet__enter {
+        font-size: 13px;
+    }
+
+    .header__search__input {
+        font-size: 14px;
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .search__results__header,
+    .header__cabinet,
+    .header__search__input {
+        font-size: 13px;
+    }
+
+    .header__cabinet__registration,
+    .header__cabinet__enter,
+    .header__personal__btn-output {
+        // font-size: 0.9rem;
+        font-size: 14px;
+    }
+
+    .header__personal__icon img {
+        height: 35px;
+        width: 35px;
+    }
+
+    .header__random {
+        margin-left: 10px;
+    }
+
+    .header__personal__link {
+        flex-direction: column;
+    }
+
+    .header__personal__name-user {
+        // font-size: 0.7rem;
+        font-size: 11px;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .header__cabinet__registration {
+        display: none;
+    }
+
+    .logo {
+        width: 80px;
+        height: 20px;
+    }
+    
+    .header {
+        height: 65px;
+    }
+
+    .header__search__input,
+    .header__random {
+        display: none;
+    }
+
+    .header__personal__link {
+        flex-direction: unset;
+    }
+
+    .header__personal__name-user {
+        font-size: inherit;
+    }
+
+}
+
+@media (max-width: 360px) {
+
+    .search__results__header,
+    .header__cabinet,
+    .header__cabinet__registration,
+    .header__cabinet__enter,
+    .header__search__input,
+    .header__personal__btn-output {
+        // font-size: 0.8rem;
+        font-size: 13px;
+    }
+
+    .header__personal__name-user {
+        display: none;
+    }
+}
+
+

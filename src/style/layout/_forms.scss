@@ -1,0 +1,134 @@
+.registration__form,
+.authorisation__form,
+.personal__form,
+.reset__form,
+.restore__form {
+    width: 520px;
+    height: 530px;
+    @include flex-colomn;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 25;
+    background: $form-color;
+    border-radius: 5px;
+    padding: 25px;
+}
+.reset__form{
+    height: 300px;
+}
+
+.personal__form,
+.restore__form {
+    width: 520px;
+    height: 350px;
+}
+
+.registration__title,
+.authorisation__title,
+.personal__title,
+.restore__title {
+    margin-bottom: 20px;
+    color: $text-dark-color;
+    font-size: 26px;
+}
+
+.authorisation__title {
+    text-align: center;
+}
+
+.authorisation__restore {
+    margin-top: 10px;
+    color: $button-form-color;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.authorisation__restore:hover {
+    color: $button-form-hover;
+}
+
+.authorisation__subtitle {
+    margin-top: 25px;
+    margin-bottom: 5px;
+    color: $text-dark-color;
+    font-size: 22px;
+}
+
+.registration__error,
+.authorisation__error,
+.restore__error {
+    width: 400px;
+    min-height: 40px;
+    color: $error-color;
+    text-align: center;
+}
+
+.restore__error {
+    margin-top: 10px;
+}
+
+.registration__submit,
+.authorisation__submit,
+.personal__submit,
+.restore__submit {
+    margin-top: 25px;
+    margin-bottom: 5px;
+    color: white;
+    background: $button-form-color;
+    height: 50px;
+    font-size: 16px;
+    border: none;
+    @include flex-center;
+}
+
+.registration__submit:hover,
+.authorisation__submit:hover,
+.restore__submit:hover {
+    background: $button-form-hover;
+}
+
+.registration__success,
+.restore__success {
+    width: 100%;
+    height: 100%;
+    @include flex-center;
+    text-align: center;
+}
+
+.authorisation__wrapper {
+    @include flex-space-between;
+}
+
+@media screen and (max-width: 576px){
+    .registration__form,
+    .authorisation__form,
+    .personal__form,
+    .restore__form,
+    .reset__form {
+        width: 95%;
+        padding: 25px 10px;
+    }
+
+    .registration__title,
+    .authorisation__title,
+    .personal__title,
+    .restore__title {
+        font-size: 22px;
+    }
+
+    .authorisation__subtitle {
+        font-size: 20px;
+    }
+
+    .registration__error,
+    .authorisation__error,
+    .restore__error {
+        width: 100%;
+    }
+}
+

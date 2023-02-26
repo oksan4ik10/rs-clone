@@ -1,0 +1,45 @@
+.input {
+    width: 350px;
+    cursor: pointer;
+    padding: 10px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    outline: none;
+}
+
+.input-registration,
+.input-authorisation {
+    width: 400px;
+    height: 50px;
+    border-radius: 4px;
+    font-size: 16px;
+    border: 1px solid $border-input;
+    background: white;
+}
+
+.input-registration:focus,
+.input-authorisation:focus {
+    border: 1px solid $border-input-focus;
+}
+
+.input-valid {
+    border: 1px solid $valid-color;
+}
+
+.input-invalid {
+    border: 1px solid $error-color;
+}
+
+@media screen and (max-width: 1000px) {
+    input.input-registration,
+    input.input-authorisation {
+        width: 400px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    input.input-registration,
+    input.input-authorisation {
+        width: 100%;
+    }
+}

@@ -1,0 +1,274 @@
+import Component from '../../templates/components';
+import { PageIds } from '../../../types';
+import Registration from '../registration';
+import Authorization from '../authorization';
+import Restore from '../restore';
+import { HeaderSearch } from './header-search';
+import { BooksAPI } from '../../../api/api';
+import { UsersAPI } from '../../../api/api';
+
+
+class Header extends Component {
+    static renderPersonalCabinet = async (token:string)=>{
+        const blockPersonal = document.querySelector('.header__personal') as HTMLElement;
+        const blockCabinet = document.querySelector('.header__cabinet') as HTMLElement;
+        const iconImg = document.querySelector('.header__personal__icon img') as HTMLImageElement;
+        const nameUser = document.querySelector('.header__personal__name-user');
+        if(blockCabinet) blockCabinet.style.display = "none";
+        if(blockPersonal && iconImg && nameUser){
+            blockPersonal.style.display = "flex";
+            const res = await UsersAPI.infoUser(token);
+            iconImg.src = res.img;
+            nameUser.textContent = res.name;
+        }
+    }
+
+    logo: HTMLAnchorElement;
+    searchContainer: HTMLElement;
+    search: HTMLInputElement;
+    searchActive: HTMLElement;
+    random: HTMLElement;
+    registration: HTMLButtonElement;
+    enter: HTMLElement;
+    icon: HTMLElement;
+    nameUser: HTMLElement;
+    output: HTMLButtonElement;
+    personalLink: HTMLElement;
+
+    static formActive = false;
+    
+    constructor(tagName: string, className: string) {
+        super(tagName, className);
+
+        this.logo = document.createElement('a');
+        this.searchContainer = document.createElement('div');
+        this.search = document.createElement('input');
+        this.searchActive = document.createElement('div');
+        this.random = document.createElement('div');
+        this.registration = document.createElement('button');
+        this.enter = document.createElement('div');
+        this.icon = document.createElement('div');
+        this.nameUser = document.createElement('span');
+        this.output = document.createElement('button');
+        this.personalLink = document.createElement('div');
+    }
+
+    renderPageHeader() {
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('wrapper');
+ 
+        this.logo.classList.add('header__logo');
+        this.logo.href = `#${PageIds.MainPage}`;
+        const logoImg = document.createElement('img');
+        logoImg.classList.add('logo');
+        logoImg.src = './images/rsb.png';
+        this.logo.append(logoImg);
+
+        this.searchContainer.classList.add('header__search');
+
+        const form = document.createElement('form');
+        form.classList.add('header__form');
+
+        this.search.classList.add('input', 'header__search__input');
+        this.search.placeholder = 'Поиск автора или книги...';
+
+        this.searchActive.classList.add('header__search__active');
+
+        this.random.classList.add('header__random');
+
+        const cabinet = document.createElement('div');
+        cabinet.classList.add('header__cabinet');
+
+        this.enter.classList.add('header__cabinet__enter');
+        this.enter.textContent = 'Войти';
+
+        this.registration.classList.add('header__cabinet__registration', 'button');
+        this.registration.textContent = 'Регистрация';
+
+        //если пользователь авторизован
+        const personalArea = document.createElement('div');
+        personalArea.classList.add('header__personal');
+
+        this.personalLink.classList.add('header__personal__link');
+        this.icon.classList.add('header__personal__icon');
+        const iconImg = document.createElement('img');
+        iconImg.src = './images/avatar.jpg';
+        iconImg.setAttribute('alt','logo');
+        this.icon.append(iconImg);
+        this.nameUser.classList.add('header__personal__name-user');
+
+        this.personalLink.append(this.icon);
+        this.personalLink.append(this.nameUser);
+
+        this.output.classList.add('header__personal__btn-output', 'button');
+        this.output.textContent = 'Выход';
+
+        this.container.appendChild(wrapper);
+        wrapper.appendChild(this.logo);
+        wrapper.appendChild(this.searchContainer);
+        this.searchContainer.appendChild(form);
+        form.appendChild(this.search);
+        form.appendChild(this.searchActive);
+        this.searchContainer.appendChild(this.random);
+        wrapper.appendChild(cabinet);
+        cabinet.appendChild(this.enter);
+        cabinet.appendChild(this.registration);
+        wrapper.appendChild(personalArea);
+        personalArea.appendChild(this.personalLink);
+        personalArea.appendChild(this.output);
+    }
+
+    openRegistr(form: string) {
+        const darkBackground = document.createElement('div');
+        const registration = new Registration('section', form);
+        const body = document.querySelector('.body') as HTMLBodyElement;
+
+        body.appendChild(registration.render());
+        body.appendChild(darkBackground);
+
+        setTimeout(function(){
+            darkBackground.classList.add('dark-background');
+            darkBackground.classList.add('dark-background_opacity');
+        }, 100);
+
+        Header.formActive = true;
+
+        darkBackground.addEventListener('click', () => {
+            this.closeForm(form);
+            Header.formActive = false;
+        })
+    }
+
+    openAuth(form: string) {
+        const darkBackground = document.createElement('div');
+        const authorisation = new Authorization('section', form);
+        const body = document.querySelector('.body') as HTMLBodyElement;
+
+        body.appendChild(authorisation.render());
+        body.appendChild(darkBackground);
+
+        setTimeout(function(){
+            darkBackground.classList.add('dark-background');
+            darkBackground.classList.add('dark-background_opacity');
+        }, 100);
+
+        Header.formActive = true;
+
+        darkBackground.addEventListener('click', () => {
+            this.closeForm(form);
+            Header.formActive = false;
+        })
+    }
+
+    openRestore(form: string) {
+        // const darkBackground = document.createElement('div');
+        const darkBackground = document.querySelector('.dark-background') as HTMLElement;
+        const restore = new Restore('section', form);
+        const body = document.querySelector('.body') as HTMLBodyElement;
+
+        body.appendChild(restore.render());
+        // body.appendChild(darkBackground);
+
+        // setTimeout(function(){
+        //     darkBackground.classList.add('dark-background');
+        //     darkBackground.classList.add('dark-background_opacity');
+        // }, 100);
+
+        Header.formActive = true;
+
+        darkBackground.addEventListener('click', () => {
+            this.closeForm(form);
+            Header.formActive = false;
+        })
+    }
+
+    closeForm(form: string) {
+        const registration = document.querySelector(`.${form}`) as HTMLElement;
+        registration.remove();
+        const darkBackground = document.querySelector('.dark-background') as HTMLElement;
+
+        darkBackground.classList.remove('dark-background_opacity');
+
+        setTimeout(function(){
+            darkBackground.classList.remove('dark-background');
+            darkBackground.remove();
+        }, 800);
+    }
+
+    outputPersonal(){
+        localStorage.removeItem('token');
+        const blockPersonal = document.querySelector('.header__personal') as HTMLElement;
+        const blockCabinet = document.querySelector('.header__cabinet') as HTMLElement;
+        if(blockPersonal && blockCabinet) {
+            blockPersonal.style.display = 'none';
+            blockCabinet.style.display = 'flex';
+        }
+        window.location.hash = 'main-page';
+    }
+
+    inputPersonal() {
+        window.location.hash = 'personal-area';
+    }
+
+    render() {
+        this.renderPageHeader();
+
+        this.registration.addEventListener('click', () => {
+            if (Header.formActive === false) {
+                this.openRegistr('registration');
+            }
+        })
+
+        this.enter.addEventListener('click', () => {
+            if (Header.formActive === false) {
+                this.openAuth('authorisation');
+            }
+        })
+
+        this.search.addEventListener('keyup', async () => {
+            const allBooks = await BooksAPI.getAllBooks();
+            if (this.search.value.length > 0) {
+                const headerSearch = new HeaderSearch(
+                    'div',
+                    'search__results__header__wrapper', 
+                    allBooks,
+                    this.search.value);
+                const oldHeaderSearch = document.querySelector('.search__results__header__wrapper');
+                if (oldHeaderSearch) {
+                    oldHeaderSearch.remove();
+                }
+                this.searchContainer.append(headerSearch.render());
+
+                window.addEventListener('click', (event) => {
+                    if (event.target instanceof HTMLElement 
+                        && !event.target.classList.contains('search__results__header__wrapper')){
+
+                        const oldSearch = document.querySelector('.search__results__header__wrapper');
+                        if (oldSearch) {
+                            oldSearch.remove();
+                        }
+
+                        this.search.value = '';
+                    }
+                })
+            } else if (this.search.value.length <= 0) {
+                const oldHeaderSearch = document.querySelector('.search__results__header__wrapper');
+                if (oldHeaderSearch) {
+                    oldHeaderSearch.remove();
+                }
+            }
+        });
+
+        this.random.addEventListener('click', () => {
+            window.location.hash = 'random';
+        })
+
+        this.output.addEventListener('click', this.outputPersonal.bind(this))
+
+        this.personalLink.addEventListener('click', this.inputPersonal.bind(this))
+
+        return this.container;
+    }
+}
+
+export default Header;

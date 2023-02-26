@@ -1,0 +1,26 @@
+@mixin flex-space-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@mixin flex-colomn {
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin border-and-backgroud {
+    border: solid 1px $border-color;
+    background-color: $back-color;
+}
+
+@mixin border-backgroud-opaque {
+    border: solid 1px $border-color;
+    background-color: $color-opaque-light;
+}
